@@ -5,3 +5,5 @@ const WelcomePane =()=>{
         <div></div>
     )
 }
+
+export default WelcomePane;

@@ -1,8 +1,8 @@
 import { ArrowRight, ChevronUp } from 'lucide-react';
-import logo from '../assets/logo.svg'
 import homeImg from '../assets/homeImg.png'
 import hateCrime from '../assets/hateCrime.png'
 import { FaFacebook, FaTwitter, FaLinkedin, FaInstagram } from 'react-icons/fa';
+import Logo from '../components/Logo';
 
 
 const LandingPage = () => {
@@ -11,10 +11,7 @@ const LandingPage = () => {
     <div className="bg-primaryBackground w-[100vw] text-white min-h-screen">
       {/* Header */}
       <header className="flex justify-between items-center p-10">
-        <div className="flex items-center flex-col">
-          <img src={logo} alt="CM&3S Logo" className="h-16 w-16 mr-2" />
-          <span className="font-bold text-l">CM&3S</span>
-        </div>
+        <Logo/>
         <nav className="hidden md:flex items-center space-x-4 text-xl">
           <a href="#" className="text-white hover:text-white-400">About Us</a>
           <a href="#" className="text-white hover:text-white-400">Contact Us</a>

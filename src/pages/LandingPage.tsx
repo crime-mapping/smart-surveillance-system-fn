@@ -3,9 +3,10 @@ import homeImg from '../assets/homeImg.png'
 import hateCrime from '../assets/hateCrime.png'
 import { FaFacebook, FaTwitter, FaLinkedin, FaInstagram } from 'react-icons/fa';
 import Logo from '../components/Logo';
+import { Link } from 'react-router-dom';
 
 
-const LandingPage = () => {
+const LandingPage:React.FC = () => {
 
   return (
     <div className="bg-primaryBackground w-[100vw] text-white min-h-screen">
@@ -15,7 +16,7 @@ const LandingPage = () => {
         <nav className="hidden md:flex items-center space-x-4 text-xl">
           <a href="#" className="text-white hover:text-white-400">About Us</a>
           <a href="#" className="text-white hover:text-white-400">Contact Us</a>
-          <button className="bg-primaryBackground text-white px-6 py-1 rounded hover:bg-purple-600"><span></span>Login</button>
+          <button className="bg-primaryBackground text-white px-6 py-1 rounded hover:bg-purple-600"><span></span><Link className='text-white' to='/login'>Login</Link></button>
         </nav>
       </header>
 
@@ -62,7 +63,7 @@ const LandingPage = () => {
       </section>
 
        <button className="bg-black p-2 flex mx-[49%] mb-4 rounded-full hover:bg-purple-700">
-        <ChevronUp />
+        <a href="#"><ChevronUp /></a>
       </button>
 
       {/* Footer */}
@@ -106,7 +107,7 @@ const LandingPage = () => {
             </div>
           </div>
           <div className="mt-8 text-center text-sm">
-            <p>&copy; 2024 CMSS. All rights reserved.</p>
+            <p>&copy; 2024 CM&3S. All rights reserved.</p>
           </div>
         </div>
       </footer>

@@ -1,7 +1,7 @@
 import { FaGoogle } from "react-icons/fa";
 import WelcomePane from "../components/welcomePane"
 
-const LoginPage:React.FC = () => {
+const RegistrationPage:React.FC = () => {
     return (
         <div className="w-[100vw] gap-0 flex">
             <WelcomePane />
@@ -9,13 +9,20 @@ const LoginPage:React.FC = () => {
                 <div className="w-1/2 flex items-center justify-center min-h-screen">
       <div className="w-full max-w-md p-8">
         <h2 className="text-2xl font-bold mb-6 text-center">
-          Welcome Back! <span className="text-2xl">👋</span>
+          Register Here! <span className="text-2xl">👋</span>
         </h2>
         <form>
+            <div className="mb-4">
+            <input
+              type="text"
+              placeholder="Enter Your Full Names Here"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
           <div className="mb-4">
             <input
               type="email"
-              placeholder="crimemapping@gmail.com"
+              placeholder="Enter Your Email"
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
@@ -23,6 +30,13 @@ const LoginPage:React.FC = () => {
             <input
               type="password"
               placeholder="Password"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+           <div className="mb-6">
+            <input
+              type="text"
+              placeholder="Confirm Password"
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
@@ -41,7 +55,7 @@ const LoginPage:React.FC = () => {
         </div>
         <div className="mt-4 text-center">
           <a href="#" className="text-sm text-blue-500 hover:underline">
-            Forgot Password? Click here
+            Already have an account ? Login
           </a>
         </div>
       </div>
@@ -50,4 +64,4 @@ const LoginPage:React.FC = () => {
     )
 }
 
-export default LoginPage;
+export default RegistrationPage;

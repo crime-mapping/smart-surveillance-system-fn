@@ -14,7 +14,7 @@ const UserDashboard : React.FC = () => {
     return (
         <div className="w-[100vw]">
             <UserSideBar />
-            <div className="w-[85%] ml-[15%]">
+            <div className="w-[85%] ml-[15%] p-4">
                 <Header />
                 <main>
                   <AnalyticsCards />

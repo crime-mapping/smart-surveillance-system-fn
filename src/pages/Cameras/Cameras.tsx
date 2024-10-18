@@ -40,9 +40,9 @@ const Cameras = () => {
   return (
       <div className="w-[100vw] h-screen">
           <UserSidebar/>
-        <div className="w-[85%] ml-[15%] p-6">
+        <div className="w-[85%] ml-[15%] p-4">
         <UserHeader/>
-      <div className="flex justify-between items-center mb-6">
+      <div className="flex justify-between items-center mb-2">
         <h1 className="text-2xl font-bold">Recently Connected Cameras</h1>
         <button onClick={() => setModalOpen(true)}  className="bg-green-500 text-white px-4 py-2 rounded-md">+ Add Camera</button>
       </div>

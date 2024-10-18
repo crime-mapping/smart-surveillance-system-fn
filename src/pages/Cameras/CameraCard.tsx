@@ -1,5 +1,5 @@
 import React from 'react';
-
+import {FiEye, FiTrash, FiLink, FiXCircle } from 'react-icons/fi';
 
 export interface Camera {
   id: number;
@@ -12,7 +12,7 @@ interface CameraCardProps {
   camera: Camera; 
 }
 
-const CameraCard:React.FC<CameraCardProps> = ({ camera }) => {
+const CameraCard: React.FC<CameraCardProps> = ({ camera }) => {
   const { name, status, dateAdded } = camera;
   const isConnected = status === 'Connected';
 
@@ -30,16 +30,26 @@ const CameraCard:React.FC<CameraCardProps> = ({ camera }) => {
       <p className="text-sm text-gray-500 mb-4">Added On {dateAdded}</p>
       <div className="flex space-x-2">
         <button
-          className={`px-3 py-1 rounded-md text-white ${
+          className={`flex items-center space-x-1 px-3 py-1 rounded-md text-white ${
             isConnected ? 'bg-red-500' : 'bg-green-500'
           }`}
         >
-          {isConnected ? 'Disconnect' : 'Connect'}
+          {isConnected ? <FiXCircle /> : <FiLink />}
+          <span>{isConnected ? 'Disconnect' : 'Connect'}</span>
         </button>
-        <button className="px-3 py-1 rounded-md bg-blue-500 text-white">
-          View Live Feed
+        <button
+          className={`flex items-center space-x-1 px-3 py-1 rounded-md ${
+            isConnected ? 'bg-blue-500 text-white' : 'bg-gray-400 text-gray-200 cursor-not-allowed'
+          }`}
+          disabled={!isConnected}
+        >
+          <FiEye />
+          <span>View Live Feed</span>
         </button>
-        <button className="px-3 py-1 rounded-md bg-red-500 text-white">Remove</button>
+        <button className="flex items-center space-x-1 px-3 py-1 rounded-md bg-red-500 text-white">
+          <FiTrash />
+          <span>Remove</span>
+        </button>
       </div>
     </div>
   );

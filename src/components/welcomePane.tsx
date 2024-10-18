@@ -2,7 +2,7 @@ import Logo from "./Logo";
 
 const WelcomePane = () => {
   return (
-    <div className="w-[50%] h-screen bg-gray-900 text-white flex flex-col items-center justify-center p-16">
+    <div className="w-1/2 h-screen bg-primaryBackground text-white flex flex-col m-0 items-center justify-center p-16">
       <div className="mb-8">
         <Logo/>
       </div>

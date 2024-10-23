@@ -2,7 +2,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 
 export const api = axios.create({
-  baseURL: `https://team-lydia-demo.onrender.com`,
+  baseURL: `http://localhost:8080`,
   headers: {
     "Content-Type": "application/json",
   },
@@ -16,7 +16,5 @@ api.interceptors.request.use(
     }
     return config;
   },
-  (error) => {
-    return Promise.reject(error);
-  }
+  (error) => Promise.reject(error)
 );

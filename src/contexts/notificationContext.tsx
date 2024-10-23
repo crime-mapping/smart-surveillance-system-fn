@@ -1,18 +1,22 @@
 import React, { createContext, useContext, useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { RootState } from '../store';
+import { RootState } from '../redux/store';
 import { notify } from '../utils/notifyUsers';
 import { useGetNotificationsQuery } from '../redux/slices/notificationSlice/notificationApiSlice';
 import notificationSound from '../utils/notifications/notificationSound.wav'
+import { Notification } from '../redux/slices/notificationSlice/notificationSlice';
 
-const getSeenNotifications = () => {
+
+const getSeenNotifications = (): Set<string> => {
   const seen = localStorage.getItem('seenNotifications');
-  return seen ? new Set(JSON.parse(seen)) : new Set();
+  return seen ? new Set<string>(JSON.parse(seen)) : new Set<string>();
 };
+
 
 const setSeenNotifications = (seen: Set<string>) => {
   localStorage.setItem('seenNotifications', JSON.stringify([...seen]));
 };
+
 
 interface NotificationContextProps {
   children: React.ReactNode;
@@ -26,7 +30,7 @@ interface NotificationContextValue {
 const NotificationContext = createContext<NotificationContextValue | undefined>(undefined);
 
 export const NotificationProvider: React.FC<NotificationContextProps> = ({ children }) => {
-  const notifications = useSelector((state: RootState) => state.sellernotifications.sellernotificationsInfo);
+  const notifications = useSelector((state: RootState) => state.notifications.notificationsInfo);
   const { refetch } = useGetNotificationsQuery(undefined, {
     pollingInterval: 2000, // Refetch every 2 seconds
   });
@@ -37,7 +41,10 @@ export const NotificationProvider: React.FC<NotificationContextProps> = ({ child
 
   useEffect(() => {
     if (notifications.length > 0) {
-      const newNotifications = notifications.filter(notification =>
+      // const newNotifications = notifications.filter(notification =>
+      //   !seenNotificationsRef.current.has(notification.id)
+      // );
+      const newNotifications = notifications.filter((notification: Notification) =>
         !seenNotificationsRef.current.has(notification.id)
       );
 

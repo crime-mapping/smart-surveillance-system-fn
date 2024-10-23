@@ -1,39 +1,37 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { notify } from '../../utils/notifyUsers';
 import { notificationsApiSlice } from "./notificationApiSlice";
+import { notify } from "../../../utils/notifyUsers";
 
-interface Notification {
+export interface Notification {
   id: string;
   message: string;
 }
 
-interface SellerNotificationsState {
-  sellernotificationsInfo: Notification[];
+export interface NotificationsState {
+  notificationsInfo: Notification[];
+  unReadCount: number;
 }
 
-const sellernotificationsInfo: INotification[] = localStorage.getItem(
-  "sellerNotificationsInfo"
-)
-const parsedSellerNotificationsInfo = sellernotificationsInfo
-  ? JSON.parse(sellernotificationsInfo)
-  : [];
+const notifications = localStorage.getItem("Notifications");
+const parsedNotifications: Notification[] = notifications ? JSON.parse(notifications) : [];
 
-const initialState: SellerNotificationsState = {
-  sellernotificationsInfo: Array.isArray(parsedSellerNotificationsInfo)
-    ? parsedSellerNotificationsInfo
+const initialState: NotificationsState = {
+  notificationsInfo: Array.isArray(parsedNotifications)
+    ? parsedNotifications
     : [],
   unReadCount: 0,
 };
 
-const sellerNotificationSlice = createSlice({
-  name: "sellernotifications",
+
+const notificationSlice = createSlice({
+  name: "notifications",
   initialState,
   reducers: {
-    setSellerNotificationsInfo(state, action: PayloadAction<Notification[]>) {
+    setNotifications(state, action: PayloadAction<Notification[]>) {
       const currentNotifications = action.payload;
       
       if (Array.isArray(currentNotifications)) {
-        const previousNotifications = state.sellernotificationsInfo;
+        const previousNotifications = state.notificationsInfo;
         
         // Find new notifications
         const newNotifications = currentNotifications.filter(
@@ -49,9 +47,9 @@ const sellerNotificationSlice = createSlice({
         }
         
         // Update state and localStorage
-        state.sellernotificationsInfo = currentNotifications;
+        state.notificationsInfo = currentNotifications;
         localStorage.setItem(
-          "sellerNotificationsInfo",
+          "Notifications",
           JSON.stringify(currentNotifications)
         );
       } else {
@@ -67,13 +65,13 @@ const sellerNotificationSlice = createSlice({
         const notifications = Array.isArray(payload) ? payload : payload.notifications || [];
         
         if (Array.isArray(notifications)) {
-          state.sellernotificationsInfo = notifications;
+          state.notificationsInfo = notifications;
           localStorage.setItem(
-            "sellerNotificationsInfo",
+            "Notifications",
             JSON.stringify(notifications)
           );
           // Notify for new notifications
-          const previousNotifications = state.sellernotificationsInfo;
+          const previousNotifications = state.notificationsInfo;
           const newNotifications = notifications.filter(
             (notification) =>
               !previousNotifications.some(
@@ -89,5 +87,5 @@ const sellerNotificationSlice = createSlice({
   },
 });
 
-export const { setSellerNotificationsInfo } = sellerNotificationSlice.actions;
-export default sellerNotificationSlice.reducer;
+export const { setNotifications } = notificationSlice.actions;
+export default notificationSlice.reducer;

@@ -1,5 +1,6 @@
 import React from 'react';
 import {FiEye, FiTrash, FiLink, FiXCircle } from 'react-icons/fi';
+import { useNavigate } from 'react-router-dom';
 
 export interface Camera {
   id: number;
@@ -13,8 +14,15 @@ interface CameraCardProps {
 }
 
 const CameraCard: React.FC<CameraCardProps> = ({ camera }) => {
+  const navigate = useNavigate();
   const { name, status, dateAdded } = camera;
   const isConnected = status === 'Connected';
+  
+   const viewLiveFeed = () => {
+    if (isConnected) {
+      navigate(`/live-feed/${camera.id}`);
+    }
+  };
 
   return (
     <div className="border rounded-md p-4 shadow-md">
@@ -38,6 +46,7 @@ const CameraCard: React.FC<CameraCardProps> = ({ camera }) => {
           <span>{isConnected ? 'Disconnect' : 'Connect'}</span>
         </button>
         <button
+          onClick={viewLiveFeed}
           className={`flex items-center space-x-1 px-3 py-1 rounded-md ${
             isConnected ? 'bg-blue-500 text-white' : 'bg-gray-400 text-gray-200 cursor-not-allowed'
           }`}

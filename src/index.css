@@ -40,6 +40,14 @@ body {
   min-height: 100vh;
 }
 
+.leaflet-container {
+  width: 100%;
+  height: 100%;
+}
+#map {
+  height: 100vh;
+}
+
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
@@ -53,7 +61,28 @@ h1 {
   a:hover {
     color: #747bff;
   }
-  button {
-    background-color: #f9f9f9;
+  .video-container {
+  position: relative;
+  padding-bottom: 48.25%; /* 16:9 aspect ratio */
+  height: 90%;
+  overflow: hidden;
+  width: 100%;
+  background: #000;
+  border-radius: 20px;
+}
+
+.video-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 95%;
+}
+
+  #mapSidebar::-webkit-scrollbar{
+    display: none;
   }
+  /* button {
+    background-color: #f9f9f9;
+  } */
 }

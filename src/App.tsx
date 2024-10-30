@@ -9,6 +9,8 @@ import UserDashboard from './pages/UserDashboard/UserDashboard';
 import Cameras from './pages/Cameras/Cameras';
 import HelpAndSupport from './pages/HelpAndSupport';
 import LandingPage from './pages/LandingPage';
+import CrimeHotspotMap from './components/Map';
+import LiveFeed from './components/LiveFeed';
 
 function App() {
   const router = createBrowserRouter(
@@ -21,7 +23,9 @@ function App() {
         <Route path='/2f-auth' element={ <TwoFactorAuth/>} />
         <Route path='/user-dashboard' element={ <UserDashboard/>} />
         <Route path='/cameras' element={<Cameras/> } /> 
-        <Route path='/help' element={ <HelpAndSupport/>} /> 
+        <Route path='/help' element={<HelpAndSupport />} /> 
+        <Route path='/map' element={<CrimeHotspotMap />} /> 
+        <Route path="/live-feed/:cameraId" element={<LiveFeed />} />
       </>
     )
   );

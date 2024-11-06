@@ -5,8 +5,8 @@ import classNames from 'classnames';
 
 // Helper function to format time
 const formatTime = (timestamp: string | number | Date) => {
-  const now = new Date();
-  const notificationTime = new Date(timestamp);
+  const now:any = new Date();
+  const notificationTime:any = new Date(timestamp);
   const diffInSeconds = (now - notificationTime) / 1000;
 
   if (diffInSeconds < 60) {

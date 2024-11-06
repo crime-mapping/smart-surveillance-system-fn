@@ -10,7 +10,7 @@ const CrimeHotspotMap:React.FC = () => {
   const [showStatistics, setShowStatistics] = useState<boolean>(true);
   const crimeHotspots = [
     {
-      location: [-1.9441, 30.0619],
+      location: [-1.9441, 30.0619] as [number, number],
       name: "Downtown Kigali",
       crimeCount: 25,
       severity: "high",
@@ -28,7 +28,7 @@ const CrimeHotspotMap:React.FC = () => {
       crimeTypes: ["Shoplifting", "Fraud"]
     },
     {
-      location: [-1.9521, 30.0648],
+      location: [-1.9521, 30.0648] as [number, number],
       name: "Nyabugogo Terminal",
       crimeCount: 10,
       severity: "low",
@@ -37,7 +37,7 @@ const CrimeHotspotMap:React.FC = () => {
       crimeTypes: ["Theft", "Harassment"]
       },
      {
-      location: [-1.9531, 30.0646],
+      location: [-1.9531, 30.0646] as [number, number],
       name: "Un sepecified Terminal",
       crimeCount: 8,
       severity: "high",
@@ -167,7 +167,7 @@ const CrimeHotspotMap:React.FC = () => {
           {filteredHotspots.map((hotspot, index) => (
             <Circle
               key={index}
-              center={hotspot.location}
+              center={hotspot.location as [number, number]}
               radius={getRadius(hotspot.crimeCount)}
               pathOptions={{
                 color: getColor(hotspot.severity),

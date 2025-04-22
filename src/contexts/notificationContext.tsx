@@ -1,22 +1,27 @@
-import React, { createContext, useContext, useEffect, useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { RootState } from '../redux/store';
-import { notify } from '../utils/notifyUsers';
-import { useGetNotificationsQuery } from '../redux/slices/notificationSlice/notificationApiSlice';
-import notificationSound from '../utils/notifications/notificationSound.wav'
-import { Notification } from '../redux/slices/notificationSlice/notificationSlice';
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
+import { notify } from "../utils/notifyUsers";
+import notificationSound from "../utils/notifications/notificationSound.wav";
+import axios from "../config/axios";
 
+interface Notification {
+  id: string;
+  message: string;
+}
 
 const getSeenNotifications = (): Set<string> => {
-  const seen = localStorage.getItem('seenNotifications');
+  const seen = localStorage.getItem("seenNotifications");
   return seen ? new Set<string>(JSON.parse(seen)) : new Set<string>();
 };
 
-
 const setSeenNotifications = (seen: Set<string>) => {
-  localStorage.setItem('seenNotifications', JSON.stringify([...seen]));
+  localStorage.setItem("seenNotifications", JSON.stringify([...seen]));
 };
-
 
 interface NotificationContextProps {
   children: React.ReactNode;
@@ -27,34 +32,46 @@ interface NotificationContextValue {
   refetchNotifications: () => void;
 }
 
-const NotificationContext = createContext<NotificationContextValue | undefined>(undefined);
+const NotificationContext = createContext<NotificationContextValue | undefined>(
+  undefined
+);
 
-export const NotificationProvider: React.FC<NotificationContextProps> = ({ children }) => {
-  const notifications = useSelector((state: RootState) => state.notifications.notificationsInfo);
-  const { refetch } = useGetNotificationsQuery(undefined, {
-    pollingInterval: 2000, // Refetch every 2 seconds
-  });
-
-  // Maintain a ref to keep track of already seen notifications
-  const seenNotificationsRef = useRef<Set<string>>(getSeenNotifications());
+export const NotificationProvider: React.FC<NotificationContextProps> = ({
+  children,
+}) => {
+  const [notifications, setNotifications] = useState<Notification[]>([]);
   const [notificationQueue, setNotificationQueue] = useState<string[]>([]);
+  const seenNotificationsRef = useRef<Set<string>>(getSeenNotifications());
+
+  const fetchNotifications = async () => {
+    try {
+      const res = await axios.get<Notification[]>("/api/notifications");
+      setNotifications(res.data || []);
+    } catch (error) {
+      console.error("Error fetching notifications:", error);
+    }
+  };
 
   useEffect(() => {
-    if (notifications.length > 0) {
-      // const newNotifications = notifications.filter(notification =>
-      //   !seenNotificationsRef.current.has(notification.id)
-      // );
-      const newNotifications = notifications.filter((notification: Notification) =>
-        !seenNotificationsRef.current.has(notification.id)
-      );
+    // Initial fetch
+    fetchNotifications();
+    // Poll every 2s
+    const interval = setInterval(fetchNotifications, 2000);
+    return () => clearInterval(interval);
+  }, []);
 
-      if (newNotifications.length > 0) {
-        setNotificationQueue(prev => [...prev, ...newNotifications.map(n => n.message)]);
-        newNotifications.forEach(notification => {
-          seenNotificationsRef.current.add(notification.id);
-        });
-        setSeenNotifications(seenNotificationsRef.current);
-      }
+  useEffect(() => {
+    const newNotifications = notifications.filter(
+      (n) => !seenNotificationsRef.current.has(n.id)
+    );
+
+    if (newNotifications.length > 0) {
+      setNotificationQueue((prev) => [
+        ...prev,
+        ...newNotifications.map((n) => n.message),
+      ]);
+      newNotifications.forEach((n) => seenNotificationsRef.current.add(n.id));
+      setSeenNotifications(seenNotificationsRef.current);
     }
   }, [notifications]);
 
@@ -64,20 +81,18 @@ export const NotificationProvider: React.FC<NotificationContextProps> = ({ child
         const message = notificationQueue[0];
         notify(message);
         playBellSound();
-        setNotificationQueue(prev => prev.slice(1));
+        setNotificationQueue((prev) => prev.slice(1));
       }, 2000);
-
       return () => clearTimeout(timer);
     }
   }, [notificationQueue]);
 
   const playBellSound = () => {
-    const audio = new Audio(notificationSound);  
-    audio.play().catch(e => {
-      console.error("Error playing sound:", e)
-      console.error("Audio src:", audio.src)
-    }
-    );
+    const audio = new Audio(notificationSound);
+    audio.play().catch((e) => {
+      console.error("Error playing sound:", e);
+      console.error("Audio src:", audio.src);
+    });
   };
 
   const showToast = () => {
@@ -86,7 +101,7 @@ export const NotificationProvider: React.FC<NotificationContextProps> = ({ child
 
   const contextValue: NotificationContextValue = {
     showToast,
-    refetchNotifications: refetch
+    refetchNotifications: fetchNotifications,
   };
 
   return (
@@ -99,7 +114,9 @@ export const NotificationProvider: React.FC<NotificationContextProps> = ({ child
 export const useNotification = () => {
   const context = useContext(NotificationContext);
   if (context === undefined) {
-    throw new Error('useNotification must be used within a NotificationProvider');
+    throw new Error(
+      "useNotification must be used within a NotificationProvider"
+    );
   }
   return context;
 };

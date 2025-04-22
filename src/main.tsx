@@ -1,11 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from './App.tsx'
-import './index.css'
+import App from "./App.tsx";
+import "./index.css";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import Modal from "react-modal";
 
-const clientId = import.meta.env.VITE_CLIENT_ID;
+const clientId = import.meta.env.VITE_APP_GOOGLE_CLIENT_ID;
 
 Modal.setAppElement("#root");
 

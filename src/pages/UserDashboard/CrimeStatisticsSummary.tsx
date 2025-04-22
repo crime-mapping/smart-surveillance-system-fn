@@ -1,26 +1,30 @@
-import React from 'react';
+import React from "react";
 
-const CrimeStatisticsSummary: React.FC = () => {
+interface CrimeStatisticsSummaryProps {
+  total: number;
+  mostCommonType: string;
+  topLocation: string;
+  emergencyDistribution: { _id: string; count: number }[];
+}
+
+const CrimeStatisticsSummary: React.FC<CrimeStatisticsSummaryProps> = ({
+  total,
+  emergencyDistribution,
+}) => {
   return (
     <div className="p-4 bg-white shadow-md rounded-md">
       <h2 className="text-left text-xl font-semibold mb-4">Crime Statistics</h2>
       <ul className="space-y-2">
-        <li className="flex justify-between">
+        <li className="flex text-sm justify-between">
           <span>Total Crimes:</span>
-          <span className="font-bold">150</span>
+          <span className="font-bold">{total}</span>
         </li>
-        <li className="flex justify-between">
-          <span>Resolved Cases:</span>
-          <span className="font-bold">100</span>
-        </li>
-        <li className="flex justify-between">
-          <span>Pending Investigations:</span>
-          <span className="font-bold">50</span>
-        </li>
-        <li className="flex justify-between">
-          <span>Average Resolution Time:</span>
-          <span className="font-bold">7 days</span>
-        </li>
+        {emergencyDistribution.map((item) => (
+          <li key={item._id} className="flex text-sm  justify-between">
+            <span>{item._id} Emergency:</span>
+            <span className="font-bold">{item.count}</span>
+          </li>
+        ))}
       </ul>
     </div>
   );

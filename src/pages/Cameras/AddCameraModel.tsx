@@ -1,20 +1,85 @@
-import React, { useState } from 'react';
-import CloseIcon from '@mui/icons-material/Close';
+import React, { useEffect, useState } from "react";
+import CloseIcon from "@mui/icons-material/Close";
+import axios from "../../config/axios";
+import { toast } from "react-toastify";
+import Spinner from "../../components/Spinners";
 
 interface AddCameraModalProps {
   isOpen: boolean;
   onClose: () => void;
+  onCameraAdded: () => void;
 }
 
-const AddCameraModal: React.FC<AddCameraModalProps> = ({ isOpen, onClose }) => {
-  const [cameraName, setCameraName] = useState('');
-  const [cameraResolution, setCameraResolution] = useState('');
-  const [modelNumber, setModelNumber] = useState('');
-  const [ipAddress, setIpAdress] = useState('');
-  const [streamUrl, setStreamUrl] = useState('');
-  const handleSubmit = (e: React.FormEvent) => {
+interface Location {
+  _id: string;
+  location: string;
+  description: string;
+}
+
+const AddCameraModal: React.FC<AddCameraModalProps> = ({
+  isOpen,
+  onClose,
+  onCameraAdded,
+}) => {
+  const [camera, setCamera] = useState({
+    name: "",
+    description: "",
+    streamUrl: "",
+    location: "",
+  });
+  const [loading, setLoading] = useState(false);
+  const [locations, setLocations] = useState<Location[]>([]);
+
+  useEffect(() => {
+    fetchLocations();
+  }, []);
+
+  const fetchLocations = async () => {
+    try {
+      setLoading(true);
+      const response = await axios.get("/locations", {
+        withCredentials: true,
+      });
+      setLocations(response.data);
+    } catch (err: any) {
+      console.error("Error retrieving locations:", err);
+      toast.error(err?.response?.data?.error || "Failed to retrieve locations");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    onClose(); 
+
+    try {
+      // Optional: validate fields here before sending
+
+      setLoading(true);
+      const response = await axios.post("/cameras", camera, {
+        withCredentials: true,
+      });
+      if (response.status == 201) {
+        toast.success("Camera added successfully!");
+        onClose();
+        onCameraAdded();
+      }
+    } catch (err: any) {
+      console.error("Error adding camera:", err);
+      toast.error(err?.response?.data?.error || "Failed to add camera");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    const { name, value } = e.target;
+    setCamera((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
   if (!isOpen) return null;
@@ -25,66 +90,65 @@ const AddCameraModal: React.FC<AddCameraModalProps> = ({ isOpen, onClose }) => {
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-lg font-bold">Add New Camera</h2>
           <button onClick={onClose} className="bg-white hover:text-gray-700">
-            <CloseIcon/>
+            <CloseIcon />
           </button>
         </div>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <input
               type="text"
-              value={cameraName}
-              placeholder='Camera Name'
-              onChange={(e) => setCameraName(e.target.value)}
+              value={camera.name}
+              name="name"
+              placeholder="Camera Name"
+              onChange={handleInputChange}
               className="border rounded-md w-full p-2"
               required
             />
           </div>
-           <div className="mb-4">
+          <div className="mb-4">
             <input
               type="text"
-              value={cameraResolution}
-              placeholder='Camera Resolution'
-              onChange={(e) => setCameraResolution(e.target.value)}
+              value={camera.streamUrl}
+              placeholder="Camera Stream Url"
+              name="streamUrl"
+              onChange={handleInputChange}
               className="border rounded-md w-full p-2"
               required
             />
           </div>
-           <div className="mb-4">
-            <input
-              type="number"
-              value={modelNumber}
-              placeholder='Model Number'
-              onChange={(e) => setModelNumber(e.target.value)}
+          <div className="mb-4">
+            <select
+              name="location"
               className="border rounded-md w-full p-2"
               required
-            />
-          </div>
-           <div className="mb-4">
-            <input
-              type="text"
-              placeholder='IP Address (e.g 192.168.10.3)'
-              value={ipAddress}
-              onChange={(e) => setIpAdress(e.target.value)}
-              className="border rounded-md w-full p-2"
-              required
-            />
-          </div>
-           <div className="mb-4">
-            <input
-              type="text"
-              value={streamUrl}
-              placeholder='Stream URL'
-              onChange={(e) => setStreamUrl(e.target.value)}
-              className="border rounded-md w-full p-2"
-              required
-            />
-          </div>
-            <button
-              type="submit"
-              className="bg-primaryGradientStart w-full text-white px-4 py-2 rounded-md"
+              value={camera.location}
+              onChange={handleInputChange}
             >
-              Add Camera
-            </button>
+              <option value="">Please select location</option>
+              {locations.map((location) => (
+                <option key={location._id} value={location._id}>
+                  {location.location}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="mb-4">
+            <input
+              type="text"
+              placeholder="Camera Description(Optional)"
+              name="description"
+              value={camera.description}
+              onChange={handleInputChange}
+              className="border rounded-md w-full p-2 h-20"
+            />
+          </div>
+          <button
+            type="submit"
+            className="bg-primaryGradientStart w-full text-white px-4 py-2 rounded-md"
+          >
+            {loading ? "Adding Camera..." : "Add Camera"}
+          </button>
+          {loading && <Spinner />}
         </form>
       </div>
     </div>

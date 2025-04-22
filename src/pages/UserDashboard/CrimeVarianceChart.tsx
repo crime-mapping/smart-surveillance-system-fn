@@ -1,6 +1,5 @@
-
-import React from 'react';
-import { Bar, Line } from 'react-chartjs-2';
+import React from "react";
+import { Bar, Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -11,8 +10,7 @@ import {
   LineElement,
   Tooltip,
   Legend,
-  ArcElement, 
-} from 'chart.js';
+} from "chart.js";
 
 ChartJS.register(
   CategoryScale,
@@ -22,50 +20,74 @@ ChartJS.register(
   LineElement,
   Title,
   Tooltip,
-  Legend,
-  ArcElement 
+  Legend
 );
 
-const CrimeVarianceChart: React.FC = () => {
+interface CrimeVarianceChartProps {
+  monthlyData: { _id: number; total: number }[];
+}
+
+const CrimeVarianceChart: React.FC<CrimeVarianceChartProps> = ({
+  monthlyData,
+}) => {
+  const labels = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+
   const barData = {
-    labels: [
-      'January', 'February', 'March', 'April', 'May', 'June',
-      'July', 'August', 'September', 'October', 'November', 'December'
-    ],
+    labels,
     datasets: [
       {
-        label: 'Total Crimes',
-        data: [90, 40, 75, 160, 45, 165, 130, 80, 195, 90, 100, 85],
-        backgroundColor: '#4CAF50',
+        label: "Total Crimes",
+        data: monthlyData.map((item) => item.total),
+        backgroundColor: "#4CAF50",
       },
     ],
   };
 
   const lineData = {
-    labels: [
-      'January', 'February', 'March', 'April', 'May', 'June',
-      'July', 'August', 'September', 'October', 'November', 'December'
-    ],
+    labels,
     datasets: [
       {
-        label: 'Crime Rate',
-        data: [1.2, 1.3, 2.1, 2.4, 1.3, 1.5, 3.6, 1.8, 1.7, 1.9, 3.0, 1.8],
+        label: "Crime Rate",
+        data: monthlyData.map((item) =>
+          parseFloat((item.total / 50).toFixed(2))
+        ), // Example calculation
         fill: false,
-        borderColor: '#FF6384',
+        borderColor: "#FF6384",
       },
     ],
   };
 
   return (
     <div className="w-full p-4 bg-white shadow-md rounded-md">
-      <h2 className="text-center text-xl font-semibold mb-4">Crimes Variance</h2>
-      <div className='flex gap-[10%]'>
-      <div className="mb-6 w-[45%]">
-        <Bar data={barData} options={{ responsive: true, maintainAspectRatio: false }} />
-      </div>
-      <div className='mb-6 w-[45%]'>
-        <Line data={lineData} options={{ responsive: true, maintainAspectRatio: false }} />
-      </div>
+      <h2 className="text-center text-xl font-semibold mb-4">
+        Crimes Variance
+      </h2>
+      <div className="flex gap-[10%]">
+        <div className="mb-6 w-[45%]">
+          <Bar
+            data={barData}
+            options={{ responsive: true, maintainAspectRatio: false }}
+          />
+        </div>
+        <div className="mb-6 w-[45%]">
+          <Line
+            data={lineData}
+            options={{ responsive: true, maintainAspectRatio: false }}
+          />
+        </div>
       </div>
     </div>
   );

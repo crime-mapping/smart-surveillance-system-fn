@@ -1,15 +1,34 @@
-import React from 'react';
-import { Line } from 'react-chartjs-2';
+import React from "react";
+import { Line } from "react-chartjs-2";
 
-const CrimeTrendsChart: React.FC = () => {
+interface CrimeTrendsChartProps {
+  trendData: { _id: number; total: number }[];
+}
+
+const CrimeTrendsChart: React.FC<CrimeTrendsChartProps> = ({ trendData }) => {
+  const labels = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+
   const data = {
-    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+    labels,
     datasets: [
       {
-        label: 'Crime Rate',
-        data: [30, 45, 28, 60, 55, 70, 65],
-        borderColor: '#36A2EB',
-        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+        label: "Crime Rate",
+        data: trendData.map((item) => item.total),
+        borderColor: "#36A2EB",
+        backgroundColor: "rgba(54, 162, 235, 0.2)",
         fill: true,
       },
     ],
@@ -19,14 +38,16 @@ const CrimeTrendsChart: React.FC = () => {
     responsive: true,
     plugins: {
       legend: {
-        position: 'top' as const,
+        position: "top" as const,
       },
     },
   };
 
   return (
     <div className="p-4 bg-white shadow-md rounded-md">
-      <h2 className="text-left text-lg font-semibold mb-4">Crime Trends Over Time</h2>
+      <h2 className="text-left text-lg font-semibold mb-4">
+        Crime Trends Over Time
+      </h2>
       <div className="w-1/2">
         <Line data={data} options={options} />
       </div>

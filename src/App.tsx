@@ -11,6 +11,8 @@ import CrimeHotspotMap from "./components/Map";
 import LiveFeed from "./components/LiveFeed";
 import { ToastContainer } from "react-toastify";
 import ProtectedRoute from "./components/ProtectedRoute";
+import PageNotFound from "./components/PageNotFound";
+import CrimeDetails from "./components/CrimeDetails";
 
 function App() {
   const router = createBrowserRouter([
@@ -24,6 +26,10 @@ function App() {
         {
           path: "/cameras",
           element: <Cameras />,
+        },
+        {
+          path: "/crime/:id",
+          element: <CrimeDetails />,
         },
         {
           path: "/map",
@@ -54,6 +60,10 @@ function App() {
     {
       path: "/help",
       element: <HelpAndSupport />,
+    },
+    {
+      path: "*",
+      element: <PageNotFound />,
     },
   ]);
 

@@ -1,7 +1,10 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
+import { formatDate } from "../../utils/formatDate";
 
 interface RecentCrimeProps {
   recent: {
+    _id: string;
     crimeType: string;
     crimeLocation: string;
     dateOfOccurrence: string;
@@ -9,6 +12,11 @@ interface RecentCrimeProps {
 }
 
 const RecentCrime: React.FC<RecentCrimeProps> = ({ recent }) => {
+  const navigate = useNavigate();
+
+  const handleViewDetails = () => {
+    navigate(`/crime/${recent._id}`);
+  };
   if (!recent) {
     return (
       <div className="p-4 bg-white shadow-md rounded-md">
@@ -16,8 +24,6 @@ const RecentCrime: React.FC<RecentCrimeProps> = ({ recent }) => {
       </div>
     );
   }
-
-  const formattedDate = new Date(recent?.dateOfOccurrence).toLocaleString();
 
   return (
     <div className="p-4 bg-white shadow-md rounded-md">
@@ -27,10 +33,15 @@ const RecentCrime: React.FC<RecentCrimeProps> = ({ recent }) => {
       ) : (
         <>
           <div className="mt-4">
-            <p className="text-gray-500">{formattedDate}</p>
-            <p className="font-semibold">{recent.crimeLocation}</p>
+            <p className="text-gray-500">
+              {formatDate(recent.dateOfOccurrence)}
+            </p>
+            <p className="font-semibold">{recent.crimeType}</p>
           </div>
-          <button className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">
+          <button
+            onClick={handleViewDetails}
+            className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+          >
             View Details
           </button>
         </>

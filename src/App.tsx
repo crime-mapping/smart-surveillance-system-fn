@@ -2,7 +2,6 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
 import TwoFactorAuth from "./pages/TwoFactorAuth";
-import RegistrationPage from "./pages/RegistrationPage";
 import UserDashboard from "./pages/UserDashboard/UserDashboard";
 import Cameras from "./pages/Cameras/Cameras";
 import HelpAndSupport from "./pages/HelpAndSupport";
@@ -13,6 +12,9 @@ import { ToastContainer } from "react-toastify";
 import ProtectedRoute from "./components/ProtectedRoute";
 import PageNotFound from "./components/PageNotFound";
 import CrimeDetails from "./components/CrimeDetails";
+import RegisterUserPage from "./pages/RegisterUser";
+import AllUsers from "./pages/AllUsers";
+import UpdateUser from "./pages/UpdateUser";
 
 function App() {
   const router = createBrowserRouter([
@@ -51,7 +53,15 @@ function App() {
     },
     {
       path: "/register",
-      element: <RegistrationPage />,
+      element: <RegisterUserPage />,
+    },
+    {
+      path: "/users",
+      element: <AllUsers />,
+    },
+    {
+      path: "/update-user/:id",
+      element: <UpdateUser />,
     },
     {
       path: "/2f-auth",

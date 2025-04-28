@@ -11,6 +11,7 @@ export const useCrimeDashboardData = () => {
         withCredentials: true,
       });
       setData(res.data);
+      console.log(res.data);
     } catch (error) {
       console.error("Failed to load dashboard data", error);
     } finally {

@@ -6,7 +6,7 @@ const SkeletonBox = ({ className = "" }: { className?: string }) => (
 
 const DashboardSkeleton: React.FC = () => {
   return (
-    <div className="space-y-6 mt-4">
+    <div className="space-y-6 mt-24">
       {/* Analytics cards row */}
       <div className="grid grid-cols-4 gap-4">
         {Array.from({ length: 4 }).map((_, idx) => (

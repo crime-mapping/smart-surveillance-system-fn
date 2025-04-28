@@ -81,7 +81,7 @@ const RegisterUserPage: React.FC = () => {
 
   return (
     <DashboardLayout>
-      <div className="flex justify-between items-center my-4">
+      <div className="flex justify-between mt-24 items-center my-4">
         <span
           onClick={() => {
             navigate("/users");

@@ -17,7 +17,7 @@ const UserDashboard: React.FC = () => {
       {loading || !data ? (
         <DashboardSkeleton />
       ) : (
-        <main>
+        <main className="mt-24">
           <AnalyticsCards
             totalCrimes={data.totalCrimes}
             crimeRate={data.crimeRate}

@@ -27,14 +27,9 @@ const UserSidebar: React.FC = () => {
     {
       icon: <FiFileText className="w-5 h-5" />,
       label: "Reports",
-      path: "/user-dashboard",
+      path: "/reports",
     },
     { icon: <FiMap className="w-5 h-5" />, label: "Crime Map", path: "/map" },
-    {
-      icon: <FiHelpCircle className="w-5 h-5" />,
-      label: "Help & Support",
-      path: "/help",
-    },
     {
       icon: <FiUsers className="w-5 h-5" />,
       label: "All System Users",
@@ -48,7 +43,12 @@ const UserSidebar: React.FC = () => {
     {
       icon: <FiUser className="w-5 h-5" />,
       label: "Profile",
-      path: "/user-dashboard",
+      path: "/profile",
+    },
+    {
+      icon: <FiHelpCircle className="w-5 h-5" />,
+      label: "Help & Support",
+      path: "/help",
     },
     { icon: <FiLogOut className="w-5 h-5" />, label: "Logout", path: "/" },
   ];

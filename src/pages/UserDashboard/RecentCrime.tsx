@@ -32,7 +32,8 @@ const RecentCrime: React.FC<RecentCrimeProps> = ({ recent }) => {
         <p className="text-gray-500 mt-4">No recent crime data found.</p>
       ) : (
         <>
-          <div className="mt-4">
+          <div className="mt-2">
+            <p className="italic">Kigali</p>
             <p className="text-gray-500">
               {formatDate(recent.dateOfOccurrence)}
             </p>

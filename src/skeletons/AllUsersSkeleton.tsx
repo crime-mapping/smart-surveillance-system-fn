@@ -7,7 +7,7 @@ const SkeletonBox = ({ className = "" }: { className?: string }) => (
 
 // Single user card skeleton
 const UserCardSkeleton = () => (
-  <div className="p-4 bg-white rounded-md shadow-sm space-y-3 w-full">
+  <div className="p-4 mt-24 bg-white rounded-md shadow-sm space-y-3 w-full">
     <div className="flex justify-between items-center">
       <SkeletonBox className="h-4 w-1/3" /> {/* Name */}
       <div className="flex gap-2">

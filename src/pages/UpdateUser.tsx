@@ -68,7 +68,7 @@ const UpdateUser = () => {
         <AllUsersSkeleton />
       ) : (
         <>
-          <div className="flex justify-between items-center my-4">
+          <div className="flex mt-24 justify-between items-center my-4">
             <span
               onClick={() => {
                 navigate("/users");

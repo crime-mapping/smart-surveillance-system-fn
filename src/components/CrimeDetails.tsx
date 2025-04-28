@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { CalendarDays, MapPin, User, Camera, Download } from "lucide-react";
 import DashboardLayout from "../Layout/DashboardLayout";
 import SingleCrimeSkeleton from "../skeletons/singleCrimeSkeleton";
@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import { formatDate } from "../utils/formatDate";
 import jsPDF from "jspdf";
 import logo from "../assets/real_logo.png";
+import { FiArrowLeft } from "react-icons/fi";
 
 export interface Location {
   location: string;
@@ -27,6 +28,7 @@ const CrimeDetails: React.FC = () => {
   const { id } = useParams();
   const [loading, setLoading] = useState(false);
   const [crime, setCrime] = useState<ICrime>();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchSingleCrime = async () => {
@@ -89,7 +91,15 @@ const CrimeDetails: React.FC = () => {
       {loading ? (
         <SingleCrimeSkeleton />
       ) : (
-        <div className="p-6 my-4 bg-white shadow rounded-md">
+        <div className="mt-24 p-6 my-4 bg-white shadow rounded-md">
+          <span
+            onClick={() => {
+              navigate("/reports");
+            }}
+            className="cursor-pointer rounded-md"
+          >
+            <FiArrowLeft className="w-16 h-10" />
+          </span>
           <h2 className="text-center text-2xl font-bold mb-4">
             Single Crime Report Details
           </h2>
@@ -108,7 +118,7 @@ const CrimeDetails: React.FC = () => {
 
           <div className="flex items-center text-gray-700 mb-4">
             <MapPin className="w-5 h-5 mr-2" />
-            {crime?.crimeLocation?.location}
+            <span className="mr-2"> {crime?.crimeLocation?.location} </span>
             KK 230 St, Kigali
           </div>
           {crime?.crimeDescription && (

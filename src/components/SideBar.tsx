@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import Logo from "./Logo";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import useLogout from "../utils/logout";
 import { tokenDecoder } from "../utils/tokenDecoder";
 
@@ -38,8 +38,9 @@ interface SidebarProps {
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ items }) => {
-  const [activeIndex, setActiveIndex] = useState(0);
+  //const [activeIndex, setActiveIndex] = useState(0);
   const handleLogout = useLogout();
+  const location = useLocation();
 
   useEffect(() => {
     const checkTokenExpiration = () => {
@@ -64,8 +65,10 @@ const Sidebar: React.FC<SidebarProps> = ({ items }) => {
     return () => clearInterval(interval);
   }, []);
 
-  const handleItemClick = (index: number) => {
-    setActiveIndex(index);
+  const handleItemClick = (label: string) => {
+    if (label === "Logout") {
+      handleLogout();
+    }
   };
   return (
     <div className="w-[15%] flex fixed top-0 flex-col gap-[50px] py-[50px] h-screen bg-primaryBackground text-white px-4 py-6">
@@ -77,14 +80,8 @@ const Sidebar: React.FC<SidebarProps> = ({ items }) => {
               key={index}
               {...item}
               path={item.path}
-              onClick={() => {
-                if (item.label === "Logout") {
-                  handleLogout();
-                } else {
-                  handleItemClick(index);
-                }
-              }}
-              isActive={index === activeIndex}
+              onClick={() => handleItemClick(item.label)}
+              isActive={location.pathname === item.path}
             />
           ))}
         </ul>

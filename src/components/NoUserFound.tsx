@@ -2,7 +2,7 @@ import { Slash, Users } from "lucide-react";
 
 const NoUserFound = () => {
   return (
-    <div className="flex flex-col items-center justify-center h-96 text-center bg-white rounded-lg shadow-inner p-6">
+    <div className="flex mt-24 flex-col items-center justify-center h-96 text-center bg-white rounded-lg shadow-inner p-6">
       <div className="relative w-6 h-6">
         <Users className="absolute text-gray-400" />
         <Slash className="absolute text-red-500" />

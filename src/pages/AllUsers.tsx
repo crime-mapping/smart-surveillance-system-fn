@@ -148,8 +148,6 @@ const AllUsers = () => {
   const paginatedUsers = filteredUsers.slice(indexOfFirstUser, indexOfLastUser);
   const totalPages = Math.ceil(filteredUsers.length / USERS_PER_PAGE);
 
-  const handlePageChange = (page: number) => setCurrentPage(page);
-
   const exportCSV = () => {
     const headers = ["Name", "Phone", "Email", "Role", "Status"];
     const rows = filteredUsers.map((user) => [
@@ -179,7 +177,7 @@ const AllUsers = () => {
         <AllUsersSkeleton />
       ) : (
         <>
-          <div className="flex justify-between items-center my-4">
+          <div className="flex justify-between mt-24 items-center my-4">
             <h1 className="text-xl font-semibold">All System Users</h1>
             <button
               onClick={() => {
@@ -310,22 +308,32 @@ const AllUsers = () => {
                 </table>
               </div>
 
-              {/* Pagination */}
-              <div className="flex justify-center my-6 space-x-2">
-                {Array.from({ length: totalPages }, (_, i) => (
+              {/* Pagination Controls */}
+              {totalPages > 1 && (
+                <div className="flex justify-center items-center gap-4 mt-8">
                   <button
-                    key={i}
-                    onClick={() => handlePageChange(i + 1)}
-                    className={`px-3 py-1 rounded ${
-                      currentPage === i + 1
-                        ? "bg-blue-500 text-white"
-                        : "bg-gray-200 text-gray-800 hover:bg-gray-300"
-                    }`}
+                    onClick={() =>
+                      setCurrentPage((prev) => Math.max(prev - 1, 1))
+                    }
+                    disabled={currentPage === 1}
+                    className="px-4 py-2 rounded bg-gray-300 hover:bg-gray-400 disabled:opacity-50"
                   >
-                    {i + 1}
+                    Previous
                   </button>
-                ))}
-              </div>
+                  <span>
+                    Page {currentPage} of {totalPages}
+                  </span>
+                  <button
+                    onClick={() =>
+                      setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+                    }
+                    disabled={currentPage === totalPages}
+                    className="px-4 py-2 rounded bg-gray-300 hover:bg-gray-400 disabled:opacity-50"
+                  >
+                    Next
+                  </button>
+                </div>
+              )}
             </>
           )}
 

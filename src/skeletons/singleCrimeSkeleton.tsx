@@ -3,7 +3,7 @@ import { CalendarDays, MapPin, User, Camera } from "lucide-react";
 
 const SingleCrimeSkeleton: React.FC = () => {
   return (
-    <div className="p-6 my-4 bg-white shadow rounded-md animate-pulse">
+    <div className="p-6 mt-24 my-4 bg-white shadow rounded-md animate-pulse">
       <div className="h-6 bg-gray-300 rounded w-1/3 mb-4 mx-auto" />
 
       <div className="h-5 bg-gray-300 rounded w-1/2 mb-2" />

@@ -43,7 +43,7 @@ const HelpAndSupport: React.FC = () => {
 
   return (
     <DashboardLayout>
-      <h1 className="text-3xl font-bold mb-6">Help and Support Center</h1>
+      <h1 className="text-3xl mt-24 font-bold mb-6">Help and Support Center</h1>
       <p className="mb-6">
         Welcome to the Help and Support page! Here you'll find answers to common
         questions, user guides, and the option to contact our support team for

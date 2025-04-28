@@ -15,6 +15,8 @@ import CrimeDetails from "./components/CrimeDetails";
 import RegisterUserPage from "./pages/RegisterUser";
 import AllUsers from "./pages/AllUsers";
 import UpdateUser from "./pages/UpdateUser";
+import ProfilePage from "./pages/ProfilePage";
+import CrimeReports from "./pages/CrimeReports";
 
 function App() {
   const router = createBrowserRouter([
@@ -26,8 +28,24 @@ function App() {
           element: <UserDashboard />,
         },
         {
+          path: "/users",
+          element: <AllUsers />,
+        },
+        {
+          path: "/update-user/:id",
+          element: <UpdateUser />,
+        },
+        {
+          path: "/profile",
+          element: <ProfilePage />,
+        },
+        {
           path: "/cameras",
           element: <Cameras />,
+        },
+        {
+          path: "/reports",
+          element: <CrimeReports />,
         },
         {
           path: "/crime/:id",
@@ -55,14 +73,7 @@ function App() {
       path: "/register",
       element: <RegisterUserPage />,
     },
-    {
-      path: "/users",
-      element: <AllUsers />,
-    },
-    {
-      path: "/update-user/:id",
-      element: <UpdateUser />,
-    },
+
     {
       path: "/2f-auth",
       element: <TwoFactorAuth />,

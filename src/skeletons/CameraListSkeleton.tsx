@@ -5,7 +5,7 @@ const SkeletonBox = ({ className = "" }: { className?: string }) => (
 );
 
 const CameraCardSkeleton = () => (
-  <div className="p-4 bg-white rounded-md shadow-md w-full space-y-3">
+  <div className="p-4 mt-24 bg-white rounded-md shadow-md w-full space-y-3">
     <SkeletonBox className="h-4 w-1/3" /> {/* Title */}
     <SkeletonBox className="h-3 w-1/4" /> {/* Status */}
     <SkeletonBox className="h-3 w-1/2" /> {/* Date */}

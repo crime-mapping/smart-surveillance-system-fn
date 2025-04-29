@@ -10,6 +10,7 @@ import {
   FiLogOut,
   FiUserPlus,
   FiUsers,
+  FiMapPin,
 } from "react-icons/fi";
 
 const UserSidebar: React.FC = () => {
@@ -28,6 +29,11 @@ const UserSidebar: React.FC = () => {
       icon: <FiFileText className="w-5 h-5" />,
       label: "Reports",
       path: "/reports",
+    },
+    {
+      icon: <FiMapPin className="w-5 h-5" />,
+      label: "Locations",
+      path: "/locations",
     },
     { icon: <FiMap className="w-5 h-5" />, label: "Crime Map", path: "/map" },
     {

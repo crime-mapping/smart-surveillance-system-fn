@@ -17,6 +17,7 @@ import AllUsers from "./pages/AllUsers";
 import UpdateUser from "./pages/UpdateUser";
 import ProfilePage from "./pages/ProfilePage";
 import CrimeReports from "./pages/CrimeReports";
+import AllLocations from "./pages/AllLocations";
 
 function App() {
   const router = createBrowserRouter([
@@ -46,6 +47,10 @@ function App() {
         {
           path: "/reports",
           element: <CrimeReports />,
+        },
+        {
+          path: "/locations",
+          element: <AllLocations />,
         },
         {
           path: "/crime/:id",

@@ -2,11 +2,16 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { formatDate } from "../../utils/formatDate";
 
+interface Location {
+  _id: string;
+  location: string;
+}
+
 interface RecentCrimeProps {
   recent: {
     _id: string;
     crimeType: string;
-    crimeLocation: string;
+    crimeLocation: Location;
     dateOfOccurrence: string;
   };
 }
@@ -33,7 +38,7 @@ const RecentCrime: React.FC<RecentCrimeProps> = ({ recent }) => {
       ) : (
         <>
           <div className="mt-2">
-            <p className="italic">Kigali</p>
+            <p className="italic">{recent.crimeLocation.location}</p>
             <p className="text-gray-500">
               {formatDate(recent.dateOfOccurrence)}
             </p>

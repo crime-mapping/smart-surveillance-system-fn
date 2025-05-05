@@ -36,7 +36,12 @@ const Cameras = () => {
   const fetchCameras = async () => {
     try {
       setLoading(true);
-      const response = await axios.get("/cameras", { withCredentials: true });
+      const response = await axios.get("/cameras", {
+        headers: {
+          "model-api-key": import.meta.env.MODEL_API_KEY,
+        },
+        withCredentials: true,
+      });
       const mapped = response.data.map((cam: any) => ({
         id: cam._id,
         name: cam.name,

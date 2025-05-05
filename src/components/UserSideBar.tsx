@@ -56,7 +56,7 @@ const UserSidebar: React.FC = () => {
       label: "Help & Support",
       path: "/help",
     },
-    { icon: <FiLogOut className="w-5 h-5" />, label: "Logout", path: "/" },
+    { icon: <FiLogOut className="w-5 h-5" />, label: "Logout", path: "/login" },
   ];
 
   return <Sidebar items={userItems} />;

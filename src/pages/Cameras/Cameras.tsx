@@ -38,7 +38,7 @@ const Cameras = () => {
       setLoading(true);
       const response = await axios.get("/cameras", {
         headers: {
-          "model-api-key": import.meta.env.MODEL_API_KEY,
+          "model-api-key": import.meta.env.VITE_MODEL_API_KEY,
         },
         withCredentials: true,
       });

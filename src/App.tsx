@@ -18,6 +18,7 @@ import UpdateUser from "./pages/UpdateUser";
 import ProfilePage from "./pages/ProfilePage";
 import CrimeReports from "./pages/CrimeReports";
 import AllLocations from "./pages/AllLocations";
+import Analytics from "./pages/analytics";
 
 function App() {
   const router = createBrowserRouter([
@@ -27,6 +28,10 @@ function App() {
         {
           path: "/user-dashboard",
           element: <UserDashboard />,
+        },
+        {
+          path: "/analytics",
+          element: <Analytics />,
         },
         {
           path: "/users",

@@ -19,7 +19,7 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
   onClick,
   isActive,
 }) => (
-  <li className="mb-4">
+  <li className="mb-2">
     <Link
       to={path}
       className={`flex items-center text-gray-300 hover:text-white ${
@@ -71,7 +71,7 @@ const Sidebar: React.FC<SidebarProps> = ({ items }) => {
     }
   };
   return (
-    <div className="w-[15%] flex fixed top-0 flex-col gap-[50px] py-[50px] h-screen bg-primaryBackground text-white px-4 py-6">
+    <div className="w-[15%] flex fixed top-0 flex-col gap-[40px] py-[50px] h-screen bg-primaryBackground text-white px-4 py-6">
       <Logo />
       <nav>
         <ul className="flex flex-col">

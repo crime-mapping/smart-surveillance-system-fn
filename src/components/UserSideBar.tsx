@@ -11,6 +11,7 @@ import {
   FiUserPlus,
   FiUsers,
   FiMapPin,
+  FiBarChart,
 } from "react-icons/fi";
 
 const UserSidebar: React.FC = () => {
@@ -19,6 +20,11 @@ const UserSidebar: React.FC = () => {
       icon: <FiHome className="w-5 h-5" />,
       label: "Dashboard",
       path: "/user-dashboard",
+    },
+    {
+      icon: <FiBarChart className="w-5 h-5" />,
+      label: "Analytics",
+      path: "/analytics",
     },
     {
       icon: <FiCamera className="w-5 h-5" />,

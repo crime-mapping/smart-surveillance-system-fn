@@ -121,12 +121,12 @@ const ProfilePage: React.FC = () => {
       {loading ? (
         <ProfilePageSkeleton />
       ) : (
-        <div className="min-h-screen mt-20 p-8 md:flex-row">
+        <div className="min-h-screen mt-24 pt-4 md:flex-row">
           {/* Left - Profile Card */}
           <div className="flex flex-row gap-4 my-2 items-center">
             <div className="bg-white  flex flex-col items-center rounded-lg min-h-80 max-h-96 shadow-md p-8 w-1/2 text-center">
               <div className="w-40 h-40 rounded-full bg-gray-200 flex items-center justify-center">
-                <FaUser className="text-gray-600 h-28 w-28 text-5xl" />
+                <FaUser className="text-gray-600 h-24 w-24 text-5xl" />
               </div>
 
               <h3 className="text-black font-bold mt-4 text-lg">{username}</h3>

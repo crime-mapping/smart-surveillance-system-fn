@@ -24,7 +24,7 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
       to={path}
       className={`flex items-center text-gray-300 hover:text-white ${
         isActive ? "bg-blue-500" : ""
-      } p-2 rounded`} // Add active background
+      } p-2 rounded`}
       onClick={onClick}
     >
       {icon}
@@ -38,7 +38,6 @@ interface SidebarProps {
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ items }) => {
-  //const [activeIndex, setActiveIndex] = useState(0);
   const handleLogout = useLogout();
   const location = useLocation();
 
@@ -51,15 +50,14 @@ const Sidebar: React.FC<SidebarProps> = ({ items }) => {
       }
 
       const decodedToken: any = tokenDecoder();
-      const currentTime = Date.now() / 1000; // Get current time in seconds
+      const currentTime = Date.now() / 1000;
       if (decodedToken.exp < currentTime) {
-        handleLogout(); // Logout if token has expired
+        handleLogout();
       }
     };
 
     checkTokenExpiration();
 
-    // Set interval to check every minute
     const interval = setInterval(checkTokenExpiration, 60000);
 
     return () => clearInterval(interval);

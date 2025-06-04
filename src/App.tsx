@@ -20,6 +20,8 @@ import CrimeReports from "./pages/CrimeReports";
 import AllLocations from "./pages/AllLocations";
 import Analytics from "./pages/analytics";
 
+const userRole = sessionStorage.getItem("userRole");
+
 function App() {
   const router = createBrowserRouter([
     {
@@ -32,14 +34,6 @@ function App() {
         {
           path: "/analytics",
           element: <Analytics />,
-        },
-        {
-          path: "/users",
-          element: <AllUsers />,
-        },
-        {
-          path: "/update-user/:id",
-          element: <UpdateUser />,
         },
         {
           path: "/profile",
@@ -69,6 +63,16 @@ function App() {
           path: "/live-feed/:cameraId",
           element: <LiveFeed />,
         },
+        ...(userRole === "SUPERADMIN"
+          ? [
+              { path: "/users", element: <AllUsers /> },
+              { path: "/update-user/:id", element: <UpdateUser /> },
+              {
+                path: "/register",
+                element: <RegisterUserPage />,
+              },
+            ]
+          : []),
       ],
     },
     {
@@ -78,10 +82,6 @@ function App() {
     {
       path: "/login",
       element: <LoginPage />,
-    },
-    {
-      path: "/register",
-      element: <RegisterUserPage />,
     },
 
     {

@@ -13,6 +13,7 @@ interface IUser {
   names: string;
   email: string;
   phone: string;
+  twoFactorEnabled: boolean;
   password: string;
   createdAt: Date;
   updatedAt: Date;
@@ -115,6 +116,22 @@ const ProfilePage: React.FC = () => {
       };
     });
   };
+  const toggle2FA = async () => {
+    try {
+      await axios.patch("/users/toggle-2fa");
+      setUser((prev: any) => ({
+        ...prev,
+        twoFactorEnabled: !prev.twoFactorEnabled,
+      }));
+      toast.success(
+        `Two-Factor Authentication ${
+          user?.twoFactorEnabled ? "disabled" : "enabled"
+        } successfully`
+      );
+    } catch (err) {
+      toast.error("Failed to toggle 2FA");
+    }
+  };
 
   return (
     <DashboardLayout>
@@ -125,8 +142,8 @@ const ProfilePage: React.FC = () => {
           {/* Left - Profile Card */}
           <div className="flex flex-row gap-4 my-2 items-center">
             <div className="bg-white  flex flex-col items-center rounded-lg min-h-80 max-h-96 shadow-md p-8 w-1/2 text-center">
-              <div className="w-40 h-40 rounded-full bg-gray-200 flex items-center justify-center">
-                <FaUser className="text-gray-600 h-24 w-24 text-5xl" />
+              <div className="w-32 h-32 rounded-full bg-gray-200 flex items-center justify-center">
+                <FaUser className="text-gray-600 h-16 w-16 text-5xl" />
               </div>
 
               <h3 className="text-black font-bold mt-4 text-lg">{username}</h3>
@@ -138,6 +155,32 @@ const ProfilePage: React.FC = () => {
                 <p className="bg-yellow-500 text-white p-2 rounded-2xl">
                   {" "}
                   Updated on {formatDate(user?.updatedAt)}
+                </p>
+              </div>
+              <div className="mt-6">
+                <div className="flex items-center justify-center gap-4">
+                  <span className="text-sm font-medium text-gray-700">
+                    Two-Factor Authentication
+                  </span>
+                  <button
+                    onClick={toggle2FA}
+                    className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-300 ${
+                      user?.twoFactorEnabled ? "bg-green-500" : "bg-gray-300"
+                    }`}
+                  >
+                    <span
+                      className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform duration-300 ${
+                        user?.twoFactorEnabled
+                          ? "translate-x-6"
+                          : "translate-x-1"
+                      }`}
+                    />
+                  </button>
+                </div>
+                <p className="text-xs text-gray-500 mt-1">
+                  {user?.twoFactorEnabled
+                    ? "2FA is currently enabled on your account."
+                    : "2FA is disabled. It's recommended to turn it on for added security."}
                 </p>
               </div>
             </div>

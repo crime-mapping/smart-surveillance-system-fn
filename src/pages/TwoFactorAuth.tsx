@@ -61,11 +61,12 @@ const TwoFactorAuth: React.FC = () => {
         tempToken: finalCode,
       });
 
-      const { token } = res.data;
+      const { token, user } = res.data;
       sessionStorage.setItem("token", JSON.stringify(token));
       document.cookie = `jwt=${token}; path=/`;
 
       toast.success("Two-factor authentication successful!");
+      sessionStorage.setItem("userRole", user.role);
       navigate("/user-dashboard");
     } catch (error: any) {
       console.error("2FA Error:", error);

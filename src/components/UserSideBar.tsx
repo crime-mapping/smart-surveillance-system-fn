@@ -15,6 +15,9 @@ import {
 } from "react-icons/fi";
 
 const UserSidebar: React.FC = () => {
+  const userRole = sessionStorage.getItem("userRole");
+  const isSuperAdmin = userRole === "SUPERADMIN";
+
   const userItems = [
     {
       icon: <FiHome className="w-5 h-5" />,
@@ -42,16 +45,20 @@ const UserSidebar: React.FC = () => {
       path: "/locations",
     },
     { icon: <FiMap className="w-5 h-5" />, label: "Crime Map", path: "/map" },
-    {
-      icon: <FiUsers className="w-5 h-5" />,
-      label: "All System Users",
-      path: "/users",
-    },
-    {
-      icon: <FiUserPlus className="w-5 h-5" />,
-      label: "Register new User",
-      path: "/register",
-    },
+    ...(isSuperAdmin
+      ? [
+          {
+            icon: <FiUsers />,
+            label: "All System Users",
+            path: "/users",
+          },
+          {
+            icon: <FiUserPlus />,
+            label: "Register new User",
+            path: "/register",
+          },
+        ]
+      : []),
     {
       icon: <FiUser className="w-5 h-5" />,
       label: "Profile",

@@ -12,6 +12,7 @@ const useLogout = () => {
       localStorage.clear();
       toast.success("Logged out successfully!");
       navigate("/login");
+      localStorage.setItem("lastLogin", new Date().toISOString());
     } catch (error) {
       console.error("❌ Logout error:", error);
       toast.error("Logout failed, try again.");

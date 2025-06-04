@@ -14,11 +14,6 @@ const LoginPage: React.FC = () => {
 
   const navigate = useNavigate();
 
-  const clearInputs = () => {
-    setEmail("");
-    setPassword("");
-  };
-
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
@@ -35,13 +30,7 @@ const LoginPage: React.FC = () => {
         password,
       });
 
-      const { token, tempToken, message } = res.data;
-
-      if (message === "Your account is blocked, Check your email to see why") {
-        toast.error(message);
-        clearInputs();
-        return;
-      }
+      const { token, user, tempToken } = res.data;
 
       if (token) {
         document.cookie = `jwt=${token}; path=/`;
@@ -53,6 +42,7 @@ const LoginPage: React.FC = () => {
         navigate("/2f-auth");
       } else {
         toast.success("Login successful!");
+        sessionStorage.setItem("userRole", user.role);
         navigate("/user-dashboard");
       }
     } catch (err: any) {
@@ -88,6 +78,7 @@ const LoginPage: React.FC = () => {
           navigate("/2f-auth");
         } else {
           toast.success("Login Successful");
+          sessionStorage.setItem("userRole", user.role);
           navigate("/user-dashboard");
         }
       } catch (err: any) {
@@ -103,9 +94,13 @@ const LoginPage: React.FC = () => {
   });
 
   const handleErrors = (err: any, defaultMessage: string) => {
-    console.error(err);
+    console.log(err);
+    if (err.status == 403) {
+      toast.info(err.response.data.message);
+      return;
+    }
     const message =
-      err?.data?.message ||
+      err.response.data.message ||
       (err.status === 401 || err.status === 404
         ? defaultMessage
         : "An unexpected error occurred. Please try again later");

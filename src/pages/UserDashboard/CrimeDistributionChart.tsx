@@ -26,7 +26,7 @@
 //     distribution.every((item) => item.count === 0)
 //   ) {
 //     return (
-//       <div className="p-4 bg-white shadow-md rounded-md text-center">
+//       <div className="p-4 bg-[var(--card-bg)] text-[var(--text-color)] shadow-md rounded-md text-center">
 //         <h2 className="text-xl font-semibold mb-2">Crime Distribution</h2>
 //         <p className="text-gray-500">No crime distribution data available.</p>
 //       </div>
@@ -71,7 +71,7 @@
 //   };
 
 //   return (
-//     <div className="py-2 px-8 bg-white shadow-md rounded-md flex flex-col items-left">
+//     <div className="py-2 px-8 bg-[var(--card-bg)] text-[var(--text-color)] shadow-md rounded-md flex flex-col items-left">
 //       <h2 className="text-left text-xl font-semibold mb-4">
 //         Crime Distribution
 //       </h2>
@@ -129,7 +129,7 @@ const CrimeDistributionChart: React.FC<CrimeDistributionChartProps> = ({
     distribution.every((item) => item.count === 0)
   ) {
     return (
-      <div className="p-4 bg-white shadow-md rounded-md text-center">
+      <div className="p-4 bg-[var(--card-bg)] text-[var(--text-color)] shadow-md rounded-md text-center">
         <h2 className="text-xl font-semibold mb-2">Crime Distribution</h2>
         <p className="text-gray-500">No crime distribution data available.</p>
       </div>
@@ -180,7 +180,7 @@ const CrimeDistributionChart: React.FC<CrimeDistributionChartProps> = ({
   };
 
   return (
-    <div className="py-2 px-8 bg-white shadow-md rounded-md flex flex-col items-left">
+    <div className="py-2 px-8 bg-[var(--card-bg)] text-[var(--text-color)] shadow-md rounded-md flex flex-col items-left">
       <h2 className="text-left text-xl font-semibold mb-4">
         Crime Distribution
       </h2>

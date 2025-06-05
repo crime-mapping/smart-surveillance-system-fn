@@ -101,7 +101,7 @@ const HelpAndSupport: React.FC = () => {
       </p>
       <form
         onSubmit={handleSubmit}
-        className="bg-white rounded-lg shadow-md p-6"
+        className="bg-[var(--card-bg)] text-[var(--text-color)] rounded-lg shadow-md p-6"
       >
         <div className="mb-4">
           <label className="block text-gray-700 mb-2">Email</label>

@@ -44,7 +44,7 @@ const CrimeTrendsChart: React.FC<CrimeTrendsChartProps> = ({ trendData }) => {
   };
 
   return (
-    <div className="p-4 bg-white shadow-md rounded-md">
+    <div className="p-4 bg-[var(--card-bg)] text-[var(--text-color)] shadow-md rounded-md">
       <h2 className="text-left text-lg font-semibold mb-4">
         Crime Trends Over Time
       </h2>

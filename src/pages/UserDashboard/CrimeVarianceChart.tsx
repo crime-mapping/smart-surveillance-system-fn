@@ -71,7 +71,7 @@ const CrimeVarianceChart: React.FC<CrimeVarianceChartProps> = ({
   };
 
   return (
-    <div className="w-full p-4 bg-white shadow-md rounded-md">
+    <div className="w-full p-4 bg-[var(--card-bg)] text-[var(--text-color)] shadow-md rounded-md">
       <h2 className="text-center text-xl font-semibold mb-4">
         Crimes Variance
       </h2>

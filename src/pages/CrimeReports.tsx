@@ -248,7 +248,7 @@ const CrimeReports: React.FC = () => {
               currentCrimes.map((crime) => (
                 <div
                   key={crime._id}
-                  className="bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition"
+                  className="bg-[var(--card-bg)] text-[var(--text-color)] p-4 rounded-lg shadow-md hover:shadow-lg transition"
                 >
                   <h2 className="font-bold text-lg mb-2">
                     Crime Report #{crime._id.substring(0, 6)}

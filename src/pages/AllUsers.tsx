@@ -234,7 +234,7 @@ const AllUsers = () => {
           ) : (
             <>
               <div className="overflow-x-auto">
-                <table className="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
+                <table className="min-w-full bg-[var(--card-bg)] text-[var(--text-color)] shadow-md rounded-lg overflow-hidden">
                   <thead className="bg-gray-100">
                     <tr className="text-left text-sm font-semibold text-gray-600">
                       <th className="px-6 py-3">Name</th>
@@ -250,7 +250,9 @@ const AllUsers = () => {
                       <tr
                         key={user._id}
                         className={`border-b ${
-                          index % 2 === 0 ? "bg-gray-50" : "bg-white"
+                          index % 2 === 0
+                            ? "bg-gray-50"
+                            : "bg-[var(--card-bg)] text-[var(--text-color)]"
                         } hover:bg-gray-100`}
                       >
                         <td className="px-6 py-4">{user.names}</td>
@@ -344,7 +346,7 @@ const AllUsers = () => {
                 initial={{ scale: 0.9, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 exit={{ scale: 0.9, opacity: 0 }}
-                className="bg-white rounded-xl p-6 w-full max-w-md shadow-lg"
+                className="bg-[var(--card-bg)] text-[var(--text-color)] rounded-xl p-6 w-full max-w-md shadow-lg"
               >
                 <h2 className="text-xl font-bold mb-4 text-center">
                   User Details
@@ -399,7 +401,7 @@ const AllUsers = () => {
               <motion.div
                 initial={{ scale: 0.9, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
-                className="bg-white rounded-lg p-6 shadow-md w-full max-w-sm text-center"
+                className="bg-[var(--card-bg)] text-[var(--text-color)] rounded-lg p-6 shadow-md w-full max-w-sm text-center"
               >
                 <h2 className="text-lg font-semibold mb-4">
                   Confirm{" "}

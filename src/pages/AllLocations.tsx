@@ -192,7 +192,7 @@ const AllLocations: React.FC = () => {
             {currentLocations.map((loc) => (
               <div
                 key={loc._id}
-                className="bg-white rounded-lg shadow-md p-6 flex flex-col justify-between hover:shadow-lg transition"
+                className="bg-[var(--card-bg)] text-[var(--text-color)] rounded-lg shadow-md p-6 flex flex-col justify-between hover:shadow-lg transition"
               >
                 <div>
                   <h2 className="text-lg font-bold mb-2 flex items-center gap-2">
@@ -278,7 +278,7 @@ const AllLocations: React.FC = () => {
                 initial={{ scale: 0.9, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 exit={{ scale: 0.9, opacity: 0 }}
-                className="bg-white rounded-lg p-6 shadow-md w-full max-w-sm text-center"
+                className="bg-[var(--card-bg)] text-[var(--text-color)] rounded-lg p-6 shadow-md w-full max-w-sm text-center"
               >
                 <h2 className="text-lg font-semibold mb-4">Confirm Delete</h2>
                 <p className="text-gray-600 mb-4">
@@ -305,11 +305,11 @@ const AllLocations: React.FC = () => {
 
           {/* Create / Edit Modal */}
           {showModal && (
-            <div className="fixed inset-0 z-50 bg-black bg-opacity-30 flex justify-center items-center">
+            <div className="fixed inset-0 z-50 bg-[var(--card-bg)] text-[var(--text-color)] bg-opacity-30 flex justify-center items-center">
               <motion.div
                 initial={{ scale: 0.9, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
-                className="bg-white rounded-lg p-8 w-full max-w-md"
+                className="bg-[var(--card-bg)] text-[var(--text-color)] rounded-lg p-8 w-full max-w-md"
               >
                 <h2 className="text-xl font-bold mb-6">
                   {selectedLocation ? "Edit Location" : "Add New Location"}
@@ -367,7 +367,7 @@ const AllLocations: React.FC = () => {
               <motion.div
                 initial={{ scale: 0.9, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
-                className="bg-white rounded-lg p-8 w-full max-w-md"
+                className="bg-[var(--card-bg)] text-[var(--text-color)] rounded-lg p-8 w-full max-w-md"
               >
                 <h2 className="text-xl font-bold mb-4">
                   Cameras at {selectedLocation.location}

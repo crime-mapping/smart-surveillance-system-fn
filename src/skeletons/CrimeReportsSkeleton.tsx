@@ -37,7 +37,7 @@ const CrimeReportsSkeleton: React.FC = () => {
         {Array.from({ length: 6 }).map((_, i) => (
           <div
             key={i}
-            className="bg-white p-4 rounded-lg shadow-md animate-pulse space-y-4"
+            className="bg-[var(--card-bg)] text-[var(--text-color)] p-4 rounded-lg shadow-md animate-pulse space-y-4"
           >
             <SkeletonBox className="h-6 w-3/4" /> {/* Report title */}
             <SkeletonBox className="h-5 w-1/2" /> {/* Crime type */}

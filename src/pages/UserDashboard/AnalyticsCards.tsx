@@ -27,9 +27,9 @@ const AnalyticsCard: React.FC<AnalyticsCardProps> = ({
   showInfo,
 }) => {
   return (
-    <div className="p-4 bg-white shadow-md rounded-lg flex gap-[30%] items-center">
+    <div className="p-4 bg-[var(--card-bg)] text-[var(--text-color)] shadow-md rounded-lg flex gap-[30%] items-center">
       <div>
-        <h2 className="text-sm text-gray-500 mb-1">{title}</h2>
+        <h2 className="text-sm text-[var(--text-color)] mb-1">{title}</h2>
         <div className="flex items-center">
           <p className="text-xl font-bold mr-2">{value}</p>
           {change && (
@@ -40,8 +40,10 @@ const AnalyticsCard: React.FC<AnalyticsCardProps> = ({
         </div>
       </div>
       <div className="flex items-center">
-        {showSearch && <FiArrowUpRight className="text-gray-400 mr-2" />}
-        {showInfo && <FiInfo className="text-gray-400" />}
+        {showSearch && (
+          <FiArrowUpRight className="text-[var(--text-color)] mr-2" />
+        )}
+        {showInfo && <FiInfo className="text-[var(--text-color)]" />}
       </div>
     </div>
   );

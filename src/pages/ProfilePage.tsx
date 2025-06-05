@@ -141,7 +141,7 @@ const ProfilePage: React.FC = () => {
         <div className="min-h-screen mt-24 pt-4 md:flex-row">
           {/* Left - Profile Card */}
           <div className="flex flex-row gap-4 my-2 items-center">
-            <div className="bg-white  flex flex-col items-center rounded-lg min-h-80 max-h-96 shadow-md p-8 w-1/2 text-center">
+            <div className="bg-[var(--card-bg)] text-[var(--text-color)]  flex flex-col items-center rounded-lg min-h-80 max-h-96 shadow-md p-8 w-1/2 text-center">
               <div className="w-32 h-32 rounded-full bg-gray-200 flex items-center justify-center">
                 <FaUser className="text-gray-600 h-16 w-16 text-5xl" />
               </div>
@@ -169,7 +169,7 @@ const ProfilePage: React.FC = () => {
                     }`}
                   >
                     <span
-                      className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform duration-300 ${
+                      className={`inline-block h-4 w-4 transform rounded-full bg-[var(--card-bg)] text-[var(--text-color)] transition-transform duration-300 ${
                         user?.twoFactorEnabled
                           ? "translate-x-6"
                           : "translate-x-1"
@@ -186,7 +186,7 @@ const ProfilePage: React.FC = () => {
             </div>
 
             {/* Update Profile Section */}
-            <div className="bg-white w-full rounded-lg pb-2 shadow-md overflow-hidden">
+            <div className="bg-[var(--card-bg)] text-[var(--text-color)] w-full rounded-lg pb-2 shadow-md overflow-hidden">
               <div className="bg-primaryBackground  flex justify-between text-white px-4 py-2 font-semibold text-md flex items-center gap-2">
                 <span className="flex items-center gap-2">
                   <FaUser /> Profile
@@ -258,7 +258,7 @@ const ProfilePage: React.FC = () => {
           </div>
 
           {/* Update Password Section */}
-          <div className="bg-white rounded-lg shadow-md overflow-hidden">
+          <div className="bg-[var(--card-bg)] text-[var(--text-color)] rounded-lg shadow-md overflow-hidden">
             <div className="bg-primaryBackground  text-white px-4 py-2 font-semibold text-md flex items-center gap-2">
               <FaUser /> Change Password
             </div>

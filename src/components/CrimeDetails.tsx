@@ -91,7 +91,7 @@ const CrimeDetails: React.FC = () => {
       {loading ? (
         <SingleCrimeSkeleton />
       ) : (
-        <div className="mt-20 p-6 my-4 bg-white shadow rounded-md">
+        <div className="mt-20 p-6 my-4 bg-[var(--card-bg)] text-[var(--text-color)] shadow rounded-md">
           <span
             onClick={() => {
               navigate("/reports");

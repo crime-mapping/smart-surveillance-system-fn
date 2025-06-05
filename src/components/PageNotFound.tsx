@@ -9,7 +9,7 @@ const PageNotFound = () => {
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="text-center bg-white shadow-lg rounded-xl p-8"
+        className="text-center bg-[var(--card-bg)] text-[var(--text-color)] shadow-lg rounded-xl p-8"
       >
         <div className="flex justify-center mb-6">
           <motion.div

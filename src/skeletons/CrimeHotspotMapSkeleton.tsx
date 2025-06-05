@@ -46,7 +46,7 @@ const CrimeHotspotMapSkeleton: React.FC = () => {
           {/* Light gray layer while loading */}
           <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
         </MapContainer>
-        <div className="absolute inset-0 bg-white bg-opacity-50 flex items-center justify-center">
+        <div className="absolute inset-0 bg-[var(--card-bg)] text-[var(--text-color)] bg-opacity-50 flex items-center justify-center">
           <div className="text-gray-700 font-semibold animate-pulse text-xl">
             Loading Map...
           </div>

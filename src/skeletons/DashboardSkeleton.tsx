@@ -10,7 +10,10 @@ const DashboardSkeleton: React.FC = () => {
       {/* Analytics cards row */}
       <div className="grid grid-cols-4 gap-4">
         {Array.from({ length: 4 }).map((_, idx) => (
-          <div key={idx} className="p-4 bg-white shadow rounded-lg space-y-2">
+          <div
+            key={idx}
+            className="p-4 bg-[var(--card-bg)] text-[var(--text-color)] shadow rounded-lg space-y-2"
+          >
             <SkeletonBox className="h-4 w-1/3" />
             <SkeletonBox className="h-6 w-1/2" />
           </div>
@@ -20,7 +23,7 @@ const DashboardSkeleton: React.FC = () => {
       {/* Chart & Statistics row */}
       <div className="grid grid-cols-3 gap-4">
         {/* Donut chart */}
-        <div className="p-4 bg-white shadow rounded-lg flex gap-6 items-center">
+        <div className="p-4 bg-[var(--card-bg)] text-[var(--text-color)] shadow rounded-lg flex gap-6 items-center">
           <div className="flex flex-col gap-3">
             {[1, 2, 3].map((_, idx) => (
               <SkeletonBox key={idx} className="h-4 w-24" />
@@ -30,7 +33,7 @@ const DashboardSkeleton: React.FC = () => {
         </div>
 
         {/* Statistics */}
-        <div className="p-4 bg-white shadow rounded-lg space-y-4">
+        <div className="p-4 bg-[var(--card-bg)] text-[var(--text-color)] shadow rounded-lg space-y-4">
           {Array.from({ length: 4 }).map((_, idx) => (
             <div key={idx} className="flex justify-between items-center">
               <SkeletonBox className="h-4 w-1/3" />
@@ -40,7 +43,7 @@ const DashboardSkeleton: React.FC = () => {
         </div>
 
         {/* Recent crime */}
-        <div className="p-4 bg-white shadow rounded-lg space-y-3">
+        <div className="p-4 bg-[var(--card-bg)] text-[var(--text-color)] shadow rounded-lg space-y-3">
           <SkeletonBox className="h-6 w-1/2" />
           <SkeletonBox className="h-4 w-2/3" />
           <SkeletonBox className="h-4 w-1/3" />
@@ -49,13 +52,13 @@ const DashboardSkeleton: React.FC = () => {
       </div>
 
       {/* Variance charts */}
-      <div className="p-4 bg-white shadow rounded-lg grid grid-cols-2 gap-6">
+      <div className="p-4 bg-[var(--card-bg)] text-[var(--text-color)] shadow rounded-lg grid grid-cols-2 gap-6">
         <SkeletonBox className="h-48 w-full" />
         <SkeletonBox className="h-48 w-full" />
       </div>
 
       {/* Trends chart */}
-      <div className="p-4 bg-white shadow rounded-lg">
+      <div className="p-4 bg-[var(--card-bg)] text-[var(--text-color)] shadow rounded-lg">
         <SkeletonBox className="h-48 w-1/2" />
       </div>
     </div>

@@ -78,7 +78,7 @@ const UpdateUser = () => {
               <FiArrowLeft className="w-16 h-10" />
             </span>
           </div>
-          <div className="max-w-xl mx-auto mt-4 bg-white px-6 shadow rounded-md">
+          <div className="max-w-xl mx-auto mt-4 bg-[var(--card-bg)] text-[var(--text-color)] px-6 shadow rounded-md">
             <h2 className="text-2xl font-bold mb-4">Update User</h2>
 
             <div className="space-y-4">

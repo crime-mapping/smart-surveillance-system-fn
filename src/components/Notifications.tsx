@@ -136,7 +136,7 @@ const Notifications = () => {
       </button>
 
       {isVisible && (
-        <div className="absolute right-0 mt-2 w-80 bg-white rounded-lg shadow-lg z-50 p-4 max-h-[450px] overflow-y-auto">
+        <div className="absolute right-0 mt-2 w-80 bg-[var(--card-bg)] text-[var(--text-color)] rounded-lg shadow-lg z-50 p-4 max-h-[450px] overflow-y-auto">
           <div className="flex justify-between items-center mb-2">
             <h2 className="text-lg font-semibold">Notifications</h2>
             <button onClick={toggleVisibility}>

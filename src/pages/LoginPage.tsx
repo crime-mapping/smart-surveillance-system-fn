@@ -147,7 +147,7 @@ const LoginPage: React.FC = () => {
           <div className="mt-4">
             <button
               onClick={() => handleGoogleSignIn()}
-              className="w-full flex items-center justify-center bg-white border border-gray-300 text-gray-700 py-2 rounded-md hover:bg-gray-50 transition duration-300"
+              className="w-full flex items-center justify-center bg-[var(--card-bg)] text-[var(--text-color)] border border-gray-300 text-gray-700 py-2 rounded-md hover:bg-gray-50 transition duration-300"
             >
               <FaGoogle className="mr-2" />
               Continue with Google

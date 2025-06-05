@@ -80,7 +80,7 @@ const TwoFactorAuth: React.FC = () => {
     <div className="w-[100vw] gap-0 flex">
       <WelcomePane />
       <div className="w-1/2 flex items-center justify-center min-h-screen">
-        <div className="w-full max-w-md bg-white rounded-lg">
+        <div className="w-full max-w-md bg-[var(--card-bg)] text-[var(--text-color)] rounded-lg">
           <h2 className="text-2xl font-bold mb-4 text-center">
             Two Factor Authentication
           </h2>

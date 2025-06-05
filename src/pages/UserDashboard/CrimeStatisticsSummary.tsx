@@ -12,7 +12,7 @@ const CrimeStatisticsSummary: React.FC<CrimeStatisticsSummaryProps> = ({
   emergencyDistribution,
 }) => {
   return (
-    <div className="p-4 bg-white shadow-md rounded-md">
+    <div className="p-4 bg-[var(--card-bg)] text-[var(--text-color)] shadow-md rounded-md">
       <h2 className="text-left text-xl font-semibold mb-4">Crime Statistics</h2>
       <ul className="space-y-2">
         <li className="flex text-sm justify-between">

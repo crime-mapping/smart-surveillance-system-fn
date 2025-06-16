@@ -21,7 +21,7 @@ interface ILocation {
   location: string;
 }
 
-const ITEMS_PER_PAGE = 9; // ✅ 9 crimes (3 rows × 3 columns)
+const ITEMS_PER_PAGE = 9;
 
 const CrimeReports: React.FC = () => {
   const [crimes, setCrimes] = useState<ICrime[]>([]);
@@ -99,7 +99,7 @@ const CrimeReports: React.FC = () => {
     }
 
     setFilteredCrimes(data);
-    setCurrentPage(1); // Reset to page 1 when filtering
+    setCurrentPage(1);
   };
 
   useEffect(() => {
@@ -152,7 +152,7 @@ const CrimeReports: React.FC = () => {
               placeholder="Search crimes..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="border px-3 py-2 rounded w-full md:w-1/3"
+              className="border bg-[var(--card-bg)] px-3 py-2 rounded w-full md:w-1/3"
             />
           </div>
 
@@ -169,7 +169,9 @@ const CrimeReports: React.FC = () => {
               <button
                 key={item}
                 className={`px-4 py-2 rounded ${
-                  tab === item ? "bg-blue-600 text-white" : "bg-gray-200"
+                  tab === item
+                    ? "bg-blue-600 text-white"
+                    : "bg-[var(--card-bg)]"
                 }`}
                 onClick={() => setTab(item)}
               >
@@ -191,7 +193,7 @@ const CrimeReports: React.FC = () => {
             <select
               value={selectedLocation}
               onChange={(e) => setSelectedLocation(e.target.value)}
-              className="border px-3 py-2 rounded mb-6"
+              className="border bg-[var(--card-bg)] px-3 py-2 rounded mb-6"
             >
               <option value="all">All Locations</option>
               {locations.map((loc) => (
@@ -205,7 +207,7 @@ const CrimeReports: React.FC = () => {
             <select
               value={selectedLevel}
               onChange={(e) => setSelectedLevel(e.target.value)}
-              className="border px-3 py-2 rounded mb-6"
+              className="border bg-[var(--card-bg)] px-3 py-2 rounded mb-6"
             >
               <option value="all">All Levels</option>
               <option value="HIGH">High</option>
@@ -216,25 +218,25 @@ const CrimeReports: React.FC = () => {
           {tab === "filter-date" && (
             <div className="flex flex-col md:flex-row gap-4 mb-6">
               <div>
-                <label className="block text-sm font-medium mb-1">
+                <label className="block  text-sm font-medium mb-1">
                   Start Date
                 </label>
                 <input
                   type="date"
                   value={startDate}
                   onChange={(e) => setStartDate(e.target.value)}
-                  className="border px-3 py-2 rounded"
+                  className="border bg-[var(--card-bg)] px-3 py-2 rounded"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium mb-1">
+                <label className="block  text-sm font-medium mb-1">
                   End Date
                 </label>
                 <input
                   type="date"
                   value={endDate}
                   onChange={(e) => setEndDate(e.target.value)}
-                  className="border px-3 py-2 rounded"
+                  className="border bg-[var(--card-bg)] px-3 py-2 rounded"
                 />
               </div>
             </div>
@@ -256,25 +258,25 @@ const CrimeReports: React.FC = () => {
                   <div
                     className={`text-white font-semibold px-2 py-1 rounded mb-2 ${
                       crime.emergencyLevel === "HIGH"
-                        ? "bg-red-600"
+                        ? "bg-red-300"
                         : crime.emergencyLevel === "MEDIUM"
-                        ? "bg-yellow-500"
-                        : "bg-green-500"
+                        ? "bg-yellow-400"
+                        : "bg-green-400"
                     }`}
                   >
                     {crime.crimeType}
                   </div>
-                  <p className="text-gray-700 text-sm mb-1">
+                  <p className="text-[var(--text-color)] text-sm mb-1">
                     {formatDate(crime.dateOfOccurrence)}
                   </p>
-                  <p className="text-gray-700 text-sm mb-4">
+                  <p className="text-[var(--text-color)] text-sm mb-4">
                     {crime.crimeLocation?.location}
                   </p>
                   <button
                     onClick={() => {
                       navigate(`/crime/${crime._id}`);
                     }}
-                    className="border border-gray-400 text-gray-700 px-4 py-2 rounded hover:bg-gray-200"
+                    className="border bg-[var(--card-bg)] text-[var(--text-color)] px-4 py-2 rounded hover:bg-gray-200"
                   >
                     View Details
                   </button>
@@ -289,7 +291,7 @@ const CrimeReports: React.FC = () => {
               <button
                 onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
                 disabled={currentPage === 1}
-                className="px-4 py-2 rounded bg-gray-300 hover:bg-gray-400 disabled:opacity-50"
+                className="px-4 py-2 rounded bg-[var(--card-bg)] hover:bg-gray-400 disabled:opacity-50"
               >
                 Previous
               </button>
@@ -301,7 +303,7 @@ const CrimeReports: React.FC = () => {
                   setCurrentPage((prev) => Math.min(prev + 1, totalPages))
                 }
                 disabled={currentPage === totalPages}
-                className="px-4 py-2 rounded bg-gray-300 hover:bg-gray-400 disabled:opacity-50"
+                className="px-4 py-2 rounded bg-[var(--card-bg)] hover:bg-gray-400 disabled:opacity-50"
               >
                 Next
               </button>

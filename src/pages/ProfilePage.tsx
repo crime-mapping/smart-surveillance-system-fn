@@ -146,7 +146,9 @@ const ProfilePage: React.FC = () => {
                 <FaUser className="text-gray-600 h-16 w-16 text-5xl" />
               </div>
 
-              <h3 className="text-black font-bold mt-4 text-lg">{username}</h3>
+              <h3 className="text-[var(--text-color)] font-bold mt-4 text-lg">
+                {username}
+              </h3>
               <div className="text-gray-600 mt-4 text-xs mt-2">
                 <p className="bg-green-500 text-white mb-2 py-2 rounded-2xl">
                   {" "}
@@ -159,7 +161,7 @@ const ProfilePage: React.FC = () => {
               </div>
               <div className="mt-6">
                 <div className="flex items-center justify-center gap-4">
-                  <span className="text-sm font-medium text-gray-700">
+                  <span className="text-sm font-medium text-[var(--text-color)]">
                     Two-Factor Authentication
                   </span>
                   <button
@@ -177,7 +179,7 @@ const ProfilePage: React.FC = () => {
                     />
                   </button>
                 </div>
-                <p className="text-xs text-gray-500 mt-1">
+                <p className="text-xs text-[var(--text-color)] mt-1">
                   {user?.twoFactorEnabled
                     ? "2FA is currently enabled on your account."
                     : "2FA is disabled. It's recommended to turn it on for added security."}
@@ -221,7 +223,7 @@ const ProfilePage: React.FC = () => {
                   <input
                     name="email"
                     type="email"
-                    className="border w-full p-2 rounded"
+                    className="border bg-[var(--card-bg)] text-[var(--text-color)] w-full p-2 rounded"
                     value={user?.email}
                     disabled={!editingMode}
                     onChange={handleInputChange}
@@ -234,7 +236,7 @@ const ProfilePage: React.FC = () => {
                   <input
                     name="phone"
                     type="text"
-                    className="border w-full p-2 rounded"
+                    className="border bg-[var(--card-bg)] text-[var(--text-color)] w-full p-2 rounded"
                     value={user?.phone}
                     disabled={!editingMode}
                     onChange={handleInputChange}
@@ -259,7 +261,7 @@ const ProfilePage: React.FC = () => {
 
           {/* Update Password Section */}
           <div className="bg-[var(--card-bg)] text-[var(--text-color)] rounded-lg shadow-md overflow-hidden">
-            <div className="bg-primaryBackground  text-white px-4 py-2 font-semibold text-md flex items-center gap-2">
+            <div className="bg-[var(--card-bg)] text-[var(--text-color)] px-4 py-2 font-semibold text-md flex items-center gap-2">
               <FaUser /> Change Password
             </div>
 
@@ -270,7 +272,7 @@ const ProfilePage: React.FC = () => {
                 </label>
                 <input
                   type="password"
-                  className="border w-full p-2 rounded"
+                  className="border bg-[var(--card-bg)] text-[var(--text-color)] w-full p-2 rounded"
                   value={currentPassword}
                   onChange={(e) => setCurrentPassword(e.target.value)}
                 />
@@ -282,7 +284,7 @@ const ProfilePage: React.FC = () => {
                 </label>
                 <input
                   type="password"
-                  className="border w-full p-2 rounded"
+                  className="border bg-[var(--card-bg)] text-[var(--text-color)] w-full p-2 rounded"
                   value={newPassword}
                   onChange={(e) => setNewPassword(e.target.value)}
                 />
@@ -293,7 +295,7 @@ const ProfilePage: React.FC = () => {
                 </label>
                 <input
                   type="password"
-                  className="border w-full p-2 rounded"
+                  className="border bg-[var(--card-bg)] text-[var(--text-color)] w-full p-2 rounded"
                   value={confirmNewPassword}
                   onChange={(e) => setConfirmNewPassword(e.target.value)}
                 />

@@ -97,7 +97,7 @@ const RegisterUserPage: React.FC = () => {
         </h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-6 relative">
-            <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
+            <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[var(--text-color)]">
               <FiUser className="w-5 h-5" />
             </span>
 
@@ -107,11 +107,11 @@ const RegisterUserPage: React.FC = () => {
               value={userInfo?.names}
               onChange={handleInputChange}
               placeholder="Enter user's names"
-              className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full pl-10 pr-3 py-2 border bg-[var(--card-bg)] text-[var(--text-color)] border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
           <div className="mb-6 relative">
-            <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
+            <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[var(--text-color)]">
               <FiPhone className="w-5 h-5" />
             </span>
 
@@ -121,11 +121,11 @@ const RegisterUserPage: React.FC = () => {
               value={userInfo?.phone}
               onChange={handleInputChange}
               placeholder="Enter user's phone number"
-              className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full pl-10 pr-3 py-2 border bg-[var(--card-bg)] text-[var(--text-color)] border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
           <div className="mb-6 relative">
-            <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
+            <span className="absolute left-3 top-1/2 transform -translate-y-1/2  text-[var(--text-color)]">
               <FiMail className="w-5 h-5" />
             </span>
 
@@ -135,11 +135,11 @@ const RegisterUserPage: React.FC = () => {
               value={userInfo?.email}
               onChange={handleInputChange}
               placeholder="Enter user's Email"
-              className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full pl-10 pr-3 py-2 border bg-[var(--card-bg)] text-[var(--text-color)] border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
           <div className="mb-6 relative">
-            <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
+            <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[var(--text-color)]">
               <FiLock className="w-5 h-5" />
             </span>
 
@@ -149,11 +149,11 @@ const RegisterUserPage: React.FC = () => {
               value={userInfo?.password}
               onChange={handleInputChange}
               placeholder="Enter user's password"
-              className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full pl-10 pr-3 py-2 border bg-[var(--card-bg)] text-[var(--text-color)] border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
           <div className="mb-6 relative">
-            <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
+            <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[var(--text-color)]">
               <FiLock className="w-5 h-5" />
             </span>
 
@@ -162,13 +162,13 @@ const RegisterUserPage: React.FC = () => {
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               placeholder="Confirm user's password"
-              className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full pl-10 pr-3 py-2 border bg-[var(--card-bg)] text-[var(--text-color)] border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full bg-black text-white py-2 rounded-md hover:bg-gray-800 transition duration-300"
+            className="w-full bg-[var(--card-bg)] text-[var(--text-color)] py-2 rounded-md hover:bg-gray-800 transition duration-300"
           >
             {isLoading ? "Registering User..." : "Register"}
           </button>

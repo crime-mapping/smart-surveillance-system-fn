@@ -47,7 +47,7 @@ const Cameras = () => {
         name: cam.name,
         status: cam.isConnected ? "Connected" : "Disconnected",
         dateAdded: new Date(cam.createdAt).toLocaleDateString(),
-        location: cam.location?._id || cam.location, // depending on backend
+        location: cam.location?._id || cam.location,
       }));
       setCameras(mapped);
     } catch (err: any) {
@@ -87,24 +87,30 @@ const Cameras = () => {
           <div className="flex justify-between mt-24 items-center my-4">
             <div className="flex gap-4">
               <button
-                className={`px-4 py-2 rounded ${
-                  tab === "recent" ? "bg-blue-600 text-white" : "bg-gray-200"
+                className={`px-4 py-2 text-[var(--text-color)] rounded ${
+                  tab === "recent"
+                    ? "bg-blue-600 text-white"
+                    : " bg-[var(--card-bg)]"
                 }`}
                 onClick={() => setTab("recent")}
               >
                 Recently Connected
               </button>
               <button
-                className={`px-4 py-2 rounded ${
-                  tab === "all" ? "bg-blue-600 text-white" : "bg-gray-200"
+                className={`px-4 py-2 text-[var(--text-color)] rounded ${
+                  tab === "all"
+                    ? "bg-blue-600 text-white"
+                    : "bg-[var(--card-bg)]"
                 }`}
                 onClick={() => setTab("all")}
               >
                 All Cameras
               </button>
               <button
-                className={`px-4 py-2 rounded ${
-                  tab === "filter" ? "bg-blue-600 text-white" : "bg-gray-200"
+                className={`px-4 py-2 text-[var(--text-color)] rounded ${
+                  tab === "filter"
+                    ? "bg-blue-600 text-white"
+                    : "bg-[var(--card-bg)]"
                 }`}
                 onClick={() => setTab("filter")}
               >
@@ -116,7 +122,7 @@ const Cameras = () => {
               <select
                 value={selectedLocation}
                 onChange={(e) => setSelectedLocation(e.target.value)}
-                className="border px-3 py-2 rounded"
+                className="border px-3 bg-[var(--card-bg)] py-2 rounded"
               >
                 <option value="all">All Locations</option>
                 {locations.map((loc) => (

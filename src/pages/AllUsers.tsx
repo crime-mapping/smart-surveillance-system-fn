@@ -194,13 +194,13 @@ const AllUsers = () => {
             <input
               type="text"
               placeholder="Search users by name, phone, or email"
-              className="border px-3 py-2 rounded w-full md:w-1/3"
+              className="border bg-[var(--card-bg)] text-[var(--text-color)] px-3 py-2 rounded w-full md:w-1/3"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
 
             <select
-              className="border px-3 py-2 rounded"
+              className="border bg-[var(--card-bg)] text-[var(--text-color)] px-3 py-2 rounded"
               value={roleFilter}
               onChange={(e) => setRoleFilter(e.target.value)}
             >
@@ -211,7 +211,7 @@ const AllUsers = () => {
             </select>
 
             <select
-              className="border px-3 py-2 rounded"
+              className="border bg-[var(--card-bg)] text-[var(--text-color)] px-3 py-2 rounded"
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
             >
@@ -236,7 +236,7 @@ const AllUsers = () => {
               <div className="overflow-x-auto">
                 <table className="min-w-full bg-[var(--card-bg)] text-[var(--text-color)] shadow-md rounded-lg overflow-hidden">
                   <thead className="bg-gray-100">
-                    <tr className="text-left text-sm font-semibold text-gray-600">
+                    <tr className="text-left text-sm font-semibold bg-[var(--bg-color-dark)] text-[var(--text-color)]">
                       <th className="px-6 py-3">Name</th>
                       <th className="px-6 py-3">Phone</th>
                       <th className="px-6 py-3">Email</th>
@@ -251,9 +251,9 @@ const AllUsers = () => {
                         key={user._id}
                         className={`border-b ${
                           index % 2 === 0
-                            ? "bg-gray-50"
+                            ? "bg-[var(--bg-color2)] text-[var(--text-color)]"
                             : "bg-[var(--card-bg)] text-[var(--text-color)]"
-                        } hover:bg-gray-100`}
+                        } hover:bg-[var(--bg-color-hover)] text-[var(--text-color)]`}
                       >
                         <td className="px-6 py-4">{user.names}</td>
                         <td className="px-6 py-4">{user.phone}</td>
@@ -318,7 +318,7 @@ const AllUsers = () => {
                       setCurrentPage((prev) => Math.max(prev - 1, 1))
                     }
                     disabled={currentPage === 1}
-                    className="px-4 py-2 rounded bg-gray-300 hover:bg-gray-400 disabled:opacity-50"
+                    className="px-4 py-2 rounded bg-[var(--card-bg)] text-[var(--text-color)] hover:bg-gray-400 disabled:opacity-50"
                   >
                     Previous
                   </button>
@@ -330,7 +330,7 @@ const AllUsers = () => {
                       setCurrentPage((prev) => Math.min(prev + 1, totalPages))
                     }
                     disabled={currentPage === totalPages}
-                    className="px-4 py-2 rounded bg-gray-300 hover:bg-gray-400 disabled:opacity-50"
+                    className="px-4 py-2 rounded bg-[var(--card-bg)] text-[var(--text-color)] hover:bg-gray-400 disabled:opacity-50"
                   >
                     Next
                   </button>
@@ -341,7 +341,7 @@ const AllUsers = () => {
 
           {/* View User Modal */}
           {showModal && selectedUser && (
-            <div className="fixed inset-0 z-50 bg-black bg-opacity-30 flex justify-center items-center">
+            <div className="fixed inset-0 z-50 text-[var(--text-color)] bg-opacity-30 flex justify-center items-center">
               <motion.div
                 initial={{ scale: 0.9, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
@@ -387,7 +387,7 @@ const AllUsers = () => {
                 </div>
                 <button
                   onClick={() => setShowModal(false)}
-                  className="mt-4 w-full text-center bg-gray-200 px-4 py-2 rounded hover:bg-gray-300"
+                  className="mt-4 w-full bg-[var(--card-bg)] text-[var(--text-color)] text-center px-4 py-2 rounded hover:bg-gray-300"
                 >
                   Close
                 </button>
@@ -409,7 +409,7 @@ const AllUsers = () => {
                     (confirmAction ?? "").slice(1)}{" "}
                   User
                 </h2>
-                <p className="text-gray-600 mb-4">
+                <p className="text-[var(--text-color)] mb-4">
                   Are you sure you want to {confirmAction}{" "}
                   <strong>{selectedUser.names}</strong>?
                 </p>

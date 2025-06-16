@@ -183,7 +183,7 @@ const AllLocations: React.FC = () => {
               placeholder="Search locations..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="border px-3 py-2 rounded w-full md:w-1/3"
+              className="border bg-[var(--card-bg)] text-[var(--text-color)] px-3 py-2 rounded w-full md:w-1/3"
             />
           </div>
 
@@ -198,13 +198,13 @@ const AllLocations: React.FC = () => {
                   <h2 className="text-lg font-bold mb-2 flex items-center gap-2">
                     <MapPin size={18} /> {loc.location}
                   </h2>
-                  <p className="text-gray-600 text-sm mb-2">
+                  <p className="text-[var(--text-color)] text-sm mb-2">
                     {loc.description || "No description"}
                   </p>
-                  <p className="text-gray-500 text-xs">
+                  <p className="text-[var(--text-color)] text-xs">
                     Latitude: {loc.coordinates[0]}
                   </p>
-                  <p className="text-gray-500 text-xs mb-4">
+                  <p className="text-[var(--text-color)] text-xs mb-4">
                     Longitude: {loc.coordinates[1]}
                   </p>
                 </div>
@@ -281,7 +281,7 @@ const AllLocations: React.FC = () => {
                 className="bg-[var(--card-bg)] text-[var(--text-color)] rounded-lg p-6 shadow-md w-full max-w-sm text-center"
               >
                 <h2 className="text-lg font-semibold mb-4">Confirm Delete</h2>
-                <p className="text-gray-600 mb-4">
+                <p className="text-[var(--text-color)] mb-4">
                   Are you sure you want to delete{" "}
                   <strong>{locationToDelete.location}</strong>?
                 </p>
@@ -294,7 +294,7 @@ const AllLocations: React.FC = () => {
                   </button>
                   <button
                     onClick={() => setConfirmDeleteModal(false)}
-                    className="bg-gray-200 px-4 py-2 rounded hover:bg-gray-300"
+                    className="bg-[var(--card-bg)] text-[var(--text-color)] px-4 py-2 rounded hover:bg-gray-300"
                   >
                     Cancel
                   </button>
@@ -320,33 +320,33 @@ const AllLocations: React.FC = () => {
                     placeholder="Location Name"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    className="border w-full p-2 rounded"
+                    className="border bg-[var(--card-bg)] text-[var(--text-color)] w-full p-2 rounded"
                   />
                   <textarea
                     placeholder="Description (optional)"
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
-                    className="border w-full p-2 rounded"
+                    className="border bg-[var(--card-bg)] text-[var(--text-color)] w-full p-2 rounded"
                   />
                   <input
                     type="text"
                     placeholder="Latitude (-90 to 90)"
                     value={latitude}
                     onChange={(e) => setLatitude(e.target.value)}
-                    className="border w-full p-2 rounded"
+                    className="border bg-[var(--card-bg)] text-[var(--text-color)] w-full p-2 rounded"
                   />
                   <input
                     type="text"
                     placeholder="Longitude (-180 to 180)"
                     value={longitude}
                     onChange={(e) => setLongitude(e.target.value)}
-                    className="border w-full p-2 rounded"
+                    className="border bg-[var(--card-bg)] text-[var(--text-color)] w-full p-2 rounded"
                   />
                 </div>
                 <div className="flex justify-end mt-6 space-x-4">
                   <button
                     onClick={() => setShowModal(false)}
-                    className="bg-gray-300 px-4 py-2 rounded hover:bg-gray-400"
+                    className="bg-[var(--card-bg)] text-[var(--text-color)] px-4 py-2 rounded hover:bg-gray-400"
                   >
                     Cancel
                   </button>

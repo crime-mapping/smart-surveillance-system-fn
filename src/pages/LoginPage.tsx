@@ -123,7 +123,7 @@ const LoginPage: React.FC = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="crimemapping@gmail.com"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border bg-[var(--card-bg)] text-[var(--text-color)] border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
             <div className="mb-6">
@@ -132,13 +132,13 @@ const LoginPage: React.FC = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Password"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border bg-[var(--card-bg)] text-[var(--text-color)] border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full bg-black text-white py-2 rounded-md hover:bg-gray-800 transition duration-300"
+              className="w-full bg-[var(--card-bg)] text-[var(--text-color)] text-white py-2 rounded-md hover:bg-gray-800 transition duration-300"
             >
               {isLoading ? "Logging in..." : "Login"}
             </button>

@@ -104,7 +104,7 @@ const AddCameraModal: React.FC<AddCameraModalProps> = ({
               name="name"
               placeholder="Camera Name"
               onChange={handleInputChange}
-              className="border rounded-md w-full p-2"
+              className="border bg-[var(--card-bg)] rounded-md w-full p-2"
               required
             />
           </div>
@@ -115,14 +115,14 @@ const AddCameraModal: React.FC<AddCameraModalProps> = ({
               placeholder="Camera Stream Url"
               name="streamUrl"
               onChange={handleInputChange}
-              className="border rounded-md w-full p-2"
+              className="border bg-[var(--card-bg)] rounded-md w-full p-2"
               required
             />
           </div>
           <div className="mb-4">
             <select
               name="location"
-              className="border rounded-md w-full p-2"
+              className="border bg-[var(--card-bg)] rounded-md w-full p-2"
               required
               value={camera.location}
               onChange={handleInputChange}
@@ -142,7 +142,7 @@ const AddCameraModal: React.FC<AddCameraModalProps> = ({
               name="description"
               value={camera.description}
               onChange={handleInputChange}
-              className="border rounded-md w-full p-2 h-20"
+              className="border bg-[var(--card-bg)] rounded-md w-full p-2 h-20"
             />
           </div>
           <button

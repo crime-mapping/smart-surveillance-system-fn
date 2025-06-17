@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "../config/axios";
-import { formatDate } from "../utils/formatDate";
 import DashboardLayout from "../Layout/DashboardLayout";
-import { useNavigate } from "react-router-dom";
 import CrimeReportsSkeleton from "../skeletons/CrimeReportsSkeleton";
+import CrimeCard from "../components/CrimeCard";
 
 interface ICrime {
   _id: string;
@@ -34,9 +33,7 @@ const CrimeReports: React.FC = () => {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [loading, setLoading] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1); // ✅ new pagination state
-
-  const navigate = useNavigate();
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     fetchCrimes();
@@ -128,7 +125,7 @@ const CrimeReports: React.FC = () => {
       {loading ? (
         <CrimeReportsSkeleton />
       ) : (
-        <div className="p-8 mt-20">
+        <div className="py-8 mt-20">
           <div className="flex justify-between items-center mb-6">
             <h1 className="text-2xl font-bold">Crime Reports</h1>
             {/* Legend */}
@@ -170,7 +167,7 @@ const CrimeReports: React.FC = () => {
                 key={item}
                 className={`px-4 py-2 rounded ${
                   tab === item
-                    ? "bg-blue-600 text-white"
+                    ? "bg-blue-300 text-white"
                     : "bg-[var(--card-bg)]"
                 }`}
                 onClick={() => setTab(item)}
@@ -248,39 +245,7 @@ const CrimeReports: React.FC = () => {
               <p>No crime reports found.</p>
             ) : (
               currentCrimes.map((crime) => (
-                <div
-                  key={crime._id}
-                  className="bg-[var(--card-bg)] text-[var(--text-color)] p-4 rounded-lg shadow-md hover:shadow-lg transition"
-                >
-                  <h2 className="font-bold text-lg mb-2">
-                    Crime Report #{crime._id.substring(0, 6)}
-                  </h2>
-                  <div
-                    className={`text-white font-semibold px-2 py-1 rounded mb-2 ${
-                      crime.emergencyLevel === "HIGH"
-                        ? "bg-red-300"
-                        : crime.emergencyLevel === "MEDIUM"
-                        ? "bg-yellow-400"
-                        : "bg-green-400"
-                    }`}
-                  >
-                    {crime.crimeType}
-                  </div>
-                  <p className="text-[var(--text-color)] text-sm mb-1">
-                    {formatDate(crime.dateOfOccurrence)}
-                  </p>
-                  <p className="text-[var(--text-color)] text-sm mb-4">
-                    {crime.crimeLocation?.location}
-                  </p>
-                  <button
-                    onClick={() => {
-                      navigate(`/crime/${crime._id}`);
-                    }}
-                    className="border bg-[var(--card-bg)] text-[var(--text-color)] px-4 py-2 rounded hover:bg-gray-200"
-                  >
-                    View Details
-                  </button>
-                </div>
+                <CrimeCard key={crime._id} crime={crime} />
               ))
             )}
           </div>

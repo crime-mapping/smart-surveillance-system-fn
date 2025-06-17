@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "../../config/axios";
 import { FaUser } from "react-icons/fa";
 import ThemeToggle from "../../components/ThemeToggle";
+
 const Header: React.FC = () => {
   const [username, setUsername] = useState("");
 
@@ -23,7 +24,7 @@ const Header: React.FC = () => {
 
   const navigate = useNavigate();
   return (
-    <header className="flex fixed top-0 left-56 right-0 rounded ml-2 mr-4 z-50 items-center justify-between py-2 px-4 bg-[var(--card-bg)] text-[var(--text-color)] shadow-md">
+    <header className="flex fixed top-0 left-52 right-0 rounded  z-50 items-center justify-between py-2 px-4 bg-[var(--card-bg)] text-[var(--text-color)] shadow-md">
       <h1 className="text-xl italic font-semibold">
         Smart Surveillance System
       </h1>

@@ -1,4 +1,3 @@
-//import { NotificationProvider } from "./contexts/notificationContext";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
 import TwoFactorAuth from "./pages/TwoFactorAuth";
@@ -99,12 +98,10 @@ function App() {
   ]);
 
   return (
-    // <NotificationProvider>
     <>
       <RouterProvider router={router} />
       <ToastContainer />
     </>
-    //</NotificationProvider>
   );
 }
 

@@ -1,11 +1,15 @@
 import React from "react";
 import { Line } from "react-chartjs-2";
+import { useTheme } from "../../contexts/ThemeContext";
 
 interface CrimeTrendsChartProps {
   trendData: { _id: number; total: number }[];
 }
 
 const CrimeTrendsChart: React.FC<CrimeTrendsChartProps> = ({ trendData }) => {
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
+
   const labels = [
     "January",
     "February",
@@ -39,6 +43,27 @@ const CrimeTrendsChart: React.FC<CrimeTrendsChartProps> = ({ trendData }) => {
     plugins: {
       legend: {
         position: "top" as const,
+        labels: {
+          color: isDark ? "#f3f4f6" : "#1f2937",
+        },
+      },
+    },
+    scales: {
+      x: {
+        ticks: {
+          color: isDark ? "#f3f4f6" : "#1f2937",
+        },
+        grid: {
+          color: isDark ? "#374151" : "#e5e7eb",
+        },
+      },
+      y: {
+        ticks: {
+          color: isDark ? "#f3f4f6" : "#1f2937",
+        },
+        grid: {
+          color: isDark ? "#374151" : "#e5e7eb",
+        },
       },
     },
   };
@@ -48,7 +73,7 @@ const CrimeTrendsChart: React.FC<CrimeTrendsChartProps> = ({ trendData }) => {
       <h2 className="text-left text-lg font-semibold mb-4">
         Crime Trends Over Time
       </h2>
-      <div className="w-1/2">
+      <div className="w-1/2 h-[300px]">
         <Line data={data} options={options} />
       </div>
     </div>

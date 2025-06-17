@@ -7,7 +7,7 @@ const ThemeToggle = () => {
   return (
     <button
       onClick={toggleTheme}
-      className="p-2 mr-4 rounded-full text-white bg-primary transition-all"
+      className="p-2 mr-4 rounded-full text-white bg-blue-300 transition-all"
       title={`Switch to ${theme === "light" ? "dark" : "light"} mode`}
     >
       {theme === "light" ? <FiMoon /> : <FiSun />}

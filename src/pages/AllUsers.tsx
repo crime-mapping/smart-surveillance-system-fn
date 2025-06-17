@@ -426,7 +426,7 @@ const AllUsers = () => {
                   </button>
                   <button
                     onClick={() => setShowConfirmModal(false)}
-                    className="bg-gray-200 px-4 py-2 rounded hover:bg-gray-300"
+                    className="bg-gray-200 text-[var(--card-bg)] px-4 py-2 rounded hover:bg-gray-300"
                   >
                     Cancel
                   </button>

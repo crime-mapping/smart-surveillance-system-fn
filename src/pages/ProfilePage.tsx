@@ -138,10 +138,10 @@ const ProfilePage: React.FC = () => {
       {loading ? (
         <ProfilePageSkeleton />
       ) : (
-        <div className="min-h-screen mt-24 pt-4 md:flex-row">
+        <div className="min-h-screen mt-20 pt-4 md:flex-row">
           {/* Left - Profile Card */}
           <div className="flex flex-row gap-4 my-2 items-center">
-            <div className="bg-[var(--card-bg)] text-[var(--text-color)]  flex flex-col items-center rounded-lg min-h-80 max-h-96 shadow-md p-8 w-1/2 text-center">
+            <div className="bg-[var(--card-bg)] text-[var(--text-color)]  flex flex-col items-center rounded-lg min-h-80 max-h-96 shadow-md py-8 w-1/2 text-center">
               <div className="w-32 h-32 rounded-full bg-gray-200 flex items-center justify-center">
                 <FaUser className="text-gray-600 h-16 w-16 text-5xl" />
               </div>

@@ -11,6 +11,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+import { useTheme } from "../../contexts/ThemeContext";
 
 ChartJS.register(
   CategoryScale,
@@ -30,6 +31,9 @@ interface CrimeVarianceChartProps {
 const CrimeVarianceChart: React.FC<CrimeVarianceChartProps> = ({
   monthlyData,
 }) => {
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
+
   const labels = [
     "January",
     "February",
@@ -63,11 +67,41 @@ const CrimeVarianceChart: React.FC<CrimeVarianceChartProps> = ({
         label: "Crime Rate",
         data: monthlyData.map((item) =>
           parseFloat((item.total / 50).toFixed(2))
-        ), // Example calculation
+        ),
         fill: false,
         borderColor: "#FF6384",
       },
     ],
+  };
+
+  const chartOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        labels: {
+          color: isDark ? "#f3f4f6" : "#1f2937",
+        },
+      },
+    },
+    scales: {
+      x: {
+        ticks: {
+          color: isDark ? "#f3f4f6" : "#1f2937",
+        },
+        grid: {
+          color: isDark ? "#374151" : "#e5e7eb",
+        },
+      },
+      y: {
+        ticks: {
+          color: isDark ? "#f3f4f6" : "#1f2937",
+        },
+        grid: {
+          color: isDark ? "#374151" : "#e5e7eb",
+        },
+      },
+    },
   };
 
   return (
@@ -76,17 +110,11 @@ const CrimeVarianceChart: React.FC<CrimeVarianceChartProps> = ({
         Crimes Variance
       </h2>
       <div className="flex gap-[10%]">
-        <div className="mb-6 w-[45%]">
-          <Bar
-            data={barData}
-            options={{ responsive: true, maintainAspectRatio: false }}
-          />
+        <div className="mb-6 w-[45%] h-[300px]">
+          <Bar data={barData} options={chartOptions} />
         </div>
-        <div className="mb-6 w-[45%]">
-          <Line
-            data={lineData}
-            options={{ responsive: true, maintainAspectRatio: false }}
-          />
+        <div className="mb-6 w-[45%] h-[300px]">
+          <Line data={lineData} options={chartOptions} />
         </div>
       </div>
     </div>

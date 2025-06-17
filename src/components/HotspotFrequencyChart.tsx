@@ -35,7 +35,7 @@ const HotspotFrequencyChart = () => {
   };
 
   return (
-    <div className="w-[500px] h-[300px]">
+    <div className="w-[500px] p-4 h-[300px]">
       <h2 className="text-xl font-semibold mb-4">Top Crime Hotspots</h2>
       {loading ? (
         <LoadingSpinner message="Fetching Crime hotspots frequency data..." />

@@ -42,7 +42,7 @@ export default {
           "--bg-color-hover": "#374151",  
           "--bg-color-dark": "#111827",
           "--text-color": "#f3f4f6",
-          "--card-bg": "#374151",
+          "--card-bg": "#1d2a40",
           "--primary": "#2563eb",
           "--primary-gradient-start": "#000000",
           "--primary-gradient-end": "#08203E",

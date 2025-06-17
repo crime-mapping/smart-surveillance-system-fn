@@ -53,7 +53,7 @@ const StackedBarChart = () => {
   });
 
   return (
-    <div className="w-full h-[400px]">
+    <div className="w-full p-4 h-[400px]">
       {loading ? (
         <LoadingSpinner message="Fetching Crime Analytics data..." />
       ) : (

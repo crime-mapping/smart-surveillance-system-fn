@@ -46,7 +46,7 @@ const CrimeLocationPieChart = () => {
 
   return (
     <div>
-      <h2 className="text-xl font-semibold mb-4">
+      <h2 className="text-xl p-4 font-semibold mb-4">
         Crime Distribution by Location
       </h2>
       <div className="w-[300px] h-[300px] mx-auto">

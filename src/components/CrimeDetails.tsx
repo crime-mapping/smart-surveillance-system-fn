@@ -24,6 +24,8 @@ export interface ICrime {
   supportingImage?: string;
 }
 
+// ... imports remain the same
+
 const CrimeDetails: React.FC = () => {
   const { id } = useParams();
   const [loading, setLoading] = useState(false);
@@ -46,7 +48,6 @@ const CrimeDetails: React.FC = () => {
         setLoading(false);
       }
     };
-
     fetchSingleCrime();
   }, []);
 
@@ -81,7 +82,7 @@ const CrimeDetails: React.FC = () => {
     }
 
     doc.text(`Suspect Info: Male, approx. 30–40 years old, 6ft tall`, 20, 100);
-    doc.text(`Evidence: 2 photos taken`, 20, 110);
+    doc.text(`Evidence: 1 photo (if attached)`, 20, 110);
 
     doc.save(`crime_report_${id}.pdf`);
   };
@@ -91,81 +92,92 @@ const CrimeDetails: React.FC = () => {
       {loading ? (
         <SingleCrimeSkeleton />
       ) : (
-        <div className="mt-20 p-6 my-4 bg-[var(--card-bg)] text-[var(--text-color)] shadow rounded-md">
-          <span
-            onClick={() => {
-              navigate("/reports");
-            }}
-            className="cursor-pointer rounded-md"
+        <div className="mt-24 p-6 my-4 bg-[var(--card-bg)] text-[var(--text-color)] shadow-md rounded-xl max-w-4xl mx-auto">
+          <button
+            onClick={() => navigate("/reports")}
+            className="flex items-center text-blue-600 text-lg hover:underline mb-4"
           >
-            <FiArrowLeft className="w-16 h-10" />
-          </span>
-          <h2 className="text-center text-2xl font-bold mb-4">
-            Single Crime Report Details
-          </h2>
-          <h3 className="text-xl font-semibold">
-            Crime Report <span className="italic">#{id}</span>
-          </h3>
+            <FiArrowLeft className="mr-2" /> Back to Reports
+          </button>
 
-          <div className="bg-red-600 text-white px-4 py-2 rounded shadow mt-2 mb-4 w-fit">
-            {crime?.crimeType}
+          <h2 className="text-3xl font-bold text-center mb-6">
+            Crime Report # ...{id?.substring(12)}
+          </h2>
+
+          {/* Crime Type and Status */}
+          <div className="flex items-center justify-between flex-wrap mb-4">
+            <h3 className="text-xl font-semibold">{crime?.crimeType}</h3>
+            <span
+              className={`text-sm font-bold px-3 py-1 rounded-full uppercase tracking-wide ${
+                crime?.emergencyLevel === "HIGH"
+                  ? "bg-red-100 text-red-700"
+                  : crime?.emergencyLevel === "MEDIUM"
+                  ? "bg-yellow-100 text-yellow-700"
+                  : "bg-green-100 text-green-700"
+              }`}
+            >
+              {crime?.emergencyLevel}
+            </span>
           </div>
 
-          <div className="flex items-center text-gray-700 mb-2">
+          {/* Date and Location */}
+          <div className="flex items-center text-sm text-[var(--text-color)] dark:text-gray-400 mb-3">
             <CalendarDays className="w-5 h-5 mr-2" />
             {formatDate(crime?.dateOfOccurrence)}
           </div>
-
-          <div className="flex items-center text-gray-700 mb-4">
+          <div className="flex items-center text-sm text-[var(--text-color)] dark:text-gray-400 mb-6">
             <MapPin className="w-5 h-5 mr-2" />
-            <span className="mr-2"> {crime?.crimeLocation?.location} </span>
-            KK 230 St, Kigali
+            {crime?.crimeLocation?.location}, Kigali
           </div>
+
+          {/* Description */}
           {crime?.crimeDescription && (
-            <div className="mb-4">
-              <h4 className="font-semibold">Description</h4>
-              <p className="text-gray-600">{crime?.crimeDescription}</p>
+            <div className="mb-6">
+              <h4 className="text-xl font-semibold mb-1">Description</h4>
+              <p className="text-sm text-[var(--text-color)]">
+                {crime.crimeDescription}
+              </p>
             </div>
           )}
 
-          <div className="mb-4">
-            <h4 className="font-semibold">Suspect Information</h4>
-            <div className="flex items-center text-gray-700">
+          {/* Suspect Info */}
+          <div className="mb-6">
+            <h3 className="text-xl font-semibold mb-1">Suspect Information</h3>
+            <div className="flex items-center text-sm text-[var(--text-color)]">
               <User className="w-5 h-5 mr-2" />
               Male, approx. 30–40 years old, 6ft tall
             </div>
           </div>
 
-          <div className="mb-4">
-            <h4 className="font-semibold">Evidences</h4>
+          {/* Evidence */}
+          <div className="mb-6">
+            <h3 className="text-xl font-semibold mb-1">Evidence</h3>
             {crime?.supportingImage ? (
               <>
-                {" "}
-                <div className="flex items-center text-gray-700">
-                  <Camera className="w-5 h-5 mr-2" />1 photo was taken
+                <div className="flex items-center text-sm text-[var(--text-color)] mb-2">
+                  <Camera className="w-5 h-5 mr-2" /> Photo evidence attached
                 </div>
                 <img
-                  className="rounded-md h-80"
-                  src={crime?.supportingImage}
-                  alt="Crime Supporting image"
+                  src={crime.supportingImage}
+                  alt="Evidence"
+                  className="rounded-lg border w-full max-h-[400px] object-cover shadow-md"
                 />
               </>
             ) : (
-              <p className="italic text-md mt-2 text-red-500">
-                No evidences found
-              </p>
+              <p className="italic text-red-500">No evidence provided</p>
             )}
           </div>
 
-          <button
-            onClick={() => {
-              handleDownload();
-            }}
-            className="flex items-center justify-center gap-2 bg-primaryBackground  text-white px-4 py-2 rounded shadow hover:bg-gray-900"
-          >
-            <Download className="w-4 h-4" />
-            Download Report
-          </button>
+          {/* Download Button */}
+          <div className="flex justify-end">
+            <button
+              onClick={handleDownload}
+              className="flex items-center gap-2 bg-primaryGradientStart hover:bg-primaryGradientEnd text-white px-5 py-2 rounded-md shadow transition"
+            >
+              <Download className="w-4 h-4" />
+              Download Report
+            </button>
+          </div>
         </div>
       )}
     </DashboardLayout>

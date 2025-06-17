@@ -84,7 +84,7 @@ const Cameras = () => {
         <CameraListSkeleton />
       ) : (
         <>
-          <div className="flex justify-between mt-24 items-center my-4">
+          <div className="flex justify-between mt-28 items-center my-4">
             <div className="flex gap-4">
               <button
                 className={`px-4 py-2 text-[var(--text-color)] rounded ${

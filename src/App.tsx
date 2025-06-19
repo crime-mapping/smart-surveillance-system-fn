@@ -18,6 +18,10 @@ import ProfilePage from "./pages/ProfilePage";
 import CrimeReports from "./pages/CrimeReports";
 import AllLocations from "./pages/AllLocations";
 import Analytics from "./pages/analytics";
+import ResetPassword from "./pages/ResetPassword";
+import VerificationCode from "./pages/VerificationCode";
+import PasswordConfirmation from "./pages/PasswordConfirmation";
+import PasswordResetSuccess from "./pages/PasswordResetSuccess";
 
 const userRole = sessionStorage.getItem("userRole");
 
@@ -86,6 +90,22 @@ function App() {
     {
       path: "/2f-auth",
       element: <TwoFactorAuth />,
+    },
+    {
+      path: "/password-reset",
+      element: <ResetPassword />,
+    },
+    {
+      path: "/verificationcode",
+      element: <VerificationCode />,
+    },
+    {
+      path: "/passwordconfirmation",
+      element: <PasswordConfirmation />,
+    },
+    {
+      path: "/password-reset-success",
+      element: <PasswordResetSuccess />,
     },
     {
       path: "/help",

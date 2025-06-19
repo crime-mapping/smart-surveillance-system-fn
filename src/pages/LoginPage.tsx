@@ -154,9 +154,15 @@ const LoginPage: React.FC = () => {
             </button>
           </div>
           <div className="mt-4 text-center">
-            <a href="#" className="text-sm text-blue-500 hover:underline">
-              Forgot Password? Click here
-            </a>
+            <span>
+              Forgot Password?{" "}
+              <a
+                href="/password-reset"
+                className="text-sm text-blue-500 hover:underline"
+              >
+                Click here
+              </a>
+            </span>
           </div>
         </div>
       </div>

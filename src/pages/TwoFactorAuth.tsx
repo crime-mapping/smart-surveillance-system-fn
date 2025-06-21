@@ -80,7 +80,7 @@ const TwoFactorAuth: React.FC = () => {
     <div className="w-[100vw] gap-0 flex">
       <WelcomePane />
       <div className="w-1/2 flex items-center justify-center min-h-screen">
-        <div className="w-full max-w-md bg-[var(--card-bg)] text-[var(--text-color)] rounded-lg">
+        <div className="w-full max-w-md text-[var(--text-color)] rounded-lg">
           <h2 className="text-2xl font-bold mb-4 text-center">
             Two Factor Authentication
           </h2>
@@ -96,7 +96,7 @@ const TwoFactorAuth: React.FC = () => {
                 inputMode="numeric"
                 pattern="[0-9]*"
                 maxLength={1}
-                className="w-12 h-12 text-center text-2xl border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-12 h-12 text-center text-2xl border bg-[var(--card-bg)] border-[var(--text-color)] rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 value={digit}
                 onChange={(e) => handleChange(index, e.target.value)}
                 onKeyDown={(e) => {
@@ -117,7 +117,7 @@ const TwoFactorAuth: React.FC = () => {
           <button
             onClick={() => handleSubmit()}
             disabled={isLoading}
-            className="w-full bg-black text-white py-3 rounded-md hover:bg-gray-800 transition duration-300"
+            className="w-full text-[var(--card-bg)] bg-[var(--text-color)] py-3 rounded-md transition duration-300"
           >
             {isLoading ? "Verifying..." : "Continue"}
           </button>

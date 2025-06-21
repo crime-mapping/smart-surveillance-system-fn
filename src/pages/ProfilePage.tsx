@@ -189,7 +189,7 @@ const ProfilePage: React.FC = () => {
 
             {/* Update Profile Section */}
             <div className="bg-[var(--card-bg)] text-[var(--text-color)] w-full rounded-lg pb-2 shadow-md overflow-hidden">
-              <div className="bg-primaryBackground  flex justify-between text-white px-4 py-2 font-semibold text-md flex items-center gap-2">
+              <div className="bg-[var(--card-bg)] text-[var(--text-color)] flex justify-between px-4 py-2 font-semibold text-md flex items-center gap-2">
                 <span className="flex items-center gap-2">
                   <FaUser /> Profile
                 </span>
@@ -209,7 +209,7 @@ const ProfilePage: React.FC = () => {
                   <input
                     name="names"
                     type="text"
-                    className="border w-full p-2 rounded"
+                    className="border bg-[var(--card-bg)] text-[var(--text-color)] w-full p-2 rounded"
                     value={user?.names}
                     disabled={!editingMode}
                     onChange={handleInputChange}
@@ -248,9 +248,9 @@ const ProfilePage: React.FC = () => {
                   onClick={handleProfileUpdate}
                   className={`w-full mt-4 ${
                     editingMode || updatingUser
-                      ? "bg-primaryBackground"
+                      ? "border text-[var(--text-color)]"
                       : "bg-gray-400 cursor-not-allowed"
-                  } text-white p-2 rounded`}
+                  } p-2 rounded`}
                 >
                   {updatingUser ? "Updating Profile..." : "Update Profile"}
                 </button>
@@ -303,7 +303,7 @@ const ProfilePage: React.FC = () => {
 
               <button
                 onClick={handlePasswordUpdate}
-                className="w-full mt-4 bg-primaryBackground text-white p-2 rounded"
+                className="w-full mt-4 border text-[var(--text-color)] p-2 rounded"
               >
                 {updatingPassword ? "Updating Password..." : "Update Password"}
               </button>

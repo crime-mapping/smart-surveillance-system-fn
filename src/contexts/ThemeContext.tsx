@@ -21,7 +21,15 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
   const [theme, setTheme] = useState<Theme>(getInitialTheme);
 
   useEffect(() => {
+    // Update both data-theme for existing components and dark class for Tailwind
     document.documentElement.setAttribute("data-theme", theme);
+    
+    if (theme === "dark") {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+    
     localStorage.setItem("theme", theme);
   }, [theme]);
 

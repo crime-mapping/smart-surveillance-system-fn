@@ -5,12 +5,13 @@ import { Loader2 } from "lucide-react";
 import axios from "../config/axios";
 import WelcomePane from "../components/welcomePane";
 import { PiLockKeyOpenFill } from "react-icons/pi";
+import { AxiosError } from "axios";
 
 const VerificationCode = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const email = location.state?.email || "";
-  const [code, setCode] = useState(["", "", "", "", "", ""]);
+  const [code, setCode] = useState<string[]>(["", "", "", "", "", ""]);
   const [loading, setLoading] = useState(false);
   const inputRefs = useRef<(HTMLInputElement | null)[]>(
     new Array(6).fill(null)
@@ -19,7 +20,7 @@ const VerificationCode = () => {
   const handleChange = (index: number, value: string) => {
     if (isNaN(Number(value)) || value.length > 1) return;
 
-    let newCode = [...code];
+    const newCode = [...code];
     newCode[index] = value;
     setCode(newCode);
 
@@ -51,21 +52,26 @@ const VerificationCode = () => {
       });
       toast.success(response.data.message);
       navigate("/passwordconfirmation", { state: { email, resetCode } });
-    } catch (error: any) {
-      toast.error(error.response?.data?.error || "Invalid code. Try again!");
+    } catch (error: unknown) {
+      if (error instanceof AxiosError) {
+        toast.error(error.response?.data?.error || "Invalid code. Try again!");
+      } else {
+        toast.error("Something went wrong.");
+      }
     }
     setLoading(false);
   };
+
 
   return (
     <div className="flex flex-col lg:flex-row h-screen">
       <WelcomePane />
       <div className="flex flex-col items-center m-auto">
         <PiLockKeyOpenFill className="text-7xl text-primaryBackground mx-auto mb-4" />
-        <h1 className="text-2xl font-bold text-gray-800 text-center mb-6">
-          Please Enter Reset Password Code Below
+        <h1 className="text-2xl font-bold text-gray-800 text-center mb-6 uppercase">
+          Please Enter Verification Code Below
         </h1>
-        <p>Please enter 6 digits we jsut sent to your email.</p>
+        <p className="text-center mb-6">Please enter 6 digits we jsut sent to your email.</p>
         {/* 6-digit input field */}
         <div className="flex space-x-2 justify-center mb-8">
           {code.map((num, index) => (
@@ -82,14 +88,19 @@ const VerificationCode = () => {
           ))}
         </div>
 
-        <div className="flex justify-between items-center">
+        <div className="flex w-full gap-x-4 mt-6">
+          <button
+            onClick={() => navigate("/password-reset")}
+            className="py-3 px-6 w-1/2 border border-gray-300 rounded-lg font-medium hover:bg-blue-700 hover:text-white transition"
+          >
+            Resend Code
+          </button>
           <button
             type="submit"
-            className={`py-3 px-6 rounded-lg font-medium hover:bg-blue-700 transition ${
-              code.some((num) => num === "")
-                ? "bg-gray-400 text-gray-700 w-full cursor-not-allowed"
-                : "bg-primaryBackground w-full text-white hover:bg-blue-700"
-            }`}
+            className={`py-3 px-6 w-1/2 rounded-lg font-medium hover:bg-blue-700 hover:text-white transition ${code.some((num) => num === "")
+              ? "bg-gray-400 text-gray-700 cursor-not-allowed"
+              : "bg-primaryBackground text-white hover:bg-blue-700"
+              }`}
             disabled={code.some((num) => num === "")}
             onClick={() => handleSubmit(code.join(""))}
           >

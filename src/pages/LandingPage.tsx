@@ -1,308 +1,471 @@
-import { ArrowRight, ChevronUp, Menu } from "lucide-react";
-import {
-  FaFacebook,
-  FaTwitter,
-  FaLinkedin,
-  FaInstagram,
-  FaCamera,
-  FaMapMarkedAlt,
-  FaShieldAlt,
-  FaUserShield,
-  FaChartBar,
-  FaRobot,
-} from "react-icons/fa";
-import { ShieldCheck, MapPin, Clock } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
-import homeImg from "../assets/homeImg.png";
+import { ArrowRight, Menu, X, Shield, Camera, MapPin, Bell, BarChart3, Zap, CheckCircle, Play, ExternalLink } from "lucide-react";
+import { Link } from "react-router-dom";
 import Logo from "../components/Logo";
 import ThemeToggle from "../components/ThemeToggle";
 import { motion } from "framer-motion";
 import { useState } from "react";
 
-const icons = [
-  <FaCamera size={30} color="text-[var(--text-color)]" />, // Surveillance
-  <FaMapMarkedAlt size={30} color="text-[var(--text-color)]" />, // Mapping
-  <FaShieldAlt size={30} color="text-[var(--text-color)]" />, // Protection
-  <FaUserShield size={30} color="text-[var(--text-color)]" />, // Safety
-  <FaChartBar size={30} color="text-[var(--text-color)]" />, // Analytics
-  <FaRobot size={30} color="text-[var(--text-color)]" />, // AI
-];
 
 const LandingPage = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const navigate = useNavigate();
+
+  const features = [
+    {
+      icon: <Camera className="w-8 h-8" />,
+      title: "AI-Powered Video Analysis",
+      description: "Real-time analysis of surveillance feeds with advanced ML algorithms detecting suspicious activities within seconds."
+    },
+    {
+      icon: <MapPin className="w-8 h-8" />,
+      title: "Predictive Crime Mapping",
+      description: "Dynamic crime hotspot identification using historical data and predictive modeling for proactive law enforcement."
+    },
+    {
+      icon: <Bell className="w-8 h-8" />,
+      title: "Instant Alerts",
+      description: "Immediate notifications to law enforcement with video clips, timestamps, and precise location data."
+    },
+    {
+      icon: <BarChart3 className="w-8 h-8" />,
+      title: "Advanced Analytics",
+      description: "Comprehensive crime pattern analysis with interactive dashboards for data-driven decision making."
+    },
+    {
+      icon: <Shield className="w-8 h-8" />,
+      title: "Enterprise Security",
+      description: "End-to-end encryption, role-based access control, and full compliance with privacy regulations."
+    },
+    {
+      icon: <Zap className="w-8 h-8" />,
+      title: "Real-Time Processing",
+      description: "Sub-minute response times with scalable infrastructure supporting multiple concurrent video feeds."
+    }
+  ];
+
+  const stats = [
+    { value: "< 1 min", label: "Response Time", description: "Average detection to alert time" },
+    { value: "99.9%", label: "Uptime", description: "System availability guarantee" },
+    { value: "5+", label: "Concurrent Feeds", description: "Simultaneous video processing" },
+    { value: "24/7", label: "Monitoring", description: "Continuous surveillance coverage" }
+  ];
+
+  const stakeholders = [
+    {
+      title: "Law Enforcement",
+      description: "Enhance response capabilities with AI-powered threat detection and predictive analytics.",
+      benefits: ["Faster response times", "Proactive crime prevention", "Data-driven insights", "Resource optimization"]
+    },
+    {
+      title: "City Officials",
+      description: "Improve public safety infrastructure with comprehensive crime mapping and analytics.",
+      benefits: ["Crime hotspot identification", "Resource allocation", "Policy insights", "Public safety metrics"]
+    },
+    {
+      title: "Security Providers",
+      description: "Integrate existing camera networks with advanced AI capabilities for enhanced security.",
+      benefits: ["Infrastructure integration", "Enhanced capabilities", "Cost-effective upgrades", "Scalable solutions"]
+    }
+  ];
 
   return (
-    <div className="bg-[var(--card-bg)] w-full  text-[var(--text-color)] min-h-screen overflow-x-hidden">
-      <header className="flex justify-between items-center p-6 md:p-10 relative z-10">
-        <Logo />
-        <nav className="hidden md:flex items-center space-x-6 text-lg">
-          <ThemeToggle />
-          <a href="#about" className="hover:text-purple-400">
-            About Us
-          </a>
-          <a href="#contact" className="hover:text-purple-400">
-            Contact Us
-          </a>
-          <Link
-            to="/login"
-            className="px-4 py-2 rounded bg-purple-600 text-white hover:bg-purple-700"
-          >
-            Login
-          </Link>
-        </nav>
-        <div className="md:hidden z-20">
-          <button onClick={() => setIsMenuOpen(!isMenuOpen)}>
-            <Menu className="text-[var(--text-color)]" />
-          </button>
-        </div>
-        {isMenuOpen && (
-          <div className="absolute top-20 right-6 bg-[var(--card-bg)] border rounded shadow-md p-4 space-y-4 text-right">
-            <a href="#about" className="block hover:text-purple-400">
-              About Us
-            </a>
-            <a href="#contact" className="block hover:text-purple-400">
-              Contact Us
-            </a>
-            <Link
-              to="/login"
-              className="block px-4 py-2 rounded bg-purple-600 text-white hover:bg-purple-700"
-            >
-              Login
-            </Link>
+    <div className="bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-slate-100 min-h-screen">
+      {/* Header */}
+      <header className="bg-white/95 dark:bg-slate-800/95 backdrop-blur-sm shadow-sm sticky top-0 z-50 border-b border-slate-200/50 dark:border-slate-700/50">
+        <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
+          <div className="flex justify-between items-center h-16">
+            <div className="flex items-center space-x-4">
+              <Logo />
+              <h1 className="text-2xl font-bold">Smart Surveillance System</h1>
+            </div>
+
+            {/* Desktop Navigation */}
+            <nav className="hidden md:flex items-center space-x-6 lg:space-x-8">
+              <a href="#features" className="text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors font-medium">
+                Features
+              </a>
+              <a href="#stakeholders" className="text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors font-medium">
+                Solutions
+              </a>
+              <a href="#contact" className="text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors font-medium">
+                Contact
+              </a>
+              <ThemeToggle />
+              <Link
+                to="/login"
+                className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors font-medium shadow-sm"
+              >
+                Access System
+              </Link>
+            </nav>
+
+            {/* Mobile menu button */}
+            <div className="md:hidden flex items-center space-x-3">
+              <ThemeToggle />
+              <button
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                className="text-slate-700 dark:text-slate-300 p-2 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition-colors"
+              >
+                {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
+              </button>
+            </div>
           </div>
+        </div>
+
+        {/* Mobile Navigation */}
+        {isMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            className="md:hidden bg-white dark:bg-slate-800 border-t border-slate-200 dark:border-slate-700 shadow-lg"
+          >
+            <div className="px-4 py-4 space-y-2">
+              <a
+                href="#features"
+                className="block px-4 py-3 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 hover:text-blue-600 dark:hover:text-blue-400 rounded-lg transition-colors font-medium"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Features
+              </a>
+              <a
+                href="#stakeholders"
+                className="block px-4 py-3 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 hover:text-blue-600 dark:hover:text-blue-400 rounded-lg transition-colors font-medium"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Solutions
+              </a>
+              <a
+                href="#contact"
+                className="block px-4 py-3 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 hover:text-blue-600 dark:hover:text-blue-400 rounded-lg transition-colors font-medium"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Contact
+              </a>
+              <Link
+                to="/login"
+                className="block mx-4 mt-4 bg-blue-600 text-white px-4 py-3 rounded-lg hover:bg-blue-700 transition-colors font-medium text-center shadow-sm"
+              >
+                Access System
+              </Link>
+            </div>
+          </motion.div>
         )}
       </header>
 
-      <section className="px-6 py-16 flex flex-col md:flex-row items-center gap-20 relative overflow-hidden">
-        <motion.div
-          className="md:w-1/2 z-10"
-          initial={{ opacity: 0, x: -50 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 1 }}
-        >
-          <h1 className="text-5xl font-extrabold leading-tight mb-4">
-            Building a Safer Kigali Together
-          </h1>
-          <p className="text-xl mb-6 text-[var(--text-color)]">
-            Smart surveillance and AI-driven crime mapping in real-time.
-          </p>
-          <button
-            onClick={() => navigate("/login")}
-            className="bg-purple-600 text-white px-6 py-3 rounded-full flex items-center hover:bg-purple-700"
-          >
-            Get Started <ArrowRight className="ml-2" />
-          </button>
-        </motion.div>
+      {/* Hero Section */}
+      <section className="relative bg-gradient-to-br from-blue-50 via-indigo-50 to-blue-100 dark:from-slate-800 dark:via-slate-850 dark:to-slate-900 py-16 sm:py-20 lg:py-24 xl:py-32 overflow-hidden">
+        {/* Background Pattern */}
+        <div className="absolute inset-0 bg-grid-slate-100 dark:bg-grid-slate-800/[0.04] bg-[size:20px_20px]"></div>
 
-        <motion.div className="relative w-[280px] h-[280px] flex items-center justify-center z-10">
-          <div className="absolute w-full h-full rounded-full border-2  animate-spin-slow"></div>
-          {icons.map((icon, i) => (
+        <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 relative">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 xl:gap-16 items-center">
             <motion.div
-              key={i}
-              className={`absolute w-12 h-12  animate-float${i}`}
+              initial={{ opacity: 0, x: -50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
+              className="text-center lg:text-left max-w-2xl mx-auto lg:mx-0"
             >
-              {icon}
+              <div className="inline-flex items-center bg-blue-100 dark:bg-blue-900/50 text-blue-800 dark:text-blue-200 px-4 py-2 rounded-full text-sm font-medium mb-6 border border-blue-200 dark:border-blue-800">
+                <Shield className="w-4 h-4 mr-2" />
+                AUCA Innovation Center
+              </div>
+
+              <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-bold text-slate-900 dark:text-white mb-6 leading-tight">
+                AI-Powered Crime Prevention for{" "}
+                <span className="text-blue-600 dark:text-blue-400">Safer Cities</span>
+              </h1>
+
+              <p className="text-lg sm:text-xl lg:text-xl xl:text-2xl text-slate-600 dark:text-slate-300 mb-8 leading-relaxed">
+                Advanced surveillance system combining artificial intelligence and machine learning
+                for real-time threat detection, predictive crime mapping, and instant law enforcement alerts.
+              </p>
+
+              <div className="flex flex-col sm:flex-row gap-4 mb-8 justify-center lg:justify-start">
+                <a
+                  href="https://calendly.com/muneangechaste/30min"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-blue-600 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg hover:bg-blue-700 transition-colors font-medium flex items-center justify-center shadow-lg hover:shadow-xl transform hover:scale-105"
+                >
+                  Request Demo
+                  <ArrowRight className="ml-2 w-4 h-4 sm:w-5 sm:h-5" />
+                </a>
+                <button className="border-2 border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 px-6 sm:px-8 py-3 sm:py-4 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors font-medium flex items-center justify-center">
+                  <Play className="mr-2 w-4 h-4 sm:w-5 sm:h-5" />
+                  Watch Overview
+                </button>
+              </div>
+
+              <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start space-y-2 sm:space-y-0 sm:space-x-6 text-sm text-slate-500 dark:text-slate-400">
+                <div className="flex items-center">
+                  <CheckCircle className="w-4 h-4 text-green-500 mr-1" />
+                  Rwanda Compliant
+                </div>
+                <div className="flex items-center">
+                  <CheckCircle className="w-4 h-4 text-green-500 mr-1" />
+                  Enterprise Ready
+                </div>
+                <div className="flex items-center">
+                  <CheckCircle className="w-4 h-4 text-green-500 mr-1" />
+                  24/7 Support
+                </div>
+              </div>
             </motion.div>
-          ))}
-          <img
-            src={homeImg}
-            alt="Surveillance"
-            className="w-[180px] h-[180px] rounded-full shadow-lg z-10"
-          />
-        </motion.div>
-        {/* Background floating shapes */}
-        <motion.div className="absolute top-[-50px] right-[-80px] w-[200px] h-[200px] bg-purple-200 rounded-full blur-3xl opacity-30 animate-pulse"></motion.div>
-        <motion.div className="absolute bottom-[-60px] left-[-60px] w-[150px] h-[150px] bg-indigo-200 rounded-full blur-2xl opacity-25 animate-ping"></motion.div>
-      </section>
-      <style>
-        {`
-          @keyframes float0 { 0% { transform: rotate(0deg) translateX(120px) rotate(0deg); } 100% { transform: rotate(360deg) translateX(120px) rotate(-360deg); } }
-          @keyframes float1 { 0% { transform: rotate(60deg) translateX(120px) rotate(-60deg); } 100% { transform: rotate(420deg) translateX(120px) rotate(-420deg); } }
-          @keyframes float2 { 0% { transform: rotate(120deg) translateX(120px) rotate(-120deg); } 100% { transform: rotate(480deg) translateX(120px) rotate(-480deg); } }
-          @keyframes float3 { 0% { transform: rotate(180deg) translateX(120px) rotate(-180deg); } 100% { transform: rotate(540deg) translateX(120px) rotate(-540deg); } }
-          @keyframes float4 { 0% { transform: rotate(240deg) translateX(120px) rotate(-240deg); } 100% { transform: rotate(600deg) translateX(120px) rotate(-600deg); } }
-          @keyframes float5 { 0% { transform: rotate(300deg) translateX(120px) rotate(-300deg); } 100% { transform: rotate(660deg) translateX(120px) rotate(-660deg); } }
 
-          .animate-float0 { animation: float0 12s linear infinite; }
-          .animate-float1 { animation: float1 12s linear infinite; }
-          .animate-float2 { animation: float2 12s linear infinite; }
-          .animate-float3 { animation: float3 12s linear infinite; }
-          .animate-float4 { animation: float4 12s linear infinite; }
-          .animate-float5 { animation: float5 12s linear infinite; }
-          .animate-wave {
-            animation: wave 12s ease-in-out infinite;
-            background-size: 200% 200%;
-          }
-        `}
-      </style>
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
+              className="relative max-w-lg mx-auto lg:max-w-none"
+            >
+              <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-700 p-6 sm:p-8 lg:p-10">
+                <div className="flex items-center justify-between mb-6">
+                  <h3 className="text-lg font-semibold text-slate-900 dark:text-white">Live System Status</h3>
+                  <div className="flex items-center text-green-600 dark:text-green-400">
+                    <div className="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></div>
+                    <span className="text-sm font-medium">Operational</span>
+                  </div>
+                </div>
 
-      {/* Crime Analytics Cards */}
-      <section className="px-6 py-16 bg-[var(--card-bg)] text-[var(--text-color)]">
-        <h2 className="text-4xl font-bold text-center mb-10">
-          Crime Reports Overview
-        </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 text-center">
-          <motion.div
-            className="p-6 rounded-xl shadow bg-gradient-to-r from-purple-500 to-indigo-600 text-white"
-            whileHover={{ scale: 1.05 }}
-          >
-            <h3 className="text-4xl font-bold">312</h3>
-            <p className="mt-2">Reports in Last 30 Days</p>
-          </motion.div>
-          <motion.div
-            className="p-6 rounded-xl shadow bg-gradient-to-r from-yellow-400 to-orange-500 text-white"
-            whileHover={{ scale: 1.05 }}
-          >
-            <h3 className="text-4xl font-bold">25%</h3>
-            <p className="mt-2">Increase from Last Month</p>
-          </motion.div>
-          <motion.div
-            className="p-6 rounded-xl shadow bg-gradient-to-r from-green-400 to-teal-500 text-white"
-            whileHover={{ scale: 1.05 }}
-          >
-            <h3 className="text-4xl font-bold">12</h3>
-            <p className="mt-2">Crime Hotspots Identified</p>
-          </motion.div>
-          <motion.div
-            className="p-6 rounded-xl shadow bg-gradient-to-r from-red-400 to-pink-500 text-white"
-            whileHover={{ scale: 1.05 }}
-          >
-            <h3 className="text-4xl font-bold">6 min</h3>
-            <p className="mt-2">Avg. Response Time</p>
-          </motion.div>
+                <div className="grid grid-cols-2 gap-3 sm:gap-4 mb-6">
+                  {stats.map((stat, index) => (
+                    <div key={index} className="text-center p-3 sm:p-4 bg-slate-50 dark:bg-slate-700 rounded-lg border border-slate-200 dark:border-slate-600">
+                      <div className="text-xl sm:text-2xl font-bold text-blue-600 dark:text-blue-400">{stat.value}</div>
+                      <div className="text-xs sm:text-sm font-medium text-slate-900 dark:text-white">{stat.label}</div>
+                      <div className="text-xs text-slate-500 dark:text-slate-400 mt-1">{stat.description}</div>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="bg-gradient-to-r from-blue-500 to-indigo-600 rounded-lg p-4 text-white">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <div className="font-semibold text-sm sm:text-base">Active Monitoring</div>
+                      <div className="text-xs sm:text-sm opacity-90">Kigali Security Network</div>
+                    </div>
+                    <div className="text-right">
+                      <div className="text-xl sm:text-2xl font-bold">142</div>
+                      <div className="text-xs sm:text-sm opacity-90">Cameras Online</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </div>
         </div>
       </section>
-      <section className="px-6 py-24 text-[var(--text-color)] text-center relative z-10 bg-gradient-to-br from-[var(--card-bg)] via-purple-100/10 to-[var(--card-bg)] dark:from-indigo-900 dark:via-purple-900 dark:to-indigo-900">
-        <div className="max-w-4xl mx-auto">
-          <p className="uppercase text-sm tracking-widest text-purple-600 dark:text-purple-400 mb-2">
-            Introducing Next-Gen Surveillance
-          </p>
-          <h2 className="text-5xl font-bold mb-6 leading-tight">
-            Empowering Kigali Through Smart Crime Detection
+
+      {/* Features Section */}
+      <section id="features" className="py-16 sm:py-20 lg:py-24 bg-white dark:bg-slate-800 border-t border-slate-200 dark:border-slate-700">
+        <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
+          <div className="text-center mb-12 sm:mb-16">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold text-slate-900 dark:text-white mb-4">
+              Advanced Crime Prevention Technology
+            </h2>
+            <p className="text-lg sm:text-xl lg:text-xl xl:text-2xl text-slate-600 dark:text-slate-300 max-w-4xl mx-auto">
+              Comprehensive AI-powered surveillance solution designed for modern law enforcement
+              and public safety requirements.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-6 sm:gap-8 lg:gap-10 max-w-7xl mx-auto">
+            {features.map((feature, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                className="bg-slate-50 dark:bg-slate-700 rounded-xl p-6 lg:p-8 hover:shadow-xl transition-all duration-300 border border-slate-200 dark:border-slate-600 hover:border-blue-300 dark:hover:border-blue-600"
+              >
+                <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/50 rounded-lg flex items-center justify-center text-blue-600 dark:text-blue-400 mb-4 border border-blue-200 dark:border-blue-800">
+                  {feature.icon}
+                </div>
+                <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-3">
+                  {feature.title}
+                </h3>
+                <p className="text-slate-600 dark:text-slate-300 leading-relaxed">
+                  {feature.description}
+                </p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Stakeholders Section */}
+      <section id="stakeholders" className="py-16 sm:py-20 lg:py-24 bg-slate-50 dark:bg-slate-900 border-t border-slate-200 dark:border-slate-700">
+        <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
+          <div className="text-center mb-12 sm:mb-16">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold text-slate-900 dark:text-white mb-4">
+              Solutions for Every Stakeholder
+            </h2>
+            <p className="text-lg sm:text-xl lg:text-xl xl:text-2xl text-slate-600 dark:text-slate-300 max-w-4xl mx-auto">
+              Tailored functionality for law enforcement, city officials, and security providers.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 lg:gap-10 max-w-7xl mx-auto">
+            {stakeholders.map((stakeholder, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                className="bg-white dark:bg-slate-800 rounded-xl p-6 sm:p-8 lg:p-10 shadow-lg border border-slate-200 dark:border-slate-700 hover:shadow-xl transition-all duration-300"
+              >
+                <h3 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white mb-4">
+                  {stakeholder.title}
+                </h3>
+                <p className="text-slate-600 dark:text-slate-300 mb-6 leading-relaxed">
+                  {stakeholder.description}
+                </p>
+                <div className="space-y-3">
+                  {stakeholder.benefits.map((benefit, benefitIndex) => (
+                    <div key={benefitIndex} className="flex items-center">
+                      <CheckCircle className="w-5 h-5 text-green-500 mr-3 flex-shrink-0" />
+                      <span className="text-slate-700 dark:text-slate-300">{benefit}</span>
+                    </div>
+                  ))}
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-16 sm:py-20 lg:py-24 bg-gradient-to-r from-blue-600 to-indigo-700 relative overflow-hidden">
+        <div className="absolute inset-0 bg-grid-white/[0.05] bg-[size:20px_20px]"></div>
+        <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 text-center relative">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold text-white mb-6">
+            Ready to Transform Public Safety?
           </h2>
-          <p className="text-lg mb-10">
-            Join our mission to transform city safety. Our AI-powered platform
-            uses real-time camera feeds and data analysis to prevent, detect,
-            and respond to crime more efficiently than ever.
+          <p className="text-lg sm:text-xl lg:text-xl xl:text-2xl text-blue-100 mb-8 max-w-4xl mx-auto">
+            Join the future of crime prevention with our AI-powered surveillance system.
+            Request a demo or contact our team to learn more.
           </p>
-          <div className="flex justify-center gap-6">
-            <button className="px-6 py-3 rounded-full bg-purple-600 hover:bg-purple-700 text-white font-medium">
-              Learn More
-            </button>
-            <button className="px-6 py-3 rounded-full bg-white text-purple-700 hover:bg-gray-100 font-medium dark:bg-slate-800 dark:text-purple-300 dark:hover:bg-slate-700">
-              Request a Demo
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <a
+              href="https://calendly.com/muneangechaste/30min"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-white text-blue-600 px-6 sm:px-8 py-3 sm:py-4 rounded-lg hover:bg-blue-50 transition-colors font-medium shadow-lg hover:shadow-xl transform hover:scale-105"
+            >
+              Schedule Demo
+            </a>
+            <button className="border-2 border-white text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg hover:bg-white hover:text-blue-600 transition-colors font-medium">
+              Contact Sales
             </button>
           </div>
         </div>
       </section>
 
-      {/* About Section */}
-      <section id="about" className="px-6 py-16 text-[var(--text-color)]">
-        <div className="mx-auto text-center">
-          <h2 className="text-4xl font-bold mb-6">About CM&3S</h2>
-          <p className="text-lg max-w-3xl mx-auto mb-8">
-            The Crime Mapping and Smart Surveillance System is Kigali’s
-            innovative step toward proactive urban safety. Using AI, live data
-            feeds, and machine learning models, we empower both communities and
-            law enforcement to take action before crimes happen.
-          </p>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-8">
-            <div className="bg-[var(--card-bg)] p-6 rounded-lg shadow">
-              <ShieldCheck className="w-12 h-12 mx-auto mb-4 text-purple-600" />
-              <h3 className="font-bold text-xl mb-2">Proactive Security</h3>
-              <p>
-                We use predictive analytics to detect patterns and prevent
-                crimes in hotspots.
-              </p>
-            </div>
-            <div className="bg-[var(--card-bg)] p-6 rounded-lg shadow">
-              <MapPin className="w-12 h-12 mx-auto mb-4 text-indigo-600" />
-              <h3 className="font-bold text-xl mb-2">Live Crime Mapping</h3>
-              <p>
-                Track real-time events and alerts across neighborhoods in
-                Kigali.
-              </p>
-            </div>
-            <div className="bg-[var(--card-bg)] p-6 rounded-lg shadow">
-              <Clock className="w-12 h-12 mx-auto mb-4 text-green-600" />
-              <h3 className="font-bold text-xl mb-2">Faster Response</h3>
-              <p>
-                Our system reduces average police response time with smart
-                routing and alerts.
-              </p>
-            </div>
+      {/* Contact Section */}
+      <section id="contact" className="py-16 sm:py-20 lg:py-24 bg-white dark:bg-slate-800 border-t border-slate-200 dark:border-slate-700">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
+          <div className="text-center mb-12">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold text-slate-900 dark:text-white mb-4">
+              Get in Touch
+            </h2>
+            <p className="text-lg sm:text-xl lg:text-xl xl:text-2xl text-slate-600 dark:text-slate-300">
+              Ready to enhance your security infrastructure? Contact our team today.
+            </p>
           </div>
-        </div>
-      </section>
-      <section
-        id="contact"
-        className="px-6 py-24 text-[var(--text-color)] bg-[var(--card-bg)]"
-      >
-        <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-4xl font-bold mb-6">Contact Us</h2>
-          <p className="mb-8">
-            Have questions or need a demo? Reach out to us directly.
-          </p>
-          <form className="space-y-6">
-            <div className="flex flex-col md:flex-row gap-4">
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 xl:gap-16">
+            <div className="order-2 lg:order-1">
+              <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-6">
+                Contact Information
+              </h3>
+              <div className="space-y-4">
+                <div className="flex items-start">
+                  <MapPin className="w-5 h-5 text-blue-600 dark:text-blue-400 mr-3 mt-1 flex-shrink-0" />
+                  <span className="text-slate-700 dark:text-slate-300">
+                    AUCA Innovation Center, Kigali, Rwanda
+                  </span>
+                </div>
+                <div className="flex items-center">
+                  <Bell className="w-5 h-5 text-blue-600 dark:text-blue-400 mr-3 flex-shrink-0" />
+                  <span className="text-slate-700 dark:text-slate-300">
+                    +250 783172388
+                  </span>
+                </div>
+                <div className="flex items-center">
+                  <ExternalLink className="w-5 h-5 text-blue-600 dark:text-blue-400 mr-3 flex-shrink-0" />
+                  <span className="text-slate-700 dark:text-slate-300">
+                    info@cmss.auca.ac.rw
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <form className="space-y-6 order-1 lg:order-2">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <input
+                  type="text"
+                  placeholder="Your Name"
+                  className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:focus:border-blue-400 transition-colors text-slate-900 dark:text-white placeholder-slate-500 dark:placeholder-slate-400"
+                />
+                <input
+                  type="email"
+                  placeholder="Your Email"
+                  className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:focus:border-blue-400 transition-colors text-slate-900 dark:text-white placeholder-slate-500 dark:placeholder-slate-400"
+                />
+              </div>
               <input
                 type="text"
-                placeholder="Your Name"
-                className="flex-1 p-3 rounded border bg-transparent"
+                placeholder="Organization"
+                className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:focus:border-blue-400 transition-colors text-slate-900 dark:text-white placeholder-slate-500 dark:placeholder-slate-400"
               />
-              <input
-                type="email"
-                placeholder="Your Email"
-                className="flex-1 p-3 rounded border bg-transparent"
+              <textarea
+                placeholder="Your Message"
+                rows={4}
+                className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:focus:border-blue-400 transition-colors text-slate-900 dark:text-white placeholder-slate-500 dark:placeholder-slate-400 resize-none"
               />
-            </div>
-            <textarea
-              placeholder="Your Message"
-              rows={5}
-              className="w-full p-3 rounded border bg-transparent"
-            ></textarea>
-            <button
-              type="submit"
-              className="px-6 py-3 bg-purple-600 text-white rounded hover:bg-purple-700"
-            >
-              Send Message
-            </button>
-          </form>
-          {/* Back to top button */}
-          <button className="bg-purple-600 text-white p-2 mt-12 rounded-full shadow hover:bg-purple-800 z-50">
-            <a href="#">
-              <ChevronUp />
-            </a>
-          </button>
+              <button
+                type="submit"
+                className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition-colors font-medium shadow-lg hover:shadow-xl transform hover:scale-105"
+              >
+                Send Message
+              </button>
+            </form>
+          </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer
-        id="contact"
-        className="bg-[var(--card-bg)] text-[var(--text-color)] border-t-2 py-8"
-      >
-        <div className="container mx-auto px-4 text-center">
-          <h4 className="text-xl font-bold mb-4">Stay Connected</h4>
-          <div className="flex justify-center space-x-6 mb-6">
-            <a href="#" className="hover:text-purple-400">
-              <FaFacebook size={24} />
-            </a>
-            <a href="#" className="hover:text-purple-400">
-              <FaTwitter size={24} />
-            </a>
-            <a href="#" className="hover:text-purple-400">
-              <FaLinkedin size={24} />
-            </a>
-            <a href="#" className="hover:text-purple-400">
-              <FaInstagram size={24} />
-            </a>
+      <footer className="bg-slate-900 text-white py-12 border-t border-slate-800">
+        <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="col-span-1 sm:col-span-2 lg:col-span-2">
+              <Logo />
+              <p className="text-slate-400 mt-4 max-w-md leading-relaxed">
+                Advanced AI-powered crime prevention system for safer communities.
+                Developed by AUCA Innovation Center.
+              </p>
+            </div>
+            <div>
+              <h4 className="font-semibold mb-4">Solutions</h4>
+              <ul className="space-y-2 text-slate-400">
+                <li><a href="#" className="hover:text-white transition-colors">Video Analysis</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">Crime Mapping</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">Alert System</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">Analytics</a></li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-semibold mb-4">Support</h4>
+              <ul className="space-y-2 text-slate-400">
+                <li><a href="#" className="hover:text-white transition-colors">Documentation</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">Training</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">Technical Support</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">Contact Us</a></li>
+              </ul>
+            </div>
           </div>
-          <p className="text-sm">
-            &copy; 2025 CMSS - Crime Mapping & Smart Surveillance. All rights
-            reserved.
-          </p>
+          <div className="border-t border-slate-800 mt-8 pt-8 text-center text-slate-400">
+            <p>&copy; 2025 AUCA Innovation Center. All rights reserved. Crime Mapping & Smart Surveillance System.</p>
+          </div>
         </div>
       </footer>
     </div>

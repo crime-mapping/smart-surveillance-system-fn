@@ -66,7 +66,7 @@ const CrimeCard: React.FC<CrimeCardProps> = ({ crime }) => {
   };
 
   return (
-    <div className="bg-[var(--card-bg)] text-[var(--text-color)] p-6 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 border">
+    <div className="bg-[var(--card-bg)] text-[var(--text-color)] p-6 rounded-xl hover:shadow-xl shadow-md transition-all duration-300 ease-in-out transform hover:scale-[1.02] hover:shadow-lg animate-fade-in border">
       <div className="flex justify-between items-center mb-4">
         <h2 className="font-semibold text-xl">
           Report #...{crime._id.slice(12)}

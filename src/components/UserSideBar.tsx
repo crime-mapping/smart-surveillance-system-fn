@@ -36,7 +36,7 @@ const UserSidebar: React.FC = () => {
     },
     {
       icon: <FiFileText className="w-5 h-5" />,
-      label: "Reports",
+      label: "Crime Reports",
       path: "/reports",
     },
     {

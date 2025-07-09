@@ -107,7 +107,7 @@ const Notifications = () => {
   useEffect(() => {
     fetchNotifications();
 
-    socket.on("new-notification", (notification) => {
+    socket.on("crime-notification", (notification) => {
       setNotifications((prev) => [notification, ...prev]);
       playBellSound();
       toast.info(() => (

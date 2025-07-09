@@ -217,7 +217,6 @@ const AllUsers = () => {
             >
               <option value="all">All Status</option>
               <option value="active">Active</option>
-              <option value="inactive">Inactive</option>
               <option value="blocked">Blocked</option>
             </select>
 
@@ -236,7 +235,7 @@ const AllUsers = () => {
               <div className="overflow-x-auto">
                 <table className="min-w-full bg-[var(--card-bg)] text-[var(--text-color)] shadow-md rounded-lg overflow-hidden">
                   <thead className="bg-gray-100">
-                    <tr className="text-left text-sm font-semibold bg-[var(--bg-color-dark)] text-[var(--text-color)]">
+                    <tr className="text-left text-sm font-semibold bg-[var(--card-bg)] text-[var(--text-color)]">
                       <th className="px-6 py-3">Name</th>
                       <th className="px-6 py-3">Phone</th>
                       <th className="px-6 py-3">Email</th>
@@ -249,7 +248,7 @@ const AllUsers = () => {
                     {paginatedUsers.map((user, index) => (
                       <tr
                         key={user._id}
-                        className={`border-b ${
+                        className={`border-b shadow-md transition-all duration-300 ease-in-out transform hover:scale-[1.02] hover:shadow-lg animate-fade-in ${
                           index % 2 === 0
                             ? "bg-[var(--bg-color2)] text-[var(--text-color)]"
                             : "bg-[var(--card-bg)] text-[var(--text-color)]"
@@ -264,7 +263,7 @@ const AllUsers = () => {
                             ? "Blocked"
                             : user.active
                             ? "Active"
-                            : "Inactive"}
+                            : ""}
                         </td>
                         <td className="px-6 py-4 text-center space-x-3">
                           <button

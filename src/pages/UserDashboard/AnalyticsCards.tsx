@@ -3,7 +3,7 @@ import { FiInfo, FiArrowUpRight } from "react-icons/fi";
 
 type AnalyticsCardProps = {
   title: string;
-  value: string | number;
+  value: string | number | [];
   change?: string;
   showSearch?: boolean;
   showInfo?: boolean;
@@ -11,6 +11,7 @@ type AnalyticsCardProps = {
 
 interface AnalyticsCardsProps {
   totalCrimes: number;
+  monthlyCrimes: [];
   crimeRate: number;
   mostPopularCrime: string;
   crimeRateChange: string;
@@ -27,7 +28,7 @@ const AnalyticsCard: React.FC<AnalyticsCardProps> = ({
   showInfo,
 }) => {
   return (
-    <div className="p-4 bg-[var(--card-bg)] text-[var(--text-color)] shadow-md rounded-lg flex gap-[30%] items-center">
+    <div className="p-4 bg-[var(--card-bg)] border text-[var(--text-color)] shadow-md transition-all duration-300 ease-in-out transform hover:scale-[1.02] hover:shadow-lg animate-fade-in rounded-lg flex gap-[20%] items-center">
       <div>
         <h2 className="text-sm text-[var(--text-color)] mb-1">{title}</h2>
         <div className="flex items-center">
@@ -51,6 +52,7 @@ const AnalyticsCard: React.FC<AnalyticsCardProps> = ({
 
 const AnalyticsCards: React.FC<AnalyticsCardsProps> = ({
   totalCrimes,
+  monthlyCrimes,
   crimeRate,
   mostPopularCrime,
   topLocation,
@@ -58,15 +60,21 @@ const AnalyticsCards: React.FC<AnalyticsCardsProps> = ({
   totalCrimesChange,
 }) => {
   return (
-    <div className="grid grid-cols-4 gap-4 my-4">
+    <div className="grid grid-cols-5 gap-4 my-4">
       <AnalyticsCard
-        title="Total Crimes"
+        title="All time Crimes"
         value={totalCrimes}
         change={totalCrimesChange}
         showSearch
       />
       <AnalyticsCard
-        title="Crime Rate"
+        title="Montly Crimes"
+        value={monthlyCrimes.length}
+        change={`${crimeRate}%`}
+        showInfo
+      />
+      <AnalyticsCard
+        title="Montly Crime Rate"
         value={`${crimeRate}%`}
         change={crimeRateChange}
         showSearch

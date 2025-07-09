@@ -77,7 +77,7 @@ const CrimeDistributionChart: React.FC<CrimeDistributionChartProps> = ({
   };
 
   return (
-    <div className="py-2 px-8 bg-[var(--card-bg)] text-[var(--text-color)] shadow-md rounded-md flex flex-col items-left">
+    <div className="py-2 border px-8 bg-[var(--card-bg)] text-[var(--text-color)] shadow-md transition-all duration-300 ease-in-out transform hover:scale-[1.02] hover:shadow-lg animate-fade-in rounded-md flex flex-col items-left">
       <h2 className="text-left text-xl font-semibold mb-4">
         Crime Distribution
       </h2>

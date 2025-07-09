@@ -20,6 +20,7 @@ const UserDashboard: React.FC = () => {
         <main className="mt-24">
           <AnalyticsCards
             totalCrimes={data.totalCrimes}
+            monthlyCrimes={data.monthlyCrimes}
             crimeRate={data.crimeRate}
             crimeRateChange={data.crimeRateChange}
             totalCrimesChange={data.totalCrimesChange}

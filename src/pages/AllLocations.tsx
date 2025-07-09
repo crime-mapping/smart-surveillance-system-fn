@@ -192,7 +192,7 @@ const AllLocations: React.FC = () => {
             {currentLocations.map((loc) => (
               <div
                 key={loc._id}
-                className="bg-[var(--card-bg)] text-[var(--text-color)] rounded-lg shadow-md p-6 flex flex-col justify-between hover:shadow-lg transition"
+                className="bg-[var(--card-bg)] border text-[var(--text-color)] rounded-lg p-6 flex flex-col justify-between shadow-md transition-all duration-300 ease-in-out transform hover:scale-[1.02] hover:shadow-lg animate-fade-in"
               >
                 <div>
                   <h2 className="text-lg font-bold mb-2 flex items-center gap-2">

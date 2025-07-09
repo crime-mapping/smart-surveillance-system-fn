@@ -22,14 +22,14 @@ const CameraCard: React.FC<CameraCardProps> = ({ camera, onAction }) => {
   const { name, status, dateAdded } = camera;
   const isConnected = status === "Connected";
 
+  const [loading, setLoading] = useState(false);
+  const [desactivating, setDesactivating] = useState(false);
+
   const viewLiveFeed = () => {
     if (isConnected) {
       navigate(`/live-feed/${camera.id}`);
     }
   };
-
-  const [loading, setLoading] = useState(false);
-  const [desactivating, setDesactivating] = useState(false);
 
   const connectCamera = async () => {
     try {
@@ -37,8 +37,8 @@ const CameraCard: React.FC<CameraCardProps> = ({ camera, onAction }) => {
       const response = await axios.put(`/cameras/connect/${camera.id}`, {
         withCredentials: true,
       });
-      if (response.status == 200) {
-        toast.success(`${camera.name} Connected Successfully !`);
+      if (response.status === 200) {
+        toast.success(`${camera.name} Connected Successfully!`);
         onAction();
       } else {
         toast.error(`Failed to connect ${camera.name}!`);
@@ -46,8 +46,7 @@ const CameraCard: React.FC<CameraCardProps> = ({ camera, onAction }) => {
     } catch (err: any) {
       console.error("Error connecting camera:", err);
       toast.error(
-        err?.response?.data?.error ||
-          `Failed to to connect camera : ${camera.name}`
+        err?.response?.data?.error || `Failed to connect camera: ${camera.name}`
       );
     } finally {
       setLoading(false);
@@ -60,17 +59,17 @@ const CameraCard: React.FC<CameraCardProps> = ({ camera, onAction }) => {
       const response = await axios.put(`/cameras/disconnect/${camera.id}`, {
         withCredentials: true,
       });
-      if (response.status == 200) {
-        toast.success(`${camera.name} was disconnected Successfully !`);
+      if (response.status === 200) {
+        toast.success(`${camera.name} was disconnected Successfully!`);
         onAction();
       } else {
         toast.error(`Failed to disconnect ${camera.name}!`);
       }
     } catch (err: any) {
-      console.error("Error disconnecting cameras:", err);
+      console.error("Error disconnecting camera:", err);
       toast.error(
         err?.response?.data?.error ||
-          `Failed to to disconnect camera : ${camera.name}`
+          `Failed to disconnect camera: ${camera.name}`
       );
     } finally {
       setLoading(false);
@@ -83,17 +82,17 @@ const CameraCard: React.FC<CameraCardProps> = ({ camera, onAction }) => {
       const response = await axios.put(`/cameras/desactivate/${camera.id}`, {
         withCredentials: true,
       });
-      if (response.status == 200) {
-        toast.success(`${camera.name} was Desactivated Successfully !`);
+      if (response.status === 200) {
+        toast.success(`${camera.name} was Desactivated Successfully!`);
         onAction();
       } else {
         toast.error(`Failed to desactivate ${camera.name}!`);
       }
     } catch (err: any) {
-      console.error("Error disconnecting cameras:", err);
+      console.error("Error desactivating camera:", err);
       toast.error(
         err?.response?.data?.error ||
-          `Failed to to desactivate camera : ${camera.name}`
+          `Failed to desactivate camera: ${camera.name}`
       );
     } finally {
       setDesactivating(false);
@@ -101,7 +100,7 @@ const CameraCard: React.FC<CameraCardProps> = ({ camera, onAction }) => {
   };
 
   return (
-    <div className="border rounded-md p-4 shadow-md">
+    <div className="border rounded-xl bg-[var(--card-bg)] p-4 shadow-md transition-all duration-300 ease-in-out transform hover:scale-[1.02] hover:shadow-lg animate-fade-in">
       <h2 className="text-lg font-semibold mb-2">{name}</h2>
       <div className="flex items-center mb-2">
         <span
@@ -112,9 +111,9 @@ const CameraCard: React.FC<CameraCardProps> = ({ camera, onAction }) => {
         <span>{status}</span>
       </div>
       <p className="text-sm text-gray-500 mb-4">Added On {dateAdded}</p>
-      <div className="flex space-x-2">
+      <div className="flex flex-wrap gap-2">
         <button
-          className={`flex items-center space-x-1 px-3 py-1 rounded-md text-white ${
+          className={`flex items-center space-x-1 px-3 py-1 rounded-md text-white transition duration-200 hover:opacity-90 ${
             isConnected ? "bg-red-500" : "bg-green-500"
           }`}
           onClick={() => {
@@ -127,16 +126,16 @@ const CameraCard: React.FC<CameraCardProps> = ({ camera, onAction }) => {
         >
           {isConnected ? <FiXCircle /> : <FiLink />}
           {loading ? (
-            <Loader2 />
+            <Loader2 className="animate-spin" />
           ) : (
             <span>{isConnected ? "Disconnect" : "Connect"}</span>
           )}
         </button>
         <button
           onClick={viewLiveFeed}
-          className={`flex items-center space-x-1 px-3 py-1 rounded-md ${
+          className={`flex items-center space-x-1 px-3 py-1 rounded-md transition duration-200 ${
             isConnected
-              ? "bg-blue-500 text-white"
+              ? "bg-blue-500 text-white hover:bg-blue-600"
               : "bg-gray-400 text-gray-200 cursor-not-allowed"
           }`}
           disabled={!isConnected}
@@ -145,11 +144,11 @@ const CameraCard: React.FC<CameraCardProps> = ({ camera, onAction }) => {
           <span>View Live Feed</span>
         </button>
         <button
-          className="flex items-center space-x-1 px-3 py-1 rounded-md bg-red-500 text-white"
+          className="flex items-center space-x-1 px-3 py-1 rounded-md bg-red-500 text-white transition duration-200 hover:bg-red-600"
           onClick={desactivateCamera}
         >
           <FiTrash />
-          <span>{desactivating ? "Removing..." : "Remove"} </span>
+          <span>{desactivating ? "Removing..." : "Remove"}</span>
         </button>
       </div>
     </div>

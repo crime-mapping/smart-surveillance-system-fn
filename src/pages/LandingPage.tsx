@@ -12,7 +12,7 @@ import {
   FaRobot,
 } from "react-icons/fa";
 import { ShieldCheck, MapPin, Clock } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import homeImg from "../assets/homeImg.png";
 import Logo from "../components/Logo";
 import ThemeToggle from "../components/ThemeToggle";
@@ -30,6 +30,7 @@ const icons = [
 
 const LandingPage = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <div className="bg-[var(--card-bg)] w-full  text-[var(--text-color)] min-h-screen overflow-x-hidden">
@@ -86,7 +87,10 @@ const LandingPage = () => {
           <p className="text-xl mb-6 text-[var(--text-color)]">
             Smart surveillance and AI-driven crime mapping in real-time.
           </p>
-          <button className="bg-purple-600 text-white px-6 py-3 rounded-full flex items-center hover:bg-purple-700">
+          <button
+            onClick={() => navigate("/login")}
+            className="bg-purple-600 text-white px-6 py-3 rounded-full flex items-center hover:bg-purple-700"
+          >
             Get Started <ArrowRight className="ml-2" />
           </button>
         </motion.div>

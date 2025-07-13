@@ -5,6 +5,7 @@ import { Loader2 } from "lucide-react";
 import axios from "../config/axios";
 import WelcomePane from "../components/welcomePane";
 import { BsShieldLock } from "react-icons/bs";
+import { AxiosError } from "axios";
 
 const ResetPassword = () => {
   const navigate = useNavigate();
@@ -24,18 +25,22 @@ const ResetPassword = () => {
       }
       if (response.status == 200) {
         toast.success(response.data.message);
-        navigate("/verificationcode", { state: { email } });
+        navigate("/verify", { state: { email } });
       } else {
         toast.error("An expected error occurred !");
       }
-    } catch (error: any) {
-      toast.error(error.response?.data?.error || "Something went wrong.");
+    } catch (error: unknown) {
+      if (error instanceof AxiosError) {
+        toast.error(error.response?.data?.error || "Something went wrong.");
+      } else {
+        toast.error("Something went wrong.");
+      }
     }
     setLoading(false);
   };
 
   return (
-    <div className="flex lg:flex-row h-screen">
+    <div className="w-full flex justify-center items-center">
       <WelcomePane />
       <div className="p-8 flex flex-col items-center m-auto">
         <BsShieldLock className="text-7xl text-primaryBackground mx-auto mb-4" />

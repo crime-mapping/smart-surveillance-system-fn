@@ -3,6 +3,7 @@ const plugin = require("tailwindcss/plugin");
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ["./src/**/*.{ts,tsx}", "./index.html"],
+  darkMode: "class", // Enable dark mode using class strategy
   theme: {
     extend: {
       backgroundImage: {
@@ -26,27 +27,29 @@ export default {
       addBase({
         ":root": {
           "--bg-color": "#ffffff",
-          "--bg-color2": "#f3f4f6",        
-          "--bg-color-hover": "#e5e7eb",   
+          "--bg-color2": "#f3f4f6",
+          "--bg-color-hover": "#e5e7eb",
           "--bg-color-dark": "#d1d5db",
           "--text-color": "#1f2937",
           "--card-bg": "#f9fafb",
           "--primary": "#3b82f6",
           "--primary-gradient-start": "#000000",
           "--primary-gradient-end": "#08203E",
-          "--primary-background": "linear-gradient(to bottom, var(--primary-gradient-start), var(--primary-gradient-end))",
+          "--primary-background":
+            "linear-gradient(to bottom, var(--primary-gradient-start), var(--primary-gradient-end))",
         },
         "[data-theme='dark']": {
-          "--bg-color": "#0c0f0a",
-          "--bg-color2": "#081c15",      
-          "--bg-color-hover": "#0b2027",  
+          "--bg-color": "#1f2937",
+          "--bg-color2": "#2d3748",
+          "--bg-color-hover": "#374151",
           "--bg-color-dark": "#111827",
           "--text-color": "#f3f4f6",
           "--card-bg": "#000000",
           "--primary": "#2563eb",
           "--primary-gradient-start": "#000000",
           "--primary-gradient-end": "#08203E",
-          "--primary-background": "linear-gradient(to bottom, var(--primary-gradient-start), var(--primary-gradient-end))",
+          "--primary-background":
+            "linear-gradient(to bottom, var(--primary-gradient-start), var(--primary-gradient-end))",
         },
       });
     }),

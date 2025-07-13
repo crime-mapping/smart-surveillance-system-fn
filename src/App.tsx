@@ -68,13 +68,13 @@ function App() {
         },
         ...(userRole === "SUPERADMIN"
           ? [
-              { path: "/users", element: <AllUsers /> },
-              { path: "/update-user/:id", element: <UpdateUser /> },
-              {
-                path: "/register",
-                element: <RegisterUserPage />,
-              },
-            ]
+            { path: "/users", element: <AllUsers /> },
+            { path: "/update-user/:id", element: <UpdateUser /> },
+            {
+              path: "/register",
+              element: <RegisterUserPage />,
+            },
+          ]
           : []),
       ],
     },
@@ -96,7 +96,7 @@ function App() {
       element: <ResetPassword />,
     },
     {
-      path: "/verificationcode",
+      path: "/verify",
       element: <VerificationCode />,
     },
     {

@@ -5,6 +5,8 @@ export interface DecodedToken {
   names: string;
   email: string;
   phone_number: string;
+  exp: number; // JWT expiration time
+  iat?: number; // JWT issued at time (optional)
 }
 
 export const tokenDecoder = (): DecodedToken | null => {

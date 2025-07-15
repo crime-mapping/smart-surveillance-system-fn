@@ -84,34 +84,31 @@ const Cameras = () => {
         <CameraListSkeleton />
       ) : (
         <>
-          <div className="flex justify-between mt-28 items-center my-4">
+          <div className="w-full flex justify-between mt-6 items-center">
             <div className="flex gap-4">
               <button
-                className={`px-4 py-2 text-[var(--text-color)] rounded ${
-                  tab === "recent"
-                    ? "bg-blue-600 text-white"
-                    : " bg-[var(--card-bg)]"
-                }`}
+                className={`px-4 py-2 text-[var(--text-color)] rounded ${tab === "recent"
+                  ? "bg-blue-600 text-white"
+                  : " bg-[var(--card-bg)]"
+                  }`}
                 onClick={() => setTab("recent")}
               >
                 Recently Connected
               </button>
               <button
-                className={`px-4 py-2 text-[var(--text-color)] rounded ${
-                  tab === "all"
-                    ? "bg-blue-600 text-white"
-                    : "bg-[var(--card-bg)]"
-                }`}
+                className={`px-4 py-2 text-[var(--text-color)] rounded ${tab === "all"
+                  ? "bg-blue-600 text-white"
+                  : "bg-[var(--card-bg)]"
+                  }`}
                 onClick={() => setTab("all")}
               >
                 All Cameras
               </button>
               <button
-                className={`px-4 py-2 text-[var(--text-color)] rounded ${
-                  tab === "filter"
-                    ? "bg-blue-600 text-white"
-                    : "bg-[var(--card-bg)]"
-                }`}
+                className={`px-4 py-2 text-[var(--text-color)] rounded ${tab === "filter"
+                  ? "bg-blue-600 text-white"
+                  : "bg-[var(--card-bg)]"
+                  }`}
                 onClick={() => setTab("filter")}
               >
                 Filtered by Location
@@ -143,8 +140,8 @@ const Cameras = () => {
           {cameras.length == 0 ? (
             <NoCameraFound />
           ) : (
-            <div className="grid grid-cols-2 gap-4">
-              {displayedCameras.map((camera) => (
+            <div className="grid grid-cols-2 gap-4 mt-4">
+              {displayedCameras?.map((camera) => (
                 <CameraCard
                   key={camera.id}
                   camera={camera}

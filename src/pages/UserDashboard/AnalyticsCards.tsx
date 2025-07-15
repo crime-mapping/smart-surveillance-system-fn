@@ -1,12 +1,16 @@
 import React from "react";
-import { FiInfo, FiArrowUpRight } from "react-icons/fi";
+import { FiArrowUpRight, FiTrendingUp, FiTrendingDown } from "react-icons/fi";
+import { HiOutlineLocationMarker, HiOutlineShieldCheck } from "react-icons/hi";
+import { RiCriminalLine } from "react-icons/ri";
+import { BiBarChartAlt2 } from "react-icons/bi";
 
 type AnalyticsCardProps = {
   title: string;
-  value: string | number | [];
+  value: string | number;
   change?: string;
-  showSearch?: boolean;
-  showInfo?: boolean;
+  icon: React.ReactNode;
+  color?: "blue" | "green" | "purple" | "orange" | "red";
+  isPositive?: boolean;
 };
 
 interface AnalyticsCardsProps {
@@ -24,27 +28,58 @@ const AnalyticsCard: React.FC<AnalyticsCardProps> = ({
   title,
   value,
   change,
-  showSearch,
-  showInfo,
+  icon,
+  color = "blue",
+  isPositive = true,
 }) => {
+  const colorClasses: Record<string, string> = {
+    blue: "from-blue-500 to-blue-600",
+    green: "from-green-500 to-green-600",
+    purple: "from-purple-500 to-purple-600",
+    orange: "from-orange-500 to-orange-600",
+    red: "from-red-500 to-red-600",
+  };
+
   return (
-    <div className="p-4 bg-[var(--card-bg)] border text-[var(--text-color)] shadow-md transition-all duration-300 ease-in-out transform hover:scale-[1.02] hover:shadow-lg animate-fade-in rounded-lg flex gap-[20%] items-center">
-      <div>
-        <h2 className="text-sm text-[var(--text-color)] mb-1">{title}</h2>
-        <div className="flex items-center">
-          <p className="text-xl font-bold mr-2">{value}</p>
+    <div className="group relative p-4 bg-white dark:bg-slate-800 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 border border-slate-200 dark:border-slate-700">
+      {/* Background gradient overlay */}
+      <div className={`absolute inset-0 bg-gradient-to-br ${colorClasses[color]} opacity-5 rounded-xl`}></div>
+
+      <div className="relative z-10">
+        {/* Header with icon */}
+        <div className="flex items-center justify-between mb-4">
+          <div className={`p-3 rounded-lg bg-gradient-to-br ${colorClasses[color]} text-white shadow-lg`}>
+            {icon}
+          </div>
+          <FiArrowUpRight className="text-slate-400 dark:text-slate-500 group-hover:text-blue-500 transition-colors" />
+        </div>
+
+        {/* Title */}
+        <h3 className="text-slate-600 dark:text-slate-400 text-sm font-medium mb-2">
+          {title}
+        </h3>
+
+        {/* Value */}
+        <div className="flex items-end justify-between">
+          <p className="text-2xl font-bold text-slate-900 dark:text-white">
+            {value}
+          </p>
+
+          {/* Change indicator */}
           {change && (
-            <span className="text-s ml-2 font-semibold text-green-500 bg-green-100 px-2 py-1 rounded">
+            <div className={`flex items-center text-sm font-medium px-2 py-1 rounded-full ${isPositive
+              ? 'text-green-600 bg-green-100 dark:bg-green-900/30 dark:text-green-400'
+              : 'text-red-600 bg-red-100 dark:bg-red-900/30 dark:text-red-400'
+              }`}>
+              {isPositive ? (
+                <FiTrendingUp className="w-3 h-3 mr-1" />
+              ) : (
+                <FiTrendingDown className="w-3 h-3 mr-1" />
+              )}
               {change}
-            </span>
+            </div>
           )}
         </div>
-      </div>
-      <div className="flex items-center">
-        {showSearch && (
-          <FiArrowUpRight className="text-[var(--text-color)] mr-2" />
-        )}
-        {showInfo && <FiInfo className="text-[var(--text-color)]" />}
       </div>
     </div>
   );
@@ -60,31 +95,43 @@ const AnalyticsCards: React.FC<AnalyticsCardsProps> = ({
   totalCrimesChange,
 }) => {
   return (
-    <div className="grid grid-cols-5 gap-4 my-4">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 mb-8">
       <AnalyticsCard
-        title="All time Crimes"
+        title="Total Crimes"
         value={totalCrimes}
         change={totalCrimesChange}
-        showSearch
+        icon={<RiCriminalLine className="w-5 h-5" />}
+        color="blue"
+        isPositive={false}
       />
       <AnalyticsCard
-        title="Montly Crimes"
+        title="Monthly Crimes"
         value={monthlyCrimes.length}
         change={`${crimeRate}%`}
-        showInfo
+        icon={<BiBarChartAlt2 className="w-5 h-5" />}
+        color="purple"
+        isPositive={false}
       />
       <AnalyticsCard
-        title="Montly Crime Rate"
+        title="Crime Rate"
         value={`${crimeRate}%`}
         change={crimeRateChange}
-        showSearch
+        icon={<FiTrendingUp className="w-5 h-5" />}
+        color="orange"
+        isPositive={false}
       />
       <AnalyticsCard
-        title="Most Popular Crime"
+        title="Most Common Crime"
         value={mostPopularCrime}
-        showInfo
+        icon={<HiOutlineShieldCheck className="w-5 h-5" />}
+        color="red"
       />
-      <AnalyticsCard title="Most Affected Place" value={topLocation} showInfo />
+      <AnalyticsCard
+        title="Top Location"
+        value={topLocation}
+        icon={<HiOutlineLocationMarker className="w-5 h-5" />}
+        color="green"
+      />
     </div>
   );
 };

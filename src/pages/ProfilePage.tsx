@@ -124,8 +124,7 @@ const ProfilePage: React.FC = () => {
         twoFactorEnabled: !prev.twoFactorEnabled,
       }));
       toast.success(
-        `Two-Factor Authentication ${
-          user?.twoFactorEnabled ? "disabled" : "enabled"
+        `Two-Factor Authentication ${user?.twoFactorEnabled ? "disabled" : "enabled"
         } successfully`
       );
     } catch (err) {
@@ -138,7 +137,7 @@ const ProfilePage: React.FC = () => {
       {loading ? (
         <ProfilePageSkeleton />
       ) : (
-        <div className="min-h-screen mt-20 pt-4 md:flex-row">
+        <div className="min-h-screen mt-1 pt-4 md:flex-row">
           {/* Left - Profile Card */}
           <div className="flex flex-row gap-4 my-2 items-center">
             <div className="bg-[var(--card-bg)] text-[var(--text-color)]  flex flex-col items-center rounded-lg min-h-80 max-h-96 shadow-md py-8 w-1/2 text-center">
@@ -166,16 +165,14 @@ const ProfilePage: React.FC = () => {
                   </span>
                   <button
                     onClick={toggle2FA}
-                    className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-300 ${
-                      user?.twoFactorEnabled ? "bg-green-500" : "bg-gray-300"
-                    }`}
+                    className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-300 ${user?.twoFactorEnabled ? "bg-green-500" : "bg-gray-300"
+                      }`}
                   >
                     <span
-                      className={`inline-block h-4 w-4 transform rounded-full bg-[var(--card-bg)] text-[var(--text-color)] transition-transform duration-300 ${
-                        user?.twoFactorEnabled
+                      className={`inline-block h-4 w-4 transform rounded-full bg-[var(--card-bg)] text-[var(--text-color)] transition-transform duration-300 ${user?.twoFactorEnabled
                           ? "translate-x-6"
                           : "translate-x-1"
-                      }`}
+                        }`}
                     />
                   </button>
                 </div>
@@ -246,11 +243,10 @@ const ProfilePage: React.FC = () => {
                 <button
                   disabled={!editingMode}
                   onClick={handleProfileUpdate}
-                  className={`w-full mt-4 ${
-                    editingMode || updatingUser
+                  className={`w-full mt-4 ${editingMode || updatingUser
                       ? "border text-[var(--text-color)]"
                       : "bg-gray-400 cursor-not-allowed"
-                  } p-2 rounded`}
+                    } p-2 rounded`}
                 >
                   {updatingUser ? "Updating Profile..." : "Update Profile"}
                 </button>

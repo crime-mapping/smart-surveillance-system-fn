@@ -12,6 +12,7 @@ import {
   Legend,
 } from "chart.js";
 import { useTheme } from "../../contexts/ThemeContext";
+import { HiOutlineChartBar } from "react-icons/hi";
 
 ChartJS.register(
   CategoryScale,
@@ -55,7 +56,10 @@ const CrimeVarianceChart: React.FC<CrimeVarianceChartProps> = ({
       {
         label: "Total Crimes",
         data: monthlyData.map((item) => item.total),
-        backgroundColor: "#4CAF50",
+        backgroundColor: "rgba(59, 130, 246, 0.8)",
+        borderColor: "#3B82F6",
+        borderWidth: 1,
+        borderRadius: 4,
       },
     ],
   };
@@ -69,7 +73,12 @@ const CrimeVarianceChart: React.FC<CrimeVarianceChartProps> = ({
           parseFloat((item.total / 50).toFixed(2))
         ),
         fill: false,
-        borderColor: "#FF6384",
+        borderColor: "#EF4444",
+        backgroundColor: "rgba(239, 68, 68, 0.1)",
+        tension: 0.4,
+        pointBackgroundColor: "#EF4444",
+        pointBorderColor: "#ffffff",
+        pointBorderWidth: 2,
       },
     ],
   };
@@ -79,42 +88,84 @@ const CrimeVarianceChart: React.FC<CrimeVarianceChartProps> = ({
     maintainAspectRatio: false,
     plugins: {
       legend: {
+        position: "top" as const,
         labels: {
           color: isDark ? "#f3f4f6" : "#1f2937",
+          font: {
+            size: 12,
+            weight: "normal" as const,
+          },
+          padding: 20,
         },
+      },
+      tooltip: {
+        backgroundColor: isDark ? "rgba(0, 0, 0, 0.9)" : "rgba(255, 255, 255, 0.9)",
+        titleColor: isDark ? "#f3f4f6" : "#1f2937",
+        bodyColor: isDark ? "#f3f4f6" : "#1f2937",
+        borderColor: "#3B82F6",
+        borderWidth: 1,
+        cornerRadius: 8,
+        padding: 12,
       },
     },
     scales: {
       x: {
         ticks: {
-          color: isDark ? "#f3f4f6" : "#1f2937",
+          color: isDark ? "#9ca3af" : "#6b7280",
+          font: {
+            size: 11,
+          },
         },
         grid: {
           color: isDark ? "#374151" : "#e5e7eb",
+          borderColor: isDark ? "#4b5563" : "#d1d5db",
         },
       },
       y: {
         ticks: {
-          color: isDark ? "#f3f4f6" : "#1f2937",
+          color: isDark ? "#9ca3af" : "#6b7280",
+          font: {
+            size: 11,
+          },
         },
         grid: {
           color: isDark ? "#374151" : "#e5e7eb",
+          borderColor: isDark ? "#4b5563" : "#d1d5db",
         },
       },
     },
   };
 
   return (
-    <div className="w-full mt-4 p-4 bg-[var(--card-bg)] text-[var(--text-color)] shadow-md rounded-md">
-      <h2 className="text-center text-xl font-semibold mb-4">
-        Crimes Variance
-      </h2>
-      <div className="flex gap-[10%]">
-        <div className="mb-6 w-[45%] h-[300px]">
-          <Bar data={barData} options={chartOptions} />
+    <div className="bg-white dark:bg-slate-800 rounded-xl p-6 shadow-lg border border-slate-200 dark:border-slate-700">
+      <div className="flex items-center mb-6">
+        <div className="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-lg mr-3">
+          <HiOutlineChartBar className="w-5 h-5 text-blue-600 dark:text-blue-400" />
         </div>
-        <div className="mb-6 w-[45%] h-[300px]">
-          <Line data={lineData} options={chartOptions} />
+        <h2 className="text-xl font-bold text-slate-900 dark:text-white">
+          Crime Variance Analysis
+        </h2>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Bar Chart */}
+        <div className="bg-slate-50 dark:bg-slate-700/50 rounded-lg p-4 border border-slate-200 dark:border-slate-600">
+          <h3 className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-4 uppercase tracking-wide">
+            Total Crimes by Month
+          </h3>
+          <div className="h-[300px]">
+            <Bar data={barData} options={chartOptions} />
+          </div>
+        </div>
+
+        {/* Line Chart */}
+        <div className="bg-slate-50 dark:bg-slate-700/50 rounded-lg p-4 border border-slate-200 dark:border-slate-600">
+          <h3 className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-4 uppercase tracking-wide">
+            Crime Rate Trend
+          </h3>
+          <div className="h-[300px]">
+            <Line data={lineData} options={chartOptions} />
+          </div>
         </div>
       </div>
     </div>

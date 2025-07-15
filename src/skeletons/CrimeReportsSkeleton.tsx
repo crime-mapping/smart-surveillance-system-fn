@@ -6,7 +6,7 @@ const SkeletonBox = ({ className = "" }: { className?: string }) => (
 
 const CrimeReportsSkeleton: React.FC = () => {
   return (
-    <div className="p-8 mt-20">
+    <div className="p-8 mt-1">
       {/* Header + Legend */}
       <div className="flex justify-between items-center mb-6">
         <SkeletonBox className="h-8 w-48" />

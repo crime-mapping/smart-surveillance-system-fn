@@ -163,7 +163,7 @@ const AllLocations: React.FC = () => {
       {loading ? (
         <AllLocationsSkeleton />
       ) : (
-        <div className="py-8 mt-20">
+        <div className="py-8 mt-1">
           <div className="flex justify-between items-center mb-6">
             <h1 className="text-2xl font-bold">Supervised Locations</h1>
             <button

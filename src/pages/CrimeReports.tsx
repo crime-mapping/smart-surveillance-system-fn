@@ -125,7 +125,7 @@ const CrimeReports: React.FC = () => {
       {loading ? (
         <CrimeReportsSkeleton />
       ) : (
-        <div className="py-8 mt-20">
+        <div className="py-8 mt-1">
           <div className="flex justify-between items-center mb-6">
             <h1 className="text-2xl font-bold">Crime Reports</h1>
             {/* Legend */}
@@ -165,22 +165,21 @@ const CrimeReports: React.FC = () => {
             ].map((item) => (
               <button
                 key={item}
-                className={`px-4 py-2 rounded ${
-                  tab === item
+                className={`px-4 py-2 rounded ${tab === item
                     ? "bg-blue-300 text-white"
                     : "bg-[var(--card-bg)]"
-                }`}
+                  }`}
                 onClick={() => setTab(item)}
               >
                 {item === "recent"
                   ? "Recent Crimes"
                   : item === "all"
-                  ? "All Crimes"
-                  : item === "filter-level"
-                  ? "Filter by Level"
-                  : item === "filter-location"
-                  ? "Filter by Location"
-                  : "Filter by Date"}
+                    ? "All Crimes"
+                    : item === "filter-level"
+                      ? "Filter by Level"
+                      : item === "filter-location"
+                        ? "Filter by Location"
+                        : "Filter by Date"}
               </button>
             ))}
           </div>

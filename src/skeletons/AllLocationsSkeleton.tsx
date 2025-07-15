@@ -22,7 +22,7 @@ const LocationCardSkeleton = () => (
 
 const AllLocationsSkeleton: React.FC = () => {
   return (
-    <div className="p-8 mt-20">
+    <div className="p-8 mt-1">
       <div className="flex justify-between mb-6">
         <SkeletonBox className="h-8 w-48" />
         <SkeletonBox className="h-10 w-36" />

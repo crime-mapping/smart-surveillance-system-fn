@@ -126,49 +126,57 @@ const Notifications = () => {
 
   return (
     <div className="relative">
-      <button onClick={toggleVisibility} className="relative w-[20px]">
-        <NotificationsIcon className="text-yellow-500 text-4xl" />
+      <button
+        onClick={toggleVisibility}
+        className="relative p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors"
+      >
+        <NotificationsIcon className="text-yellow-500 dark:text-yellow-400 text-xl" />
         {unreadCount > 0 && (
-          <span className="absolute top-0 left-4 w-5 h-5 bg-red-600 text-white text-center text-sm rounded-full">
+          <span className="absolute -top-1 -right-1 w-5 h-5 bg-red-600 text-white text-center text-xs rounded-full flex items-center justify-center">
             {unreadCount}
           </span>
         )}
       </button>
 
       {isVisible && (
-        <div className="absolute right-0 mt-2 w-80 bg-[var(--card-bg)] text-[var(--text-color)] rounded-lg shadow-lg z-50 p-4 max-h-[450px] overflow-y-auto">
-          <div className="flex justify-between items-center mb-2">
-            <h2 className="text-lg font-semibold">Notifications</h2>
-            <button onClick={toggleVisibility}>
-              <FiX size={20} className="text-gray-500" />
+        <div className="absolute right-0 mt-2 w-80 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 rounded-lg shadow-lg border border-slate-200 dark:border-slate-700 z-50 p-4 max-h-[450px] overflow-y-auto">
+          <div className="flex justify-between items-center mb-4">
+            <h2 className="text-lg font-semibold text-slate-900 dark:text-white">Notifications</h2>
+            <button
+              onClick={toggleVisibility}
+              className="p-1 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors"
+            >
+              <FiX size={20} className="text-slate-500 dark:text-slate-400" />
             </button>
           </div>
           <ul className="space-y-2">
-            {notifications.length == 0 && (
-              <h3 className="italic">No new notifications</h3>
+            {notifications.length === 0 && (
+              <h3 className="italic text-slate-500 dark:text-slate-400 text-center py-4">
+                No new notifications
+              </h3>
             )}
             {notifications.map((n) => (
               <li
                 key={n._id}
                 onClick={() => markAsRead(n._id)}
                 className={classNames(
-                  "p-2 rounded-md",
-                  n.isRead ? "bg-gray-200" : "bg-blue-100 cursor-pointer"
+                  "p-3 rounded-lg transition-colors cursor-pointer",
+                  n.isRead
+                    ? "bg-slate-50 dark:bg-slate-700/50 text-slate-600 dark:text-slate-400"
+                    : "bg-blue-50 dark:bg-blue-900/20 text-slate-900 dark:text-slate-100 hover:bg-blue-100 dark:hover:bg-blue-900/30"
                 )}
               >
-                <p className={n.isRead ? "text-gray-500" : "text-gray-800"}>
-                  {n.title}
-                </p>
-                <small className="text-gray-400">
+                <p className="font-medium text-sm mb-1">{n.title}</p>
+                <p className="text-xs text-slate-500 dark:text-slate-400">
                   {formatTime(n.timestamp)}
-                </small>
+                </p>
               </li>
             ))}
           </ul>
           {unreadCount > 0 && (
             <button
               onClick={markAllAsRead}
-              className="mt-4 w-full text-sm text-white bg-blue-600 p-2 rounded-md"
+              className="mt-4 w-full text-sm text-white bg-blue-600 hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-700 p-2 rounded-lg transition-colors font-medium"
             >
               Mark All as Read
             </button>

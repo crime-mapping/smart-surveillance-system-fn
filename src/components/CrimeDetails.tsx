@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { CalendarDays, MapPin, User, Camera, Download } from "lucide-react";
+import { CalendarDays, MapPin, User, Camera, Download, Info } from "lucide-react";
 import DashboardLayout from "../Layout/DashboardLayout";
 import SingleCrimeSkeleton from "../skeletons/singleCrimeSkeleton";
 import axios from "../config/axios";
@@ -9,6 +9,7 @@ import { formatDate } from "../utils/formatDate";
 import jsPDF from "jspdf";
 import logo from "../assets/real_logo.png";
 import { FiArrowLeft } from "react-icons/fi";
+import { cn } from "../lib/utils";
 
 export interface Location {
   location: string;
@@ -24,12 +25,60 @@ export interface ICrime {
   supportingImage?: string;
 }
 
-// ... imports remain the same
+// Atoms/Molecules
+const Section: React.FC<{ icon: React.ReactNode; title: string; children: React.ReactNode; className?: string }> = ({ icon, title, children, className }) => (
+  <section className={cn("mb-6", className)}>
+    <div className="flex items-center gap-2 mb-1">
+      {icon}
+      <h4 className="text-lg font-semibold tracking-tight">{title}</h4>
+    </div>
+    <div>{children}</div>
+  </section>
+);
+
+const InfoRow: React.FC<{ icon: React.ReactNode; children: React.ReactNode; className?: string }> = ({ icon, children, className }) => (
+  <div className={cn("flex items-center text-sm text-[var(--text-color)] dark:text-gray-400 mb-2", className)}>
+    {icon}
+    {children}
+  </div>
+);
+
+const SeverityBadge: React.FC<{ level?: string }> = ({ level }) => (
+  <span
+    className={cn(
+      "text-sm font-bold px-3 py-1 rounded-full uppercase tracking-wide shadow-sm border",
+      level === "HIGH"
+        ? "bg-red-100 text-red-700 border-red-300"
+        : level === "MEDIUM"
+          ? "bg-yellow-100 text-yellow-700 border-yellow-300"
+          : "bg-green-100 text-green-700 border-green-300"
+    )}
+    aria-label={`Severity Level: ${level}`}
+  >
+    {level}
+  </span>
+);
+
+const EvidenceModal: React.FC<{ image?: string; open: boolean; onClose: () => void }> = ({ image, open, onClose }) => (
+  open && image ? (
+    <div className="fixed inset-0 z-50 flex items-center justify-center" onClick={onClose}>
+      <img
+        src={image}
+        alt="Evidence Large"
+        className="max-w-full max-h-[80vh] rounded-lg border-4 border-white shadow-2xl animate-fade-in"
+        onClick={e => e.stopPropagation()}
+      />
+    </div>
+  ) : null
+);
+
+
 
 const CrimeDetails: React.FC = () => {
   const { id } = useParams();
   const [loading, setLoading] = useState(false);
   const [crime, setCrime] = useState<ICrime>();
+  const [evidenceOpen, setEvidenceOpen] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -49,12 +98,11 @@ const CrimeDetails: React.FC = () => {
       }
     };
     fetchSingleCrime();
-  }, []);
+  }, [id]);
 
   const getBase64FromUrl = async (url: string): Promise<string> => {
     const res = await fetch(url);
     const blob = await res.blob();
-
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
       reader.onloadend = () => resolve(reader.result as string);
@@ -69,89 +117,87 @@ const CrimeDetails: React.FC = () => {
     doc.addImage(base64Logo, "PNG", 160, 10, 35, 15);
     doc.setFontSize(16);
     doc.text("Crime Report", 20, 20);
-
     doc.setFontSize(12);
     doc.text(`Crime ID: ${id}`, 20, 30);
     doc.text(`Type: ${crime?.crimeType || "-"}`, 20, 40);
     doc.text(`Date: ${formatDate(crime?.dateOfOccurrence)}`, 20, 50);
     doc.text(`Location: ${crime?.crimeLocation?.location || "-"}`, 20, 60);
-
     if (crime?.crimeDescription) {
       doc.text("Description:", 20, 70);
       doc.text(doc.splitTextToSize(crime.crimeDescription, 170), 20, 78);
     }
-
     doc.text(`Suspect Info: Male, approx. 30–40 years old, 6ft tall`, 20, 100);
     doc.text(`Evidence: 1 photo (if attached)`, 20, 110);
-
     doc.save(`crime_report_${id}.pdf`);
   };
+
+  console.log(crime);
 
   return (
     <DashboardLayout>
       {loading ? (
         <SingleCrimeSkeleton />
       ) : (
-        <div className="mt-24 p-6 my-4 bg-[var(--card-bg)] text-[var(--text-color)] shadow-md rounded-xl max-w-4xl mx-auto">
+        <div
+          className={cn(
+            "relative mt-6 p-6 my-4 text-[var(--text-color)] rounded-lg max-w-5xl mx-auto border transition-all duration-300",
+
+          )}
+        >
+          {/* Floating Download Button (mobile) */}
+          <button
+            onClick={handleDownload}
+            className="fixed bottom-6 right-6 z-40 flex md:hidden items-center gap-2 bg-gradient-to-r from-blue-600 to-blue-400 hover:from-blue-700 hover:to-blue-500 text-white px-5 py-3 rounded-full shadow-lg transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+            aria-label="Download crime report as PDF"
+          >
+            <Download className="w-5 h-5" />
+          </button>
+
+          {/* Back Button */}
           <button
             onClick={() => navigate("/reports")}
-            className="flex items-center text-blue-600 text-lg hover:underline mb-4"
+            className="flex items-center text-blue-600 text-lg hover:underline mb-4 rounded-md px-3 py-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            aria-label="Back to Reports"
           >
             <FiArrowLeft className="mr-2" /> Back to Reports
           </button>
 
-          <h2 className="text-3xl font-bold text-center mb-6">
-            Crime Report # ...{id?.substring(12)}
-          </h2>
-
-          {/* Crime Type and Status */}
-          <div className="flex items-center justify-between flex-wrap mb-4">
-            <h3 className="text-xl font-semibold">{crime?.crimeType}</h3>
-            <span
-              className={`text-sm font-bold px-3 py-1 rounded-full uppercase tracking-wide ${
-                crime?.emergencyLevel === "HIGH"
-                  ? "bg-red-100 text-red-700"
-                  : crime?.emergencyLevel === "MEDIUM"
-                  ? "bg-yellow-100 text-yellow-700"
-                  : "bg-green-100 text-green-700"
-              }`}
-            >
-              {crime?.emergencyLevel}
-            </span>
+          {/* Header: Crime Type & Severity */}
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2 mb-6 border-b pb-4 border-blue-200 dark:border-blue-900">
+            <div className="flex items-center gap-3">
+              <Info className="w-7 h-7 text-blue-500" />
+              <h2 className="text-2xl font-bold tracking-tight">{crime?.crimeType}</h2>
+            </div>
+            <div className="flex items-center gap-2 mt-2 md:mt-0">
+              <span className="text-xs font-medium text-gray-700 dark:text-gray-300 mr-1">Severity Level:</span>
+              <SeverityBadge level={crime?.emergencyLevel} />
+            </div>
           </div>
 
-          {/* Date and Location */}
-          <div className="flex items-center text-sm text-[var(--text-color)] dark:text-gray-400 mb-3">
-            <CalendarDays className="w-5 h-5 mr-2" />
-            {formatDate(crime?.dateOfOccurrence)}
-          </div>
-          <div className="flex items-center text-sm text-[var(--text-color)] dark:text-gray-400 mb-6">
-            <MapPin className="w-5 h-5 mr-2" />
-            {crime?.crimeLocation?.location}, Kigali
+          {/* Date & Location */}
+          <div className="flex flex-col md:flex-row md:items-center gap-4 mb-6">
+            <InfoRow icon={<CalendarDays className="w-5 h-5 mr-2 text-blue-400" />}>{formatDate(crime?.dateOfOccurrence)}</InfoRow>
+            <InfoRow icon={<MapPin className="w-5 h-5 mr-2 text-blue-400" />}>{crime?.crimeLocation?.location}, Kigali</InfoRow>
           </div>
 
           {/* Description */}
           {crime?.crimeDescription && (
-            <div className="mb-6">
-              <h4 className="text-xl font-semibold mb-1">Description</h4>
-              <p className="text-sm text-[var(--text-color)]">
+            <Section icon={<Info className="w-5 h-5 text-blue-400" />} title="Description">
+              <p className="text-base text-[var(--text-color)] leading-relaxed">
                 {crime.crimeDescription}
               </p>
-            </div>
+            </Section>
           )}
 
           {/* Suspect Info */}
-          <div className="mb-6">
-            <h3 className="text-xl font-semibold mb-1">Suspect Information</h3>
-            <div className="flex items-center text-sm text-[var(--text-color)]">
-              <User className="w-5 h-5 mr-2" />
+          <Section icon={<User className="w-5 h-5 text-blue-400" />} title="Suspect Information">
+            <div className="flex items-center text-base text-[var(--text-color)]">
               Male, approx. 30–40 years old, 6ft tall
             </div>
-          </div>
+          </Section>
 
           {/* Evidence */}
-          <div className="mb-6">
-            <h3 className="text-xl font-semibold mb-1">Evidence</h3>
+          <Section icon={<Camera className="w-5 h-5 text-blue-400" />} title="Evidence">
             {crime?.supportingImage ? (
               <>
                 <div className="flex items-center text-sm text-[var(--text-color)] mb-2">
@@ -160,21 +206,26 @@ const CrimeDetails: React.FC = () => {
                 <img
                   src={crime.supportingImage}
                   alt="Evidence"
-                  className="rounded-lg border w-full max-h-[400px] object-cover shadow-md"
+                  className="rounded-lg border w-full max-h-[400px] object-cover shadow-md cursor-pointer transition hover:scale-105"
+                  onClick={() => setEvidenceOpen(true)}
+                  tabIndex={0}
+                  aria-label="View evidence larger"
                 />
+                <EvidenceModal image={crime.supportingImage} open={evidenceOpen} onClose={() => setEvidenceOpen(false)} />
               </>
             ) : (
               <p className="italic text-red-500">No evidence provided</p>
             )}
-          </div>
+          </Section>
 
-          {/* Download Button */}
-          <div className="flex justify-end">
+          {/* Download Button (desktop) */}
+          <div className="hidden md:flex justify-end mt-8">
             <button
               onClick={handleDownload}
-              className="flex items-center gap-2 bg-primaryGradientStart hover:bg-primaryGradientEnd text-white px-5 py-2 rounded-md shadow transition"
+              className="flex items-center gap-2 bg-gradient-to-r from-blue-600 to-blue-400 hover:from-blue-700 hover:to-blue-500 text-white px-6 py-3 rounded-lg shadow transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+              aria-label="Download crime report as PDF"
             >
-              <Download className="w-4 h-4" />
+              <Download className="w-5 h-5" />
               Download Report
             </button>
           </div>

@@ -157,7 +157,7 @@ const LandingPage = () => {
         {/* Background Pattern */}
         <div className="absolute inset-0 bg-grid-slate-100 dark:bg-grid-slate-800/[0.04] bg-[size:20px_20px]"></div>
 
-        <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 relative">
+        <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 xl:px-20 relative">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 xl:gap-16 items-center">
             <motion.div
               initial={{ opacity: 0, x: -50 }}
@@ -185,7 +185,7 @@ const LandingPage = () => {
                   href="https://calendly.com/muneangechaste/30min"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-blue-600 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg hover:bg-blue-700 transition-colors font-medium flex items-center justify-center shadow-lg hover:shadow-xl transform hover:scale-105"
+                  className="bg-blue-600 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg hover:bg-blue-700 transition-colors font-medium flex items-center justify-center shadow-lg hover:shadow-xl transform "
                 >
                   Request Demo
                   <ArrowRight className="ml-2 w-4 h-4 sm:w-5 sm:h-5" />
@@ -349,7 +349,7 @@ const LandingPage = () => {
               href="https://calendly.com/muneangechaste/30min"
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-white text-blue-600 px-6 sm:px-8 py-3 sm:py-4 rounded-lg hover:bg-blue-50 transition-colors font-medium shadow-lg hover:shadow-xl transform hover:scale-105"
+              className="bg-white text-blue-600 px-6 sm:px-8 py-3 sm:py-4 rounded-lg hover:bg-blue-50 transition-colors font-medium shadow-lg hover:shadow-xl transform "
             >
               Schedule Demo
             </a>
@@ -424,7 +424,7 @@ const LandingPage = () => {
               />
               <button
                 type="submit"
-                className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition-colors font-medium shadow-lg hover:shadow-xl transform hover:scale-105"
+                className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition-colors font-medium shadow-lg hover:shadow-xl transform "
               >
                 Send Message
               </button>

@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 import { Outlet } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
+import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
 import UserSidebar from "../components/UserSideBar";
 import Header from "../pages/UserDashboard/Header";
 
@@ -10,13 +11,17 @@ type RootLayoutProps = {
 
 const DashboardLayout = ({ children }: RootLayoutProps) => {
   return (
-    <div className="w-[100vw] h-screen">
+    <SidebarProvider>
       <UserSidebar />
-      <div className="w-[85.5%] ml-[14.5%] px-2 py-4">
+      <SidebarInset>
         <Header />
-        {children || <Outlet />}
-      </div>
-    </div>
+        <main className="flex-1 overflow-auto">
+          <div className="max-w-7xl mx-auto">
+            {children || <Outlet />}
+          </div>
+        </main>
+      </SidebarInset>
+    </SidebarProvider>
   );
 };
 

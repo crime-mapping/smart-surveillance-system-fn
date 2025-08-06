@@ -19,16 +19,19 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
   onClick,
   isActive,
 }) => (
-  <li className="mb-2">
+  <li className="mb-1">
     <Link
       to={path}
-      className={`flex items-center text-gray-300 hover:text-white ${
-        isActive ? "bg-blue-500" : ""
-      } p-2 rounded`}
+      className={`flex items-center px-4 py-3 mx-3 rounded-lg transition-all duration-200 group ${isActive
+          ? "bg-blue-600 text-white shadow-lg shadow-blue-600/25"
+          : "text-slate-700 dark:text-slate-300 hover:bg-slate-200/70 dark:hover:bg-slate-700/50 hover:text-slate-900 dark:hover:text-white"
+        }`}
       onClick={onClick}
     >
-      {icon}
-      <span className="ml-2">{label}</span>
+      <div className={`transition-transform duration-200 ${isActive ? "scale-110" : "group-hover:scale-105"}`}>
+        {icon}
+      </div>
+      <span className="ml-3 font-medium">{label}</span>
     </Link>
   </li>
 );
@@ -49,9 +52,14 @@ const Sidebar: React.FC<SidebarProps> = ({ items }) => {
         return;
       }
 
-      const decodedToken: any = tokenDecoder();
-      const currentTime = Date.now() / 1000;
-      if (decodedToken.exp < currentTime) {
+      try {
+        const decodedToken = tokenDecoder();
+        const currentTime = Date.now() / 1000;
+        if (decodedToken?.exp && decodedToken.exp < currentTime) {
+          handleLogout();
+        }
+      } catch (error) {
+        console.error("Token validation error:", error);
         handleLogout();
       }
     };
@@ -68,11 +76,17 @@ const Sidebar: React.FC<SidebarProps> = ({ items }) => {
       handleLogout();
     }
   };
+
   return (
-    <div className="w-[14.5%] flex fixed top-0 flex-col gap-[40px] h-screen bg-primaryBackground  text-[var(--text-color)] py-6">
-      <Logo />
-      <nav>
-        <ul className="flex flex-col">
+    <div className="fixed left-0 top-0 h-screen w-64 bg-slate-100 dark:bg-slate-900 border-r border-slate-300 dark:border-slate-700 shadow-xl z-40 overflow-y-auto">
+      {/* Logo Section */}
+      <div className="px-6 py-6 border-b border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800">
+        <Logo />
+      </div>
+
+      {/* Navigation */}
+      <nav className="mt-6 px-3 pb-20">
+        <ul className="space-y-1">
           {items.map((item, index) => (
             <SidebarItem
               key={index}
@@ -84,6 +98,9 @@ const Sidebar: React.FC<SidebarProps> = ({ items }) => {
           ))}
         </ul>
       </nav>
+
+      {/* Bottom gradient overlay */}
+      <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-slate-100 dark:from-slate-900 to-transparent pointer-events-none"></div>
     </div>
   );
 };

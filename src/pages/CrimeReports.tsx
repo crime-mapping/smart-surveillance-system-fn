@@ -3,6 +3,7 @@ import axios from "../config/axios";
 import DashboardLayout from "../Layout/DashboardLayout";
 import CrimeReportsSkeleton from "../skeletons/CrimeReportsSkeleton";
 import CrimeCard from "../components/CrimeCard";
+import { Search, Filter, Calendar, MapPin, AlertTriangle, TrendingUp } from "lucide-react";
 
 interface ICrime {
   _id: string;
@@ -120,160 +121,278 @@ const CrimeReports: React.FC = () => {
 
   const totalPages = Math.ceil(filteredCrimes.length / ITEMS_PER_PAGE);
 
+  const getCrimeStats = () => {
+    const highPriority = crimes.filter(crime => crime.emergencyLevel === 'HIGH').length;
+    const mediumPriority = crimes.filter(crime => crime.emergencyLevel === 'MEDIUM').length;
+    const lowPriority = crimes.filter(crime => crime.emergencyLevel === 'LOW').length;
+    const totalCrimes = crimes.length;
+
+    return { highPriority, mediumPriority, lowPriority, totalCrimes };
+  };
+
+  const stats = getCrimeStats();
+
   return (
     <DashboardLayout>
       {loading ? (
         <CrimeReportsSkeleton />
       ) : (
-        <div className="py-8 mt-20">
-          <div className="flex justify-between items-center mb-6">
-            <h1 className="text-2xl font-bold">Crime Reports</h1>
-            {/* Legend */}
-            <div className="flex items-center gap-4 text-sm">
-              <div className="flex items-center gap-1">
-                <div className="w-4 h-4 bg-red-600 rounded" /> High
+        <div className="min-h-screen p-6 bg-gray-50">
+          <div className="max-w-7xl mx-auto">
+            {/* Header Section */}
+            <div className="mb-8">
+              <div className="flex items-center justify-between mb-6">
+                <div className="flex items-center space-x-3">
+                  <div className="w-10 h-10 rounded-lg bg-red-100 flex items-center justify-center">
+                    <AlertTriangle className="text-red-600 h-5 w-5" />
+                  </div>
+                  <div>
+                    <h1 className="text-2xl font-bold text-gray-900">Crime Reports</h1>
+                    <p className="text-gray-600">Monitor and analyze crime incidents across all locations</p>
+                  </div>
+                </div>
               </div>
-              <div className="flex items-center gap-1">
-                <div className="w-4 h-4 bg-yellow-500 rounded" /> Medium
-              </div>
-              <div className="flex items-center gap-1">
-                <div className="w-4 h-4 bg-green-500 rounded" /> Low
+
+              {/* Stats Cards */}
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+                <div className="bg-white rounded-lg p-4 border border-gray-200">
+                  <div className="flex items-center">
+                    <div className="w-8 h-8 rounded-lg bg-red-100 flex items-center justify-center">
+                      <AlertTriangle className="text-red-600 h-4 w-4" />
+                    </div>
+                    <div className="ml-3">
+                      <p className="text-sm font-medium text-gray-600">High Priority</p>
+                      <p className="text-lg font-semibold text-gray-900">{stats.highPriority}</p>
+                    </div>
+                  </div>
+                </div>
+                <div className="bg-white rounded-lg p-4 border border-gray-200">
+                  <div className="flex items-center">
+                    <div className="w-8 h-8 rounded-lg bg-yellow-100 flex items-center justify-center">
+                      <AlertTriangle className="text-yellow-600 h-4 w-4" />
+                    </div>
+                    <div className="ml-3">
+                      <p className="text-sm font-medium text-gray-600">Medium Priority</p>
+                      <p className="text-lg font-semibold text-gray-900">{stats.mediumPriority}</p>
+                    </div>
+                  </div>
+                </div>
+                <div className="bg-white rounded-lg p-4 border border-gray-200">
+                  <div className="flex items-center">
+                    <div className="w-8 h-8 rounded-lg bg-green-100 flex items-center justify-center">
+                      <AlertTriangle className="text-green-600 h-4 w-4" />
+                    </div>
+                    <div className="ml-3">
+                      <p className="text-sm font-medium text-gray-600">Low Priority</p>
+                      <p className="text-lg font-semibold text-gray-900">{stats.lowPriority}</p>
+                    </div>
+                  </div>
+                </div>
+                <div className="bg-white rounded-lg p-4 border border-gray-200">
+                  <div className="flex items-center">
+                    <div className="w-8 h-8 rounded-lg bg-blue-100 flex items-center justify-center">
+                      <TrendingUp className="text-blue-600 h-4 w-4" />
+                    </div>
+                    <div className="ml-3">
+                      <p className="text-sm font-medium text-gray-600">Total Reports</p>
+                      <p className="text-lg font-semibold text-gray-900">{stats.totalCrimes}</p>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
 
-          {/* Search */}
-          <div className="mb-6">
-            <input
-              type="text"
-              placeholder="Search crimes..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="border bg-[var(--card-bg)] px-3 py-2 rounded w-full md:w-1/3"
-            />
-          </div>
-
-          {/* Tabs */}
-          <div className="flex flex-wrap gap-4 mb-6">
-            {/* Tabs Buttons */}
-            {[
-              "recent",
-              "all",
-              "filter-level",
-              "filter-location",
-              "filter-date",
-            ].map((item) => (
-              <button
-                key={item}
-                className={`px-4 py-2 rounded ${
-                  tab === item
-                    ? "bg-blue-300 text-white"
-                    : "bg-[var(--card-bg)]"
-                }`}
-                onClick={() => setTab(item)}
-              >
-                {item === "recent"
-                  ? "Recent Crimes"
-                  : item === "all"
-                  ? "All Crimes"
-                  : item === "filter-level"
-                  ? "Filter by Level"
-                  : item === "filter-location"
-                  ? "Filter by Location"
-                  : "Filter by Date"}
-              </button>
-            ))}
-          </div>
-
-          {/* Filters */}
-          {tab === "filter-location" && (
-            <select
-              value={selectedLocation}
-              onChange={(e) => setSelectedLocation(e.target.value)}
-              className="border bg-[var(--card-bg)] px-3 py-2 rounded mb-6"
-            >
-              <option value="all">All Locations</option>
-              {locations.map((loc) => (
-                <option key={loc._id} value={loc._id}>
-                  {loc.location}
-                </option>
-              ))}
-            </select>
-          )}
-          {tab === "filter-level" && (
-            <select
-              value={selectedLevel}
-              onChange={(e) => setSelectedLevel(e.target.value)}
-              className="border bg-[var(--card-bg)] px-3 py-2 rounded mb-6"
-            >
-              <option value="all">All Levels</option>
-              <option value="HIGH">High</option>
-              <option value="MEDIUM">Medium</option>
-              <option value="LOW">Low</option>
-            </select>
-          )}
-          {tab === "filter-date" && (
-            <div className="flex flex-col md:flex-row gap-4 mb-6">
-              <div>
-                <label className="block  text-sm font-medium mb-1">
-                  Start Date
-                </label>
-                <input
-                  type="date"
-                  value={startDate}
-                  onChange={(e) => setStartDate(e.target.value)}
-                  className="border bg-[var(--card-bg)] px-3 py-2 rounded"
-                />
+            {/* Search and Filters Section */}
+            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6">
+              {/* Search Bar */}
+              <div className="mb-6">
+                <div className="relative">
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+                  <input
+                    type="text"
+                    placeholder="Search crimes by type or location..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
+                  />
+                </div>
               </div>
-              <div>
-                <label className="block  text-sm font-medium mb-1">
-                  End Date
-                </label>
-                <input
-                  type="date"
-                  value={endDate}
-                  onChange={(e) => setEndDate(e.target.value)}
-                  className="border bg-[var(--card-bg)] px-3 py-2 rounded"
-                />
+
+              {/* Filter Tabs */}
+              <div className="mb-6">
+                <div className="flex flex-wrap gap-2">
+                  {[
+                    { key: "recent", label: "Recent Crimes", icon: TrendingUp },
+                    { key: "all", label: "All Crimes", icon: AlertTriangle },
+                    { key: "filter-level", label: "Filter by Level", icon: Filter },
+                    { key: "filter-location", label: "Filter by Location", icon: MapPin },
+                    { key: "filter-date", label: "Filter by Date", icon: Calendar },
+                  ].map((item) => {
+                    const IconComponent = item.icon;
+                    return (
+                      <button
+                        key={item.key}
+                        className={`inline-flex items-center px-4 py-2 rounded-lg text-sm font-medium transition-colors ${tab === item.key
+                          ? "bg-blue-600 text-white shadow-sm"
+                          : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                          }`}
+                        onClick={() => setTab(item.key)}
+                      >
+                        <IconComponent className="h-4 w-4 mr-2" />
+                        {item.label}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Additional Filters */}
+              {tab === "filter-location" && (
+                <div className="mb-4">
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Select Location
+                  </label>
+                  <select
+                    value={selectedLocation}
+                    onChange={(e) => setSelectedLocation(e.target.value)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors bg-white"
+                  >
+                    <option value="all">All Locations</option>
+                    {locations.map((loc) => (
+                      <option key={loc._id} value={loc._id}>
+                        {loc.location}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              )}
+
+              {tab === "filter-level" && (
+                <div className="mb-4">
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Select Priority Level
+                  </label>
+                  <select
+                    value={selectedLevel}
+                    onChange={(e) => setSelectedLevel(e.target.value)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors bg-white"
+                  >
+                    <option value="all">All Levels</option>
+                    <option value="HIGH">High Priority</option>
+                    <option value="MEDIUM">Medium Priority</option>
+                    <option value="LOW">Low Priority</option>
+                  </select>
+                </div>
+              )}
+
+              {tab === "filter-date" && (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Start Date
+                    </label>
+                    <input
+                      type="date"
+                      value={startDate}
+                      onChange={(e) => setStartDate(e.target.value)}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      End Date
+                    </label>
+                    <input
+                      type="date"
+                      value={endDate}
+                      onChange={(e) => setEndDate(e.target.value)}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
+                    />
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Results Section */}
+            <div className="mb-6">
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-lg font-semibold text-gray-900">
+                  {filteredCrimes.length === 0
+                    ? "No crime reports found"
+                    : `Showing ${filteredCrimes.length} crime report${filteredCrimes.length !== 1 ? 's' : ''}`
+                  }
+                </h2>
+                {filteredCrimes.length > 0 && (
+                  <div className="flex items-center gap-4 text-sm text-gray-600">
+                    <div className="flex items-center gap-1">
+                      <div className="w-3 h-3 bg-red-500 rounded-full"></div>
+                      <span>High</span>
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                      <span>Medium</span>
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                      <span>Low</span>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
-          )}
 
-          {/* Crime Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {/* Crime Cards Grid */}
             {currentCrimes.length === 0 ? (
-              <p>No crime reports found.</p>
+              <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-12 text-center">
+                <AlertTriangle className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+                <h3 className="text-lg font-medium text-gray-900 mb-2">No crime reports found</h3>
+                <p className="text-gray-500">
+                  {searchQuery || tab !== "all"
+                    ? "Try adjusting your search criteria or filters"
+                    : "No crime reports have been recorded yet"
+                  }
+                </p>
+              </div>
             ) : (
-              currentCrimes.map((crime) => (
-                <CrimeCard key={crime._id} crime={crime} />
-              ))
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {currentCrimes.map((crime) => (
+                  <CrimeCard key={crime._id} crime={crime} />
+                ))}
+              </div>
+            )}
+
+            {/* Pagination */}
+            {totalPages > 1 && (
+              <div className="mt-8 bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                <div className="flex items-center justify-between">
+                  <div className="text-sm text-gray-700">
+                    Showing {indexOfFirstCrime + 1} to {Math.min(indexOfLastCrime, filteredCrimes.length)} of {filteredCrimes.length} results
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <button
+                      onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                      disabled={currentPage === 1}
+                      className="inline-flex items-center px-3 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                    >
+                      Previous
+                    </button>
+                    <span className="text-sm text-gray-700">
+                      Page {currentPage} of {totalPages}
+                    </span>
+                    <button
+                      onClick={() =>
+                        setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+                      }
+                      disabled={currentPage === totalPages}
+                      className="inline-flex items-center px-3 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                    >
+                      Next
+                    </button>
+                  </div>
+                </div>
+              </div>
             )}
           </div>
-
-          {/* Pagination Controls */}
-          {totalPages > 1 && (
-            <div className="flex justify-center items-center gap-4 mt-8">
-              <button
-                onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-                disabled={currentPage === 1}
-                className="px-4 py-2 rounded bg-[var(--card-bg)] hover:bg-gray-400 disabled:opacity-50"
-              >
-                Previous
-              </button>
-              <span>
-                Page {currentPage} of {totalPages}
-              </span>
-              <button
-                onClick={() =>
-                  setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-                }
-                disabled={currentPage === totalPages}
-                className="px-4 py-2 rounded bg-[var(--card-bg)] hover:bg-gray-400 disabled:opacity-50"
-              >
-                Next
-              </button>
-            </div>
-          )}
         </div>
       )}
     </DashboardLayout>

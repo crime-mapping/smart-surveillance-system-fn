@@ -11,10 +11,12 @@ const UpdateUser = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const [user, setUser] = useState({
+    _id:"",
     names: "",
     email: "",
     phone: "",
     role: "",
+    twoFactorEnabled:false,
   });
   const [newPassword, setNewPassword] = useState("");
   const [loading, setLoading] = useState<boolean>(false);
@@ -23,14 +25,31 @@ const UpdateUser = () => {
 
   const fetchUser = () => {
     setLoading(true);
-    axios.get(`/users/${id}`).then((res) => {
+    console.log('User ID: ', id);
+    axios.get(`/users/single-user/${id}`).then((res) => {
       setUser(res.data);
       setLoading(false);
     });
   };
   useEffect(() => {
     fetchUser();
-  }, [id]);
+  }, []);
+
+   const toggle2FA = async (userId:string) => {
+    try {
+      await axios.patch(`/users/user-toggle-2fa/${userId}`);
+      setUser((prev: any) => ({
+        ...prev,
+        twoFactorEnabled: !prev.twoFactorEnabled,
+      }));
+      toast.success(
+        `${user.names}'s Two-Factor Authentication ${user?.twoFactorEnabled ? "disabled" : "enabled"
+        } successfully`
+      );
+    } catch (err) {
+      toast.error("Failed to toggle user 2FA");
+    }
+  };
 
   const handleUpdate = async () => {
     setUpdatingUser(true);
@@ -247,6 +266,34 @@ const UpdateUser = () => {
                         </div>
                       </div>
                     </div>
+                  </div>
+                   {/* Two-Factor Authentication */}
+                  <div className="border-t border-gray-200 pt-6">
+                    <div className="flex items-center justify-between mb-3">
+                      <div>
+                        <h3 className="text-sm font-medium text-gray-900">Two-Factor Authentication</h3>
+                        <p className="text-xs text-gray-500 mt-1">
+                          {user?.twoFactorEnabled
+                            ? "Enhanced security is enabled"
+                            : "Add an extra layer of security"}
+                        </p>
+                      </div>
+                      <button
+                        onClick={()=>toggle2FA(user._id)}
+                        className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${user?.twoFactorEnabled ? "bg-blue-600" : "bg-gray-200"
+                          }`}
+                      >
+                        <span
+                          className={`inline-block h-4 w-4 transform rounded-full bg-white shadow transition-transform duration-300 ${user?.twoFactorEnabled ? "translate-x-6" : "translate-x-1"
+                            }`}
+                        />
+                      </button>
+                    </div>
+                    <p className="text-xs text-gray-600">
+                      {user?.twoFactorEnabled
+                        ? "2FA is currently enabled on your account."
+                        : "2FA is disabled. It's recommended to turn it on for added security."}
+                    </p>
                   </div>
                 </div>
               </div>

@@ -71,8 +71,8 @@ const UpdateUser = () => {
   const handlePasswordReset = async () => {
     setUpdatingPassword(true);
     try {
-      await axios.put(`/users/${id}/password`, { password: newPassword });
-      toast.success("Password updated");
+      await axios.put(`/users/change-user-password/${id}`, {newPassword });
+      toast.success("User Password updated");
       setNewPassword("");
     } catch (err: any) {
       toast.error(err?.response?.data?.error || "Password reset failed");

@@ -6,6 +6,7 @@ import axios from "../config/axios";
 import { socket } from "../config/socket";
 import notificationSound from "../utils/notifications/notificationsound2.wav";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const formatTime = (timestamp: string | number | Date) => {
   const now = new Date();
@@ -49,6 +50,7 @@ const playBellSound = () => {
 const Notifications = () => {
   const [notifications, setNotifications] = useState<any[]>([]);
   const [isVisible, setIsVisible] = useState(false);
+  const navigate = useNavigate();
 
   const unreadCount = notifications.filter((n) => !n.isRead).length;
 
@@ -107,7 +109,7 @@ const Notifications = () => {
   useEffect(() => {
     fetchNotifications();
 
-    socket.on("crime-notification", (notification) => {
+    socket.on("new-notification", (notification) => {
       setNotifications((prev) => [notification, ...prev]);
       playBellSound();
       toast.info(() => (
@@ -117,6 +119,7 @@ const Notifications = () => {
           <p className="text-sm text-gray-700">{notification.description}</p>
         </div>
       ));
+      navigate('reports');
     });
 
     return () => {
@@ -158,7 +161,8 @@ const Notifications = () => {
             {notifications.map((n) => (
               <li
                 key={n._id}
-                onClick={() => markAsRead(n._id)}
+                onDoubleClick={() => markAsRead(n._id)}
+                 onClick={() => navigate(`/crime/${n.crimeId}`)}
                 className={classNames(
                   "p-3 rounded-lg transition-colors cursor-pointer",
                   n.isRead

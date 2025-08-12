@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 import { FiEye, FiTrash, FiLink, FiXCircle } from "react-icons/fi";
-import { useNavigate } from "react-router-dom";
+//import { useNavigate } from "react-router-dom";
 import axios from "../../config/axios";
 import { toast } from "react-toastify";
 import { Loader2 } from "lucide-react";
+import EditCameraModal from "./EditCameraModal";
 
 export interface Camera {
   id: string;
   name: string;
+  description:string;
   status: "Connected" | "Disconnected";
   dateAdded: string;
 }
@@ -18,18 +20,21 @@ interface CameraCardProps {
 }
 
 const CameraCard: React.FC<CameraCardProps> = ({ camera, onAction }) => {
-  const navigate = useNavigate();
-  const { name, status, dateAdded } = camera;
+  //const navigate = useNavigate();
+  const { name, status, description, dateAdded } = camera;
   const isConnected = status === "Connected";
 
   const [loading, setLoading] = useState(false);
   const [desactivating, setDesactivating] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
 
-  const viewLiveFeed = () => {
-    if (isConnected) {
-      navigate(`/live-feed/${camera.id}`);
-    }
-  };
+
+
+  // const viewLiveFeed = () => {
+  //   if (isConnected) {
+  //     navigate(`/live-feed/${camera.id}`);
+  //   }
+  // };
 
   const connectCamera = async () => {
     try {
@@ -101,7 +106,8 @@ const CameraCard: React.FC<CameraCardProps> = ({ camera, onAction }) => {
 
   return (
     <div className="border rounded-xl bg-[var(--card-bg)] p-4 shadow-md transition-all duration-300 ease-in-out transform hover:scale-[1.02] hover:shadow-lg animate-fade-in">
-      <h2 className="text-lg font-semibold mb-2">{name}</h2>
+      <h2 className="text-lg font-semibold">{name}</h2>
+      <p className="text-md text-italic mb-2">{description}</p>
       <div className="flex items-center mb-2">
         <span
           className={`h-2 w-2 rounded-full mr-2 ${
@@ -114,7 +120,7 @@ const CameraCard: React.FC<CameraCardProps> = ({ camera, onAction }) => {
       <div className="flex flex-wrap gap-2">
         <button
           className={`flex items-center space-x-1 px-3 py-1 rounded-md text-white transition duration-200 hover:opacity-90 ${
-            isConnected ? "bg-red-500" : "bg-green-500"
+            isConnected ? "bg-red-200" : "bg-green-500"
           }`}
           onClick={() => {
             if (isConnected) {
@@ -131,7 +137,7 @@ const CameraCard: React.FC<CameraCardProps> = ({ camera, onAction }) => {
             <span>{isConnected ? "Disconnect" : "Connect"}</span>
           )}
         </button>
-        <button
+        {/* <button
           onClick={viewLiveFeed}
           className={`flex items-center space-x-1 px-3 py-1 rounded-md transition duration-200 ${
             isConnected
@@ -142,7 +148,15 @@ const CameraCard: React.FC<CameraCardProps> = ({ camera, onAction }) => {
         >
           <FiEye />
           <span>View Live Feed</span>
-        </button>
+        </button> */}
+        <button
+  className="flex items-center space-x-1 px-3 py-1 rounded-md bg-yellow-500 text-white transition duration-200 hover:bg-yellow-600"
+  onClick={() => setShowEditModal(true)}
+>
+  ✏️
+  <span>Edit</span>
+</button>
+
         <button
           className="flex items-center space-x-1 px-3 py-1 rounded-md bg-red-500 text-white transition duration-200 hover:bg-red-600"
           onClick={desactivateCamera}
@@ -151,7 +165,16 @@ const CameraCard: React.FC<CameraCardProps> = ({ camera, onAction }) => {
           <span>{desactivating ? "Removing..." : "Remove"}</span>
         </button>
       </div>
+          {showEditModal && (
+  <EditCameraModal
+    isOpen={showEditModal}
+    cameraId={camera.id}
+    onClose={() => setShowEditModal(false)}
+    onUpdated={onAction} // refresh list
+  />
+)}
     </div>
+    
   );
 };
 

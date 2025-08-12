@@ -7,10 +7,12 @@ import DashboardLayout from "../../Layout/DashboardLayout";
 import CameraListSkeleton from "../../skeletons/CameraListSkeleton";
 import NoCameraFound from "../../components/NoCameraFound";
 import { Camera, Plus, Filter, Clock, Wifi, WifiOff } from "lucide-react";
+import { describe } from "node:test";
 
 export interface Camera {
   id: string;
   name: string;
+  description:string;
   status: "Connected" | "Disconnected";
   dateAdded: string;
   location?: string;
@@ -46,6 +48,7 @@ const Cameras = () => {
       const mapped = response.data.map((cam: any) => ({
         id: cam._id,
         name: cam.name,
+        description: cam.description,
         status: cam.isConnected ? "Connected" : "Disconnected",
         dateAdded: new Date(cam.createdAt).toLocaleDateString(),
         location: cam.location?._id || cam.location,

@@ -4,7 +4,6 @@ import {
   FiHome,
   FiCamera,
   FiFileText,
-  FiHelpCircle,
   FiMap,
   FiUser,
   FiLogOut,
@@ -90,11 +89,11 @@ const UserSidebar: React.FC = () => {
       url: "/profile",
       icon: FiUser,
     },
-    {
-      title: "Help & Support",
-      url: "/help",
-      icon: FiHelpCircle,
-    },
+    // {
+    //   title: "Help & Support",
+    //   url: "/help",
+    //   icon: FiHelpCircle,
+    // },
   ];
 
   const handleItemClick = (url: string, title: string) => {

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { CalendarDays, MapPin, User, Camera, Download, Info } from "lucide-react";
+import { CalendarDays, MapPin, Camera, Download, Info } from "lucide-react";
 import DashboardLayout from "../Layout/DashboardLayout";
 import SingleCrimeSkeleton from "../skeletons/singleCrimeSkeleton";
 import axios from "../config/axios";
@@ -182,12 +182,12 @@ const handleDownload = async () => {
             </Section>
           )}
 
-          {/* Suspect Info */}
+          {/* Suspect Info
           <Section icon={<User className="w-5 h-5 text-blue-400" />} title="Suspect Information">
             <div className="flex items-center text-base text-[var(--text-color)]">
               Male, approx. 30–40 years old, 6ft tall
             </div>
-          </Section>
+          </Section> */}
 
           {/* Evidence */}
           <Section icon={<Camera className="w-5 h-5 text-blue-400" />} title="Evidence">

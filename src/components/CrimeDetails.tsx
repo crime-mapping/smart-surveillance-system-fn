@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { CalendarDays, MapPin, User, Camera, Download, Info } from "lucide-react";
 import DashboardLayout from "../Layout/DashboardLayout";
@@ -7,9 +7,10 @@ import axios from "../config/axios";
 import { toast } from "react-toastify";
 import { formatDate } from "../utils/formatDate";
 import jsPDF from "jspdf";
-import logo from "../assets/real_logo.png";
+// import logo from "../assets/real_logo.png";
 import { FiArrowLeft } from "react-icons/fi";
 import { cn } from "../lib/utils";
+import html2canvas from "html2canvas";
 
 export interface Location {
   location: string;
@@ -17,6 +18,7 @@ export interface Location {
 }
 
 export interface ICrime {
+  _id:string;
   crimeDescription?: string;
   crimeType: string;
   crimeLocation: Location;
@@ -100,45 +102,32 @@ const CrimeDetails: React.FC = () => {
     fetchSingleCrime();
   }, [id]);
 
-  const getBase64FromUrl = async (url: string): Promise<string> => {
-    const res = await fetch(url);
-    const blob = await res.blob();
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onloadend = () => resolve(reader.result as string);
-      reader.onerror = reject;
-      reader.readAsDataURL(blob);
-    });
-  };
+const reportRef = useRef<HTMLDivElement>(null);
 
-  const handleDownload = async () => {
-    const doc = new jsPDF();
-    const base64Logo = await getBase64FromUrl(logo);
-    doc.addImage(base64Logo, "PNG", 160, 10, 35, 15);
-    doc.setFontSize(16);
-    doc.text("Crime Report", 20, 20);
-    doc.setFontSize(12);
-    doc.text(`Crime ID: ${id}`, 20, 30);
-    doc.text(`Type: ${crime?.crimeType || "-"}`, 20, 40);
-    doc.text(`Date: ${formatDate(crime?.dateOfOccurrence)}`, 20, 50);
-    doc.text(`Location: ${crime?.crimeLocation?.location || "-"}`, 20, 60);
-    if (crime?.crimeDescription) {
-      doc.text("Description:", 20, 70);
-      doc.text(doc.splitTextToSize(crime.crimeDescription, 170), 20, 78);
-    }
-    doc.text(`Suspect Info: Male, approx. 30–40 years old, 6ft tall`, 20, 100);
-    doc.text(`Evidence: 1 photo (if attached)`, 20, 110);
-    doc.save(`crime_report_${id}.pdf`);
-  };
+const handleDownload = async () => {
+  if (!reportRef.current) return;
 
-  console.log(crime);
+  const canvas = await html2canvas(reportRef.current, {
+    scale: 2,
+    useCORS: true, // For external images like logo
+  });
+
+  const imgData = canvas.toDataURL("image/png");
+  const pdf = new jsPDF("p", "mm", "a4");
+
+  const pdfWidth = pdf.internal.pageSize.getWidth();
+  const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+
+  pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+  pdf.save(`crime_report_${id}.pdf`);
+};
 
   return (
     <DashboardLayout>
       {loading ? (
         <SingleCrimeSkeleton />
       ) : (
-        <div
+        <div  ref={reportRef}
           className={cn(
             "relative mt-6 p-6 my-4 text-[var(--text-color)] rounded-lg max-w-5xl mx-auto border transition-all duration-300",
 
@@ -156,11 +145,15 @@ const CrimeDetails: React.FC = () => {
           {/* Back Button */}
           <button
             onClick={() => navigate("/reports")}
-            className="flex items-center text-blue-600 text-lg hover:underline mb-4 rounded-md px-3 py-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="print:hidden flex items-center text-blue-600 text-lg hover:underline mb-4 rounded-md px-3 py-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
             aria-label="Back to Reports"
           >
             <FiArrowLeft className="mr-2" /> Back to Reports
           </button>
+           <div className="hidden print:block mb-4">
+        <h2 className="text-xl font-semibold">Crime Report Summary #{crime?._id}</h2>
+        <p>Generated on: {new Date().toLocaleDateString()}</p>
+      </div>
 
           {/* Header: Crime Type & Severity */}
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2 mb-6 border-b pb-4 border-blue-200 dark:border-blue-900">
@@ -219,7 +212,7 @@ const CrimeDetails: React.FC = () => {
           </Section>
 
           {/* Download Button (desktop) */}
-          <div className="hidden md:flex justify-end mt-8">
+          <div className="print:hidden hidden md:flex justify-end mt-8">
             <button
               onClick={handleDownload}
               className="flex items-center gap-2 bg-gradient-to-r from-blue-600 to-blue-400 hover:from-blue-700 hover:to-blue-500 text-white px-6 py-3 rounded-lg shadow transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"

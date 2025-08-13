@@ -27,7 +27,7 @@ const CrimeDistributionChart: React.FC<CrimeDistributionChartProps> = ({
   ) {
     return (
       <div className="bg-white dark:bg-slate-800 rounded-xl p-6 shadow-xs border border-slate-200 dark:border-slate-700">
-        <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-4">Crime Distribution</h2>
+        <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-4">Kigali City</h2>
         <div className="flex items-center justify-center h-48">
           <div className="text-center">
             <div className="w-16 h-16 bg-slate-100 dark:bg-slate-700 rounded-full flex items-center justify-center mx-auto mb-4">

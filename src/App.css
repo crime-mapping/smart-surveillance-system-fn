@@ -40,3 +40,29 @@
 .read-the-docs {
   color: #888;
 }
+
+
+@media print {
+  body {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .no-print,
+  .screen-only {
+    display: none !important;
+  }
+
+  .print-only {
+    display: block !important;
+  }
+}
+
+
+/* Screen-specific default */
+.screen-only {
+  display: block;
+}
+.print-only {
+  display: none;
+}

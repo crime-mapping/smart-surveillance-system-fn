@@ -1,12 +1,12 @@
 import { useState, useRef } from "react";
 import { useNavigate, useLocation } from "react-router";
 import { toast } from "react-toastify";
-import { Loader2 } from "lucide-react";
 import { FaArrowLeft } from "react-icons/fa";
 import axios from "../config/axios";
 import WelcomePane from "../components/welcomePane";
 import { PiLockKeyOpenFill } from "react-icons/pi";
 import { AxiosError } from "axios";
+import Spinner from "../components/Spinners";
 
 const VerificationCode = () => {
   const navigate = useNavigate();
@@ -79,69 +79,59 @@ const VerificationCode = () => {
           <div className="w-full max-w-md bg-white dark:bg-slate-800 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-700 p-6 sm:p-8 flex flex-col items-center mx-auto min-h-[400px] md:min-h-[500px] justify-center">
             <PiLockKeyOpenFill className="text-5xl sm:text-6xl text-blue-600 dark:text-blue-400 mx-auto mb-6" />
 
-            <h1 className="text-2xl sm:text-3xl font-bold mb-2 text-center text-slate-900 dark:text-white">
+            <h2 className="text-2xl sm:text-3xl font-bold mb-6 text-center text-slate-900 dark:text-white">
               Enter Verification Code
-            </h1>
-            <p className="mb-6 text-center text-slate-600 dark:text-slate-400">
-              Please enter the 6-digit code we sent to your email
-            </p>
+            </h2>
+            <form onSubmit={(e) => { e.preventDefault(); handleSubmit(code.join("")); }} className="w-full space-y-5">
+              <div>
+                <p className="mb-4 text-center text-slate-600 dark:text-slate-400">
+                  Please enter the 6-digit code we sent to your email
+                </p>
+                {/* 6-digit input field */}
+                <div className="flex space-x-2 justify-center">
+                  {code.map((num, index) => (
+                    <input
+                      key={index}
+                      ref={(el) => (inputRefs.current[index] = el)}
+                      type="text"
+                      value={num}
+                      maxLength={1}
+                      onChange={(e) => handleChange(index, e.target.value)}
+                      onKeyDown={(e) => handleKeyDown(index, e)}
+                      className="w-12 h-12 text-center bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:focus:border-blue-400 transition-colors text-slate-900 dark:text-white text-xl font-semibold"
+                    />
+                  ))}
+                </div>
+              </div>
+              <button
+                type="submit"
+                disabled={code.some((num) => num === "") || loading}
+                className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition-colors font-medium shadow-lg hover:shadow-xl transform disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+              >
+                {loading ? "Verifying..." : "Verify Code"}
+              </button>
+            </form>
+            {loading && <div className="mt-4"><Spinner /></div>}
 
-            {/* 6-digit input field */}
-            <div className="flex space-x-2 justify-center mb-8">
-              {code.map((num, index) => (
-                <input
-                  key={index}
-                  ref={(el) => (inputRefs.current[index] = el)}
-                  type="text"
-                  value={num}
-                  maxLength={1}
-                  onChange={(e) => handleChange(index, e.target.value)}
-                  onKeyDown={(e) => handleKeyDown(index, e)}
-                  className="w-12 h-12 text-center bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:focus:border-blue-400 transition-colors text-slate-900 dark:text-white text-xl font-semibold"
-                />
-              ))}
-            </div>
-
-            <div className="flex w-full gap-x-4 mb-4">
+            <div className="mt-4 w-full">
               <button
                 onClick={() => navigate("/password-reset")}
                 disabled={loading}
-                className="py-3 px-6 w-1/2 bg-white dark:bg-slate-700 border border-gray-300 dark:border-slate-600 text-gray-700 dark:text-white rounded-lg hover:bg-gray-50 dark:hover:bg-slate-600 transition-colors font-medium shadow-sm"
+                className="w-full flex items-center justify-center bg-white dark:bg-slate-700 border border-gray-300 dark:border-slate-600 text-gray-700 dark:text-white py-3 rounded-lg hover:bg-gray-50 dark:hover:bg-slate-600 transition-colors font-medium shadow-sm"
               >
                 Resend Code
               </button>
               <button
-                type="submit"
-                className={`py-3 px-6 w-1/2 rounded-lg font-medium transition-colors shadow-lg ${code.some((num) => num === "") || loading
-                    ? "bg-gray-400 text-gray-700 cursor-not-allowed"
-                    : "bg-blue-600 text-white hover:bg-blue-700 hover:shadow-xl transform hover:scale-105"
-                  }`}
-                disabled={code.some((num) => num === "") || loading}
-                onClick={() => handleSubmit(code.join(""))}
-              >
-                {loading ? (
-                  <div className="flex items-center justify-center">
-                    <Loader2 className="w-4 h-4 animate-spin mr-2" />
-                    Verifying...
-                  </div>
-                ) : (
-                  "Verify"
-                )}
-              </button>
-            </div>
-
-            <div className="w-full">
-              <button
                 onClick={() => navigate("/")}
                 disabled={loading}
-                className="w-full flex items-center justify-center bg-white dark:bg-slate-700 border border-gray-300 dark:border-slate-600 text-gray-700 dark:text-white py-3 rounded-lg hover:bg-gray-50 dark:hover:bg-slate-600 transition-colors font-medium shadow-sm"
+                className="w-full flex mt-4 items-center justify-center bg-white dark:bg-slate-700 border border-gray-300 dark:border-slate-600 text-gray-700 dark:text-white py-3 rounded-lg hover:bg-gray-50 dark:hover:bg-slate-600 transition-colors font-medium shadow-sm"
               >
                 <FaArrowLeft className="mr-2" />
                 Go Home
               </button>
             </div>
 
-            <div className="mt-4 w-full flex flex-col sm:flex-row justify-center items-center text-center">
+            <div className="mt-4 w-full flex flex-col sm:flex-row justify-between items-center text-center">
               <span className="text-slate-600 dark:text-slate-400">
                 Need help?{' '}
                 <button
